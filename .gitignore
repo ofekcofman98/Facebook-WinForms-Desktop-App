@@ -1,46 +1,15 @@
-# Ignore Visual Studio temporary files, build results, and other unimportant files
-
-# User-specific files
-*.rsuser
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
-
-# Build results (bin and obj folders)
+# Ignore Visual Studio temporary files
+.vs/
 [Bb]in/
 [Oo]bj/
 
-# Visual Studio settings and cache
-.vs/
-.vscode/
+# Ignore user-specific files
+*.suo
+*.user
+*.rsuser
+*.sln.docstates
 
-# Test result and log files
-[Tt]est[Rr]esult*/
+# Ignore build output
 *.log
-
-# NuGet packages
-*.nupkg
-**/[Pp]ackages/*
-!**/[Pp]ackages/build/
-
-# Backup & report files from Visual Studio project upgrades
-_UpgradeReport_Files/
-Backup*/
-UpgradeLog*.XML
-UpgradeLog*.htm
-
-# Temporary files
 *.tmp
-*.tmp_proj
-*.pidb
-*.tlog
-*.cachefile
-
-# Code analysis files
-*.code-workspace
-
-# Uncomment the following line if you want to include *.sln and *.csproj files
-# NOTE: These are essential for Visual Studio solutions
-!*.sln
-!*.csproj
+*.pdb
