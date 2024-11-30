@@ -3,6 +3,8 @@
 [Bb]in/
 [Oo]bj/
 
+MigrationBackup/
+
 # Ignore user-specific files
 *.suo
 *.user
