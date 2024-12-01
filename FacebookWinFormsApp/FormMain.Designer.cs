@@ -32,9 +32,10 @@
             this.buttonLogout = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.likesListBox = new System.Windows.Forms.ListBox();
+            this.userNameLabel = new System.Windows.Forms.Label();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.userNameLabel = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
@@ -76,6 +77,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.likesListBox);
             this.tabPage1.Controls.Add(this.userNameLabel);
             this.tabPage1.Controls.Add(this.pictureBoxProfile);
             this.tabPage1.Controls.Add(this.buttonLogout);
@@ -87,6 +89,25 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // likesListBox
+            // 
+            this.likesListBox.FormattingEnabled = true;
+            this.likesListBox.ItemHeight = 22;
+            this.likesListBox.Location = new System.Drawing.Point(451, 113);
+            this.likesListBox.Name = "likesListBox";
+            this.likesListBox.Size = new System.Drawing.Size(340, 180);
+            this.likesListBox.TabIndex = 57;
+            this.likesListBox.Visible = false;
+            // 
+            // userNameLabel
+            // 
+            this.userNameLabel.Location = new System.Drawing.Point(14, 223);
+            this.userNameLabel.Name = "userNameLabel";
+            this.userNameLabel.Size = new System.Drawing.Size(272, 33);
+            this.userNameLabel.TabIndex = 56;
+            this.userNameLabel.Text = "Hello, ";
+            this.userNameLabel.Visible = false;
             // 
             // pictureBoxProfile
             // 
@@ -106,15 +127,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // userNameLabel
-            // 
-            this.userNameLabel.Location = new System.Drawing.Point(14, 223);
-            this.userNameLabel.Name = "userNameLabel";
-            this.userNameLabel.Size = new System.Drawing.Size(272, 33);
-            this.userNameLabel.TabIndex = 56;
-            this.userNameLabel.Text = "Hello, ";
-            this.userNameLabel.Visible = false;
             // 
             // FormMain
             // 
@@ -143,6 +155,7 @@
 		private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.Label userNameLabel;
+        private System.Windows.Forms.ListBox likesListBox;
     }
 }
 

@@ -13,10 +13,11 @@ namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
-        private AppManager appManager = new AppManager();
+        private readonly AppManager r_AppManager;
         public FormMain()
         {
             InitializeComponent();
+            r_AppManager = new AppManager();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
         }
 
@@ -52,7 +53,7 @@ namespace BasicFacebookFeatures
         
         private void login()
         {
-            string appID = appManager.AppId;// textBoxAppID.Text.Trim();
+            string appID = r_AppManager.AppId;// textBoxAppID.Text.Trim();
 
             if(string.IsNullOrEmpty((appID)))
             {
@@ -65,7 +66,8 @@ namespace BasicFacebookFeatures
                 m_LoginResult = FacebookService.Login(
                     appID,
                     "email",
-                    "public_profile");
+                    "public_profile",
+                    "user_likes");
                 
 
                 if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
@@ -95,6 +97,9 @@ namespace BasicFacebookFeatures
             pictureBoxProfile.Visible = true;
             userNameLabel.Text = $"Hello, {m_LoginResult.LoggedInUser.FirstName}!";
             pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
+            likesListBox.Visible = true;
+            friendsList();
+
         }
 
         private void unLaunchFacebook()
@@ -103,7 +108,33 @@ namespace BasicFacebookFeatures
             pictureBoxProfile.Visible = false;
         }
 
+        private void friendsList()
+        {
+            likesListBox.Items.Clear(); // Assuming you have a ListBox to display likes
+            likesListBox.DisplayMember = "Name";
 
+            try
+            {
+                if (m_LoginResult.LoggedInUser.LikedPages != null && m_LoginResult.LoggedInUser.LikedPages.Count > 0)
+                {
+                    foreach (Page likedPage in m_LoginResult.LoggedInUser.LikedPages)
+                    {
+                        likesListBox.Items.Add(likedPage);
+                    }
+                }
+                else
+                {
+                    likesListBox.Items.Add("No liked pages to display.");
+                }
+            }
+            catch (Exception ex)
+            {
+                likesListBox.Items.Add("Couldn't fetch liked pages.");
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+
+
+        }
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
