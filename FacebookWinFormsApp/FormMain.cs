@@ -32,24 +32,24 @@ namespace BasicFacebookFeatures
             }
 
 
-            try
-            {
-                FacebookService.LogoutWithUI();
-                m_LoginResult = null; // Reset the login result
-                buttonLogin.Text = "Login";
-                buttonLogin.BackColor = buttonLogout.BackColor;
-                pictureBoxProfile.Image = null; // Clear profile picture
-                buttonLogin.Enabled = true;
-                buttonLogout.Enabled = false;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error during logout: {ex.Message}");
-            }
+            //try
+            //{
+            //    FacebookService.LogoutWithUI();
+            //    m_LoginResult = null; // Reset the login result
+            //    buttonLogin.Text = "Login";
+            //    buttonLogin.BackColor = buttonLogout.BackColor;
+            //    pictureBoxProfile.Image = null; // Clear profile picture
+            //    buttonLogin.Enabled = true;
+            //    buttonLogout.Enabled = false;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show($"Error during logout: {ex.Message}");
+            //}
 
         }
         
-
+        
         private void login()
         {
             string appID = appManager.AppId;// textBoxAppID.Text.Trim();
@@ -66,26 +66,17 @@ namespace BasicFacebookFeatures
                     appID,
                     "email",
                     "public_profile");
-            
-
-            
-
-            //m_LoginResult = FacebookService.Login(
-            //    /// (This is Desig Patter's App ID. replace it with your own)
-            //    textBoxAppID.Text,
-            //    /// requested permissions:
-            //    "email",
-            //    "public_profile"
-            //    /// add any relevant permissions
-            //    );
+                
 
                 if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
                 {
                     buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";
                     buttonLogin.BackColor = Color.LightGreen;
-                    pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
+
                     buttonLogin.Enabled = false;
                     buttonLogout.Enabled = true;
+
+                    launchFacebook();
                 }
                 else 
                 {
@@ -98,14 +89,33 @@ namespace BasicFacebookFeatures
             }
         }
 
+        private void launchFacebook()
+        {
+            userNameLabel.Visible = true;
+            pictureBoxProfile.Visible = true;
+            userNameLabel.Text = $"Hello, {m_LoginResult.LoggedInUser.FirstName}!";
+            pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
+        }
+
+        private void unLaunchFacebook()
+        {
+            userNameLabel.Visible = false;
+            pictureBoxProfile.Visible = false;
+        }
+
+
+
         private void buttonLogout_Click(object sender, EventArgs e)
         {
             FacebookService.LogoutWithUI();
+            m_LoginResult = null;
             buttonLogin.Text = "Login";
             buttonLogin.BackColor = buttonLogout.BackColor;
-            m_LoginResult = null;
             buttonLogin.Enabled = true;
             buttonLogout.Enabled = false;
+
+            unLaunchFacebook();
+
         }
     }
 }
