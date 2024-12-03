@@ -14,6 +14,8 @@ namespace BasicFacebookFeatures
     public partial class FormMain : Form
     {
         private readonly AppManager r_AppManager;
+        private Album m_currentAlbum = null;
+        private int m_albumPictureCounter = 0;
 
         FacebookWrapper.LoginResult m_LoginResult;
         FacebookWrapper.ObjectModel.User m_LoggedInUser;
@@ -118,6 +120,8 @@ namespace BasicFacebookFeatures
             fetchAlbums();
             fetchFriendList();
             fetchProfileInfo();
+            fetchGroups();
+            fetchFavoriteTeams();
 
         }
        private void fetchFriendList()
@@ -159,6 +163,36 @@ namespace BasicFacebookFeatures
             if (userAlbumsListBox.Items.Count == 0)
             {
                 MessageBox.Show("No Albums to retrieve :(");
+            }
+        }
+        private void fetchFavoriteTeams()
+        {
+            userFavoriteTeamsListBox.Items.Clear();
+            userFavoriteTeamsListBox.DisplayMember = "Name";
+            foreach (Page page in m_LoggedInUser.FavofriteTeams)
+            {
+                userFavoriteTeamsListBox.Items.Add(page);
+                //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
+            }
+
+            if (userFavoriteTeamsListBox.Items.Count == 0)
+            {
+                MessageBox.Show("No Albums to retrieve :(");
+            }
+        }
+        private void fetchGroups()
+        {
+            userGroupsListBox.Items.Clear();
+            userGroupsListBox.DisplayMember = "Name";
+            foreach (Group group in m_LoggedInUser.Groups)
+            {
+                userGroupsListBox.Items.Add(group);
+                //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
+            }
+
+            if (userGroupsListBox.Items.Count == 0)
+            {
+                MessageBox.Show("No Groups to retrieve :(");
             }
         }
 
@@ -209,39 +243,58 @@ namespace BasicFacebookFeatures
 
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void userFavoriteTeamsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (userFavoriteTeamsListBox.SelectedItems.Count == 1)
+            {
+                Page selectedTeam = userFavoriteTeamsListBox.SelectedItem as Page;
+                favoriteTeamPictureBox.LoadAsync(selectedTeam.PictureNormalURL);
+            }
+        }
+
+        private void userFriendsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (userFriendsListBox.SelectedItems.Count == 1)
+            {
+                User selectedUser = userFriendsListBox.SelectedItem as User;
+                userFriendPictureBox.LoadAsync(selectedUser.PictureNormalURL);
+            }
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void nextAlbumPictureButton_Click(object sender, EventArgs e)
         {
+            if (m_albumPictureCounter +1  <= m_currentAlbum.Count)
+            {
+                m_albumPictureCounter++;
+                albumPicture.LoadAsync(getCurrentAlbumPictureUrl());
+            }
 
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void prevAlbumPictureButton_Click(object sender, EventArgs e)
         {
+            if (m_albumPictureCounter - 1 >= 0)
+            {
+                m_albumPictureCounter--;
+                albumPicture.LoadAsync(getCurrentAlbumPictureUrl());
+            }
 
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        private void userAlbumsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (userAlbumsListBox.SelectedItems.Count == 1)
+            {
+                m_albumPictureCounter = 0;
+                m_currentAlbum = userAlbumsListBox.SelectedItem as Album;
+                albumPicture.LoadAsync(getCurrentAlbumPictureUrl());
+            }
 
         }
-
-        private void label6_Click(object sender, EventArgs e)
+        private String getCurrentAlbumPictureUrl()
         {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
+            return m_currentAlbum.Photos[m_albumPictureCounter].PictureNormalURL;
         }
     }
 }
