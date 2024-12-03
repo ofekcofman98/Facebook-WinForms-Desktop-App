@@ -11,14 +11,22 @@ using FacebookWrapper;
 
 namespace BasicFacebookFeatures
 {
-    public partial class FormMain : Form
+    public partial class FormMainOld : Form
     {
         private readonly AppManager r_AppManager;
-        public FormMain()
+
+        public FormMainOld()
         {
             InitializeComponent();
             r_AppManager = new AppManager();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
+
+            //textBoxStatus.Text = $"What's on your mind, {r_AppManager.LoggedInUser.FirstName}?";
+            //textBoxStatus.ForeColor = Color.Gray;
+            //textBoxStatus.Enter += textBoxStatus_Enter;
+            //textBoxStatus.Leave += textBoxStatus_Leave;
+
+
         }
 
         FacebookWrapper.LoginResult m_LoginResult;
@@ -147,6 +155,37 @@ namespace BasicFacebookFeatures
 
             unLaunchFacebook();
 
+        }
+        private void textBoxStatus_Enter(object sender, EventArgs e)
+        {
+            if (textBoxStatus.Text == $"What's on your mind, {r_AppManager.LoggedInUser.FirstName}?")
+            {
+                textBoxStatus.Text = "";
+                textBoxStatus.ForeColor = Color.Black;
+            }
+        }
+
+        private void textBoxStatus_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBoxStatus.Text))
+            {
+                textBoxStatus.Text = $"What's on your mind, {r_AppManager.LoggedInUser.FirstName}?";
+                textBoxStatus.ForeColor = Color.Gray; 
+            }
+        }
+
+
+        private void buttonSetStatus_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Status postedStatus = r_AppManager.LoggedInUser.PostStatus(textBoxStatus.Text);
+                MessageBox.Show($"Status Posted! ID: {postedStatus.Id}");
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show(exception.ToString());
+            }
         }
     }
 }

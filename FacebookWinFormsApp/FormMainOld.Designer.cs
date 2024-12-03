@@ -1,6 +1,6 @@
 ﻿namespace BasicFacebookFeatures
 {
-    partial class FormMain
+    partial class FormMainOld
     {
         /// <summary>
         /// Required designer variable.
@@ -36,6 +36,8 @@
             this.userNameLabel = new System.Windows.Forms.Label();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.textBoxStatus = new System.Windows.Forms.TextBox();
+            this.buttonSetStatus = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
@@ -46,7 +48,7 @@
             this.buttonLogin.Location = new System.Drawing.Point(18, 17);
             this.buttonLogin.Margin = new System.Windows.Forms.Padding(4);
             this.buttonLogin.Name = "buttonLogin";
-            this.buttonLogin.Size = new System.Drawing.Size(268, 32);
+            this.buttonLogin.Size = new System.Drawing.Size(128, 32);
             this.buttonLogin.TabIndex = 36;
             this.buttonLogin.Text = "Login";
             this.buttonLogin.UseVisualStyleBackColor = true;
@@ -58,7 +60,7 @@
             this.buttonLogout.Location = new System.Drawing.Point(18, 57);
             this.buttonLogout.Margin = new System.Windows.Forms.Padding(4);
             this.buttonLogout.Name = "buttonLogout";
-            this.buttonLogout.Size = new System.Drawing.Size(268, 32);
+            this.buttonLogout.Size = new System.Drawing.Size(128, 32);
             this.buttonLogout.TabIndex = 52;
             this.buttonLogout.Text = "Logout";
             this.buttonLogout.UseVisualStyleBackColor = true;
@@ -77,6 +79,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.buttonSetStatus);
+            this.tabPage1.Controls.Add(this.textBoxStatus);
             this.tabPage1.Controls.Add(this.likesListBox);
             this.tabPage1.Controls.Add(this.userNameLabel);
             this.tabPage1.Controls.Add(this.pictureBoxProfile);
@@ -113,7 +117,7 @@
             // 
             this.pictureBoxProfile.Location = new System.Drawing.Point(18, 96);
             this.pictureBoxProfile.Name = "pictureBoxProfile";
-            this.pictureBoxProfile.Size = new System.Drawing.Size(79, 78);
+            this.pictureBoxProfile.Size = new System.Drawing.Size(128, 124);
             this.pictureBoxProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxProfile.TabIndex = 55;
             this.pictureBoxProfile.TabStop = false;
@@ -128,7 +132,29 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // FormMain
+            // textBoxStatus
+            // 
+            this.textBoxStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxStatus.Location = new System.Drawing.Point(451, 17);
+            this.textBoxStatus.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxStatus.Name = "textBoxStatus";
+            this.textBoxStatus.Size = new System.Drawing.Size(293, 28);
+            this.textBoxStatus.TabIndex = 58;
+            // 
+            // buttonSetStatus
+            // 
+            this.buttonSetStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSetStatus.Location = new System.Drawing.Point(752, 17);
+            this.buttonSetStatus.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSetStatus.Name = "buttonSetStatus";
+            this.buttonSetStatus.Size = new System.Drawing.Size(100, 28);
+            this.buttonSetStatus.TabIndex = 59;
+            this.buttonSetStatus.Text = "Post";
+            this.buttonSetStatus.UseVisualStyleBackColor = true;
+            this.buttonSetStatus.Click += new System.EventHandler(this.buttonSetStatus_Click);
+            // 
+            // FormMainOld
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -136,11 +162,12 @@
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "FormMain";
+            this.Name = "FormMainOld";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
             this.ResumeLayout(false);
 
@@ -156,6 +183,8 @@
         private System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.Label userNameLabel;
         private System.Windows.Forms.ListBox likesListBox;
+        private System.Windows.Forms.Button buttonSetStatus;
+        private System.Windows.Forms.TextBox textBoxStatus;
     }
 }
 
