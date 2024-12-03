@@ -118,6 +118,7 @@ namespace BasicFacebookFeatures
             pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
             likesListBox.Visible = true;
             friendsList();
+            fetchNewsFeed();
             fetchAlbums();
             fetchFriendList();
             fetchProfileInfo();
@@ -127,6 +128,33 @@ namespace BasicFacebookFeatures
 
 
         }
+
+        private void fetchNewsFeed()
+        {
+            newsFeedListBox.Items.Clear();
+            foreach (Post post in m_LoggedInUser.Posts)
+            {
+                if (post.Message != null)
+                {
+                    newsFeedListBox.Items.Add(post);
+                }
+                else if (post.Caption != null)
+                {
+                    newsFeedListBox.Items.Add(post);
+                }
+                else
+                {
+                    newsFeedListBox.Items.Add(string.Format("[{0}]", post.Type));
+                }
+            }
+
+            if (newsFeedListBox.Items.Count == 0)
+            {
+                MessageBox.Show("No news to retrieve :(");
+            }
+
+        }
+
         private void fetchFriendList()
         {
             userFriendsListBox.Visible = true;
@@ -168,7 +196,7 @@ namespace BasicFacebookFeatures
 
         private void textBoxStatus_Click(object sender, EventArgs e)
         {
-            if (textBoxStatusPost.Text == $"What's on your mind, {m_LoggedInUser?.Name}?")
+            if ( m_LoggedInUser != null)
             {
                 textBoxStatusPost.Text = ""; 
                 textBoxStatusPost.ForeColor = Color.Black;

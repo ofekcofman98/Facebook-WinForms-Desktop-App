@@ -60,6 +60,8 @@
             this.tabsController = new System.Windows.Forms.TabControl();
             this.textBoxStatusPost = new System.Windows.Forms.TextBox();
             this.buttonSetStatusPost = new System.Windows.Forms.Button();
+            this.newsFeedListBox = new System.Windows.Forms.ListBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.profileInfo.SuspendLayout();
             this.homePageTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.albumPicture)).BeginInit();
@@ -161,6 +163,8 @@
             // 
             // homePageTab
             // 
+            this.homePageTab.Controls.Add(this.label10);
+            this.homePageTab.Controls.Add(this.newsFeedListBox);
             this.homePageTab.Controls.Add(this.buttonSetStatusPost);
             this.homePageTab.Controls.Add(this.textBoxStatusPost);
             this.homePageTab.Controls.Add(this.prevAlbumPictureButton);
@@ -404,6 +408,24 @@
             this.buttonSetStatusPost.Text = "Post";
             this.buttonSetStatusPost.UseVisualStyleBackColor = true;
             // 
+            // newsFeedListBox
+            // 
+            this.newsFeedListBox.FormattingEnabled = true;
+            this.newsFeedListBox.ItemHeight = 22;
+            this.newsFeedListBox.Location = new System.Drawing.Point(756, 410);
+            this.newsFeedListBox.Name = "newsFeedListBox";
+            this.newsFeedListBox.Size = new System.Drawing.Size(324, 158);
+            this.newsFeedListBox.TabIndex = 74;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(752, 364);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(97, 24);
+            this.label10.TabIndex = 75;
+            this.label10.Text = "news feed";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
@@ -462,6 +484,8 @@
         private System.Windows.Forms.Button prevAlbumPictureButton;
         private System.Windows.Forms.Button buttonSetStatusPost;
         private System.Windows.Forms.TextBox textBoxStatusPost;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ListBox newsFeedListBox;
     }
 }
 
