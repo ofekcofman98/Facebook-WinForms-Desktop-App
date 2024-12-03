@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
+using System.Windows.Forms.VisualStyles;
 
 namespace BasicFacebookFeatures
 {
@@ -122,9 +123,11 @@ namespace BasicFacebookFeatures
             fetchProfileInfo();
             fetchGroups();
             fetchFavoriteTeams();
+            fetchStatusPost();
+
 
         }
-       private void fetchFriendList()
+        private void fetchFriendList()
         {
             userFriendsListBox.Visible = true;
             userFriendsListBox.Items.Clear();
@@ -150,6 +153,38 @@ namespace BasicFacebookFeatures
             fullNameData.Text = m_LoggedInUser.Name;
 
         }
+
+        private void fetchStatusPost()
+        {
+            textBoxStatusPost.Click += textBoxStatus_Click;
+            textBoxStatusPost.Leave += textBoxStatus_Leave;
+
+            if (m_LoggedInUser != null)
+            {
+                textBoxStatusPost.Text = $"What's on your mind, {m_LoggedInUser.FirstName}";
+                textBoxStatusPost.ForeColor = Color.Gray;
+            }
+        }
+
+        private void textBoxStatus_Click(object sender, EventArgs e)
+        {
+            if (textBoxStatusPost.Text == $"What's on your mind, {m_LoggedInUser?.Name}?")
+            {
+                textBoxStatusPost.Text = ""; 
+                textBoxStatusPost.ForeColor = Color.Black;
+            }
+        }
+
+        private void textBoxStatus_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBoxStatusPost.Text))
+            {
+                textBoxStatusPost.Text = $"What's on your mind, {m_LoggedInUser.Name}?";
+                textBoxStatusPost.ForeColor = Color.Gray; 
+            }
+        }
+
+
         private void fetchAlbums()
         {
             userAlbumsListBox.Items.Clear();
