@@ -14,14 +14,18 @@ namespace BasicFacebookFeatures
     public partial class FormMain : Form
     {
         private readonly AppManager r_AppManager;
+
+        FacebookWrapper.LoginResult m_LoginResult;
+        FacebookWrapper.ObjectModel.User m_LoggedInUser;
+        
         public FormMain()
         {
             InitializeComponent();
             r_AppManager = new AppManager();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
+            tabsController.TabPages.Remove(profileInfo);
         }
 
-        FacebookWrapper.LoginResult m_LoginResult;
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
@@ -67,11 +71,23 @@ namespace BasicFacebookFeatures
                     appID,
                     "email",
                     "public_profile",
-                    "user_likes");
-                
+                    "user_age_range",
+                    "user_birthday",
+                    "user_events",
+                    "user_friends",
+                    "user_gender",
+                    "user_hometown",
+                    "user_likes",
+                    "user_link",
+                    "user_location",
+                    "user_photos",
+                    "user_posts",
+                    "user_videos");
+
 
                 if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
                 {
+                    m_LoggedInUser = m_LoginResult.LoggedInUser;
                     buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";
                     buttonLogin.BackColor = Color.LightGreen;
 
@@ -99,7 +115,51 @@ namespace BasicFacebookFeatures
             pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
             likesListBox.Visible = true;
             friendsList();
+            fetchAlbums();
+            fetchFriendList();
+            fetchProfileInfo();
 
+        }
+       private void fetchFriendList()
+        {
+            userFriendsListBox.Visible = true;
+            userFriendsListBox.Items.Clear();
+            userFriendsListBox.DisplayMember = "Name";
+            foreach (User User in m_LoggedInUser.Friends)
+            {
+                userFriendsListBox.Items.Add(User);
+                //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
+            }
+
+            if (userFriendsListBox.Items.Count == 0)
+            {
+                MessageBox.Show("No friends to retrieve :(");
+            }
+            
+        }
+        private void fetchProfileInfo()
+        {
+            tabsController.TabPages.Add(profileInfo);
+            emailData.Text = m_LoggedInUser.Email;
+            birthdayData.Text = m_LoggedInUser.Birthday;
+            genderData.Text = m_LoggedInUser.Gender.ToString();
+            fullNameData.Text = m_LoggedInUser.Name;
+
+        }
+        private void fetchAlbums()
+        {
+            userAlbumsListBox.Items.Clear();
+            userAlbumsListBox.DisplayMember = "Name";
+            foreach (Album album in m_LoggedInUser.Albums)
+            {
+                userAlbumsListBox.Items.Add(album);
+                //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
+            }
+
+            if (userAlbumsListBox.Items.Count == 0)
+            {
+                MessageBox.Show("No Albums to retrieve :(");
+            }
         }
 
         private void unLaunchFacebook()
@@ -146,6 +206,41 @@ namespace BasicFacebookFeatures
             buttonLogout.Enabled = false;
 
             unLaunchFacebook();
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
 
         }
     }
