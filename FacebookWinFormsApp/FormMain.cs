@@ -98,6 +98,8 @@ namespace BasicFacebookFeatures
                     buttonLogout.Enabled = true;
 
                     launchFacebook();
+
+                    r_AppManager.StatCenter = new StatCenter(m_LoggedInUser.Posts.ToList());
                 }
                 else 
                 {
@@ -179,6 +181,7 @@ namespace BasicFacebookFeatures
             birthdayData.Text = m_LoggedInUser.Birthday;
             genderData.Text = m_LoggedInUser.Gender.ToString();
             fullNameData.Text = m_LoggedInUser.Name;
+            ProfilePictureBox.Image = m_LoggedInUser.ImageLarge;
 
         }
 

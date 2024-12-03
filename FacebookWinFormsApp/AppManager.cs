@@ -11,6 +11,7 @@ namespace BasicFacebookFeatures
     {
         private readonly string r_AppId = "945333600988492"; 
         //LoginResult result = FacebookWrapper.FBService.Login("272862089537667",
+        public StatCenter StatCenter { get; set; }
 
         public string AppId
         {
@@ -19,5 +20,7 @@ namespace BasicFacebookFeatures
                 return r_AppId;
             }
         }
+
+
     }
 }

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.profileInfo = new System.Windows.Forms.TabPage();
+            this.ProfilePictureBox = new System.Windows.Forms.PictureBox();
             this.fullNameData = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.genderData = new System.Windows.Forms.Label();
@@ -38,6 +39,10 @@
             this.emailData = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.homePageTab = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
+            this.newsFeedListBox = new System.Windows.Forms.ListBox();
+            this.buttonSetStatusPost = new System.Windows.Forms.Button();
+            this.textBoxStatusPost = new System.Windows.Forms.TextBox();
             this.prevAlbumPictureButton = new System.Windows.Forms.Button();
             this.nextAlbumPictureButton = new System.Windows.Forms.Button();
             this.albumPicture = new System.Windows.Forms.PictureBox();
@@ -58,21 +63,22 @@
             this.buttonLogout = new System.Windows.Forms.Button();
             this.buttonLogin = new System.Windows.Forms.Button();
             this.tabsController = new System.Windows.Forms.TabControl();
-            this.textBoxStatusPost = new System.Windows.Forms.TextBox();
-            this.buttonSetStatusPost = new System.Windows.Forms.Button();
-            this.newsFeedListBox = new System.Windows.Forms.ListBox();
-            this.label10 = new System.Windows.Forms.Label();
+            this.Stats = new System.Windows.Forms.TabPage();
+            this.imagesListBox = new System.Windows.Forms.ListBox();
             this.profileInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ProfilePictureBox)).BeginInit();
             this.homePageTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.albumPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userFriendPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.favoriteTeamPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.tabsController.SuspendLayout();
+            this.Stats.SuspendLayout();
             this.SuspendLayout();
             // 
             // profileInfo
             // 
+            this.profileInfo.Controls.Add(this.ProfilePictureBox);
             this.profileInfo.Controls.Add(this.fullNameData);
             this.profileInfo.Controls.Add(this.label5);
             this.profileInfo.Controls.Add(this.genderData);
@@ -86,13 +92,23 @@
             this.profileInfo.Padding = new System.Windows.Forms.Padding(3);
             this.profileInfo.Size = new System.Drawing.Size(1235, 662);
             this.profileInfo.TabIndex = 1;
-            this.profileInfo.Text = "Profile Info";
+            this.profileInfo.Text = "My Profile";
             this.profileInfo.UseVisualStyleBackColor = true;
+            // 
+            // ProfilePictureBox
+            // 
+            this.ProfilePictureBox.Location = new System.Drawing.Point(167, 21);
+            this.ProfilePictureBox.Name = "ProfilePictureBox";
+            this.ProfilePictureBox.Size = new System.Drawing.Size(207, 234);
+            this.ProfilePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.ProfilePictureBox.TabIndex = 8;
+            this.ProfilePictureBox.TabStop = false;
             // 
             // fullNameData
             // 
+            this.fullNameData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.fullNameData.AutoSize = true;
-            this.fullNameData.Location = new System.Drawing.Point(422, 85);
+            this.fullNameData.Location = new System.Drawing.Point(314, 267);
             this.fullNameData.Name = "fullNameData";
             this.fullNameData.Size = new System.Drawing.Size(70, 24);
             this.fullNameData.TabIndex = 7;
@@ -100,8 +116,9 @@
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(271, 85);
+            this.label5.Location = new System.Drawing.Point(163, 267);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(102, 24);
             this.label5.TabIndex = 6;
@@ -109,8 +126,9 @@
             // 
             // genderData
             // 
+            this.genderData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.genderData.AutoSize = true;
-            this.genderData.Location = new System.Drawing.Point(422, 199);
+            this.genderData.Location = new System.Drawing.Point(314, 381);
             this.genderData.Name = "genderData";
             this.genderData.Size = new System.Drawing.Size(35, 24);
             this.genderData.TabIndex = 5;
@@ -118,8 +136,9 @@
             // 
             // label8
             // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(271, 199);
+            this.label8.Location = new System.Drawing.Point(163, 381);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(79, 24);
             this.label8.TabIndex = 4;
@@ -127,8 +146,9 @@
             // 
             // birthdayData
             // 
+            this.birthdayData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.birthdayData.AutoSize = true;
-            this.birthdayData.Location = new System.Drawing.Point(422, 162);
+            this.birthdayData.Location = new System.Drawing.Point(314, 344);
             this.birthdayData.Name = "birthdayData";
             this.birthdayData.Size = new System.Drawing.Size(60, 24);
             this.birthdayData.TabIndex = 3;
@@ -136,8 +156,9 @@
             // 
             // label6
             // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(271, 162);
+            this.label6.Location = new System.Drawing.Point(163, 344);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(82, 24);
             this.label6.TabIndex = 2;
@@ -145,8 +166,9 @@
             // 
             // emailData
             // 
+            this.emailData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.emailData.AutoSize = true;
-            this.emailData.Location = new System.Drawing.Point(422, 124);
+            this.emailData.Location = new System.Drawing.Point(314, 306);
             this.emailData.Name = "emailData";
             this.emailData.Size = new System.Drawing.Size(60, 24);
             this.emailData.TabIndex = 1;
@@ -154,8 +176,9 @@
             // 
             // label4
             // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(271, 124);
+            this.label4.Location = new System.Drawing.Point(163, 306);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(62, 24);
             this.label4.TabIndex = 0;
@@ -193,6 +216,45 @@
             this.homePageTab.TabIndex = 0;
             this.homePageTab.Text = "Home Page";
             this.homePageTab.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(752, 364);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(97, 24);
+            this.label10.TabIndex = 75;
+            this.label10.Text = "news feed";
+            // 
+            // newsFeedListBox
+            // 
+            this.newsFeedListBox.FormattingEnabled = true;
+            this.newsFeedListBox.ItemHeight = 22;
+            this.newsFeedListBox.Location = new System.Drawing.Point(756, 410);
+            this.newsFeedListBox.Name = "newsFeedListBox";
+            this.newsFeedListBox.Size = new System.Drawing.Size(324, 158);
+            this.newsFeedListBox.TabIndex = 74;
+            // 
+            // buttonSetStatusPost
+            // 
+            this.buttonSetStatusPost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSetStatusPost.Location = new System.Drawing.Point(813, 21);
+            this.buttonSetStatusPost.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSetStatusPost.Name = "buttonSetStatusPost";
+            this.buttonSetStatusPost.Size = new System.Drawing.Size(100, 28);
+            this.buttonSetStatusPost.TabIndex = 73;
+            this.buttonSetStatusPost.Text = "Post";
+            this.buttonSetStatusPost.UseVisualStyleBackColor = true;
+            // 
+            // textBoxStatusPost
+            // 
+            this.textBoxStatusPost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxStatusPost.Location = new System.Drawing.Point(496, 21);
+            this.textBoxStatusPost.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxStatusPost.Name = "textBoxStatusPost";
+            this.textBoxStatusPost.Size = new System.Drawing.Size(293, 28);
+            this.textBoxStatusPost.TabIndex = 72;
             // 
             // prevAlbumPictureButton
             // 
@@ -380,6 +442,7 @@
             // 
             this.tabsController.Controls.Add(this.homePageTab);
             this.tabsController.Controls.Add(this.profileInfo);
+            this.tabsController.Controls.Add(this.Stats);
             this.tabsController.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabsController.Location = new System.Drawing.Point(0, 0);
             this.tabsController.Name = "tabsController";
@@ -387,44 +450,25 @@
             this.tabsController.Size = new System.Drawing.Size(1243, 697);
             this.tabsController.TabIndex = 54;
             // 
-            // textBoxStatusPost
+            // Stats
             // 
-            this.textBoxStatusPost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxStatusPost.Location = new System.Drawing.Point(496, 21);
-            this.textBoxStatusPost.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxStatusPost.Name = "textBoxStatusPost";
-            this.textBoxStatusPost.Size = new System.Drawing.Size(293, 28);
-            this.textBoxStatusPost.TabIndex = 72;
+            this.Stats.Controls.Add(this.imagesListBox);
+            this.Stats.Location = new System.Drawing.Point(4, 31);
+            this.Stats.Name = "Stats";
+            this.Stats.Padding = new System.Windows.Forms.Padding(3);
+            this.Stats.Size = new System.Drawing.Size(1235, 662);
+            this.Stats.TabIndex = 2;
+            this.Stats.Text = "Stats";
+            this.Stats.UseVisualStyleBackColor = true;
             // 
-            // buttonSetStatusPost
+            // imagesListBox
             // 
-            this.buttonSetStatusPost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSetStatusPost.Location = new System.Drawing.Point(813, 21);
-            this.buttonSetStatusPost.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonSetStatusPost.Name = "buttonSetStatusPost";
-            this.buttonSetStatusPost.Size = new System.Drawing.Size(100, 28);
-            this.buttonSetStatusPost.TabIndex = 73;
-            this.buttonSetStatusPost.Text = "Post";
-            this.buttonSetStatusPost.UseVisualStyleBackColor = true;
-            // 
-            // newsFeedListBox
-            // 
-            this.newsFeedListBox.FormattingEnabled = true;
-            this.newsFeedListBox.ItemHeight = 22;
-            this.newsFeedListBox.Location = new System.Drawing.Point(756, 410);
-            this.newsFeedListBox.Name = "newsFeedListBox";
-            this.newsFeedListBox.Size = new System.Drawing.Size(324, 158);
-            this.newsFeedListBox.TabIndex = 74;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(752, 364);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(97, 24);
-            this.label10.TabIndex = 75;
-            this.label10.Text = "news feed";
+            this.imagesListBox.FormattingEnabled = true;
+            this.imagesListBox.ItemHeight = 22;
+            this.imagesListBox.Location = new System.Drawing.Point(111, 104);
+            this.imagesListBox.Name = "imagesListBox";
+            this.imagesListBox.Size = new System.Drawing.Size(341, 202);
+            this.imagesListBox.TabIndex = 0;
             // 
             // FormMain
             // 
@@ -439,6 +483,7 @@
             this.Text = "Facebook App";
             this.profileInfo.ResumeLayout(false);
             this.profileInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ProfilePictureBox)).EndInit();
             this.homePageTab.ResumeLayout(false);
             this.homePageTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.albumPicture)).EndInit();
@@ -446,6 +491,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.favoriteTeamPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
             this.tabsController.ResumeLayout(false);
+            this.Stats.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -486,6 +532,9 @@
         private System.Windows.Forms.TextBox textBoxStatusPost;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ListBox newsFeedListBox;
+        private System.Windows.Forms.TabPage Stats;
+        private System.Windows.Forms.ListBox imagesListBox;
+        private System.Windows.Forms.PictureBox ProfilePictureBox;
     }
 }
 
