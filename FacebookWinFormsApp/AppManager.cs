@@ -34,16 +34,19 @@ namespace BasicFacebookFeatures
                                                              "user_videos"
                                                          };
 
+        public string AppId
+        {
+            get
+            {
+                return r_AppId;
+            }
+        }
 
         public FacebookWrapper.LoginResult LoginResult
         {
             get
             {  
                 return m_LoginResult;
-            }
-            set
-            {
-                m_LoginResult = value;
             }
         }
         public FacebookWrapper.ObjectModel.User LoggedInUser
@@ -80,17 +83,16 @@ namespace BasicFacebookFeatures
             {
                 throw new Exception($"An error occurred during login: {exception.Message}");
             }
-
-
         }
 
-        public string AppId
+        public void Logout()
         {
-            get
-            {
-                return r_AppId;
-            }
+            
+            FacebookService.LogoutWithUI();
+            m_LoginResult = null;
+            m_LoggedInUser = null;
         }
+
 
 
     }

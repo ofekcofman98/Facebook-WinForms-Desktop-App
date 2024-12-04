@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
 using System.Windows.Forms.VisualStyles;
+using CefSharp.DevTools.Fetch;
 
 namespace BasicFacebookFeatures
 {
@@ -36,12 +37,12 @@ namespace BasicFacebookFeatures
 
             if (r_AppManager.LoginResult == null)
             {
-                login();
+                performLogin();
             }
 
         }
         
-        private void login()
+        private void performLogin()
         {
             try
             {
@@ -65,12 +66,8 @@ namespace BasicFacebookFeatures
 
         private void launchFacebook()
         {
-            userNameLabel.Visible = true;
-            pictureBoxProfile.Visible = true;
-            userNameLabel.Text = $"Hello, {r_AppManager.LoggedInUser.FirstName}!";
-            pictureBoxProfile.ImageLocation = r_AppManager.LoggedInUser.PictureNormalURL;
-            likesListBox.Visible = true;
-            friendsList();
+            fetchProfileInfo();
+            fetchLikedPages();
             fetchNewsFeed();
             fetchAlbums();
             fetchFriendList();
@@ -79,10 +76,16 @@ namespace BasicFacebookFeatures
             fetchGroups();
             fetchFavoriteTeams();
             fetchStatusPost();
-
-
         }
 
+        private void fetchProfileInfo()
+        {
+            userNameLabel.Visible = true;
+            pictureBoxProfile.Visible = true;
+            userNameLabel.Text = $"Hello, {r_AppManager.LoggedInUser.FirstName}!";
+            pictureBoxProfile.ImageLocation = r_AppManager.LoggedInUser.PictureNormalURL;
+
+        }
 
         private void fetchNewsFeed()
         {
@@ -226,7 +229,7 @@ namespace BasicFacebookFeatures
             pictureBoxProfile.Visible = false;
         }
 
-        private void friendsList()
+        private void fetchLikedPages()
         {
             likesListBox.Items.Clear(); // Assuming you have a ListBox to display likes
             likesListBox.DisplayMember = "Name";
@@ -256,15 +259,17 @@ namespace BasicFacebookFeatures
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
-            FacebookService.LogoutWithUI();
-            r_AppManager.LoginResult = null;
+            r_AppManager.Logout();
+            performLogout();
+        }
+
+        private void performLogout()
+        {
             buttonLogin.Text = "Login";
             buttonLogin.BackColor = buttonLogout.BackColor;
             buttonLogin.Enabled = true;
             buttonLogout.Enabled = false;
-
             unLaunchFacebook();
-
         }
 
         private void userFavoriteTeamsListBox_SelectedIndexChanged(object sender, EventArgs e)
