@@ -26,8 +26,8 @@ namespace BasicFacebookFeatures
             InitializeComponent();
             r_AppManager = new AppManager();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25; // ????????????????????????
-            tabsController.TabPages.Remove(MyProfileTab); ////
-            tabsController.TabPages.Remove(StatsTab);
+            tabsController.TabPages.Remove(tabMyProfile); ////
+            tabsController.TabPages.Remove(tabStats);
             OnLogin += fetchProfileInfo;
             OnLogin += fetchLikedPages;
             OnLogin += fetchNewsFeed;
@@ -80,33 +80,33 @@ namespace BasicFacebookFeatures
 
         private void fetchProfileInfo()
         {
-            userNameLabel.Visible = true;
+            labelUserName.Visible = true;
             pictureBoxProfile.Visible = true;
-            userNameLabel.Text = $"Hello, {r_AppManager.LoggedInUser.FirstName}!";
+            labelUserName.Text = $"Hello, {r_AppManager.LoggedInUser.FirstName}!";
             pictureBoxProfile.ImageLocation = r_AppManager.LoggedInUser.PictureNormalURL;
 
         }
 
         private void fetchNewsFeed()
         {
-            newsFeedListBox.Items.Clear();
+            listBoxNewsFeed.Items.Clear();
             foreach (Post post in r_AppManager.LoggedInUser.Posts)
             {
                 if (post.Message != null)
                 {
-                    newsFeedListBox.Items.Add(post);
+                    listBoxNewsFeed.Items.Add(post);
                 }
                 else if (post.Caption != null)
                 {
-                    newsFeedListBox.Items.Add(post);
+                    listBoxNewsFeed.Items.Add(post);
                 }
                 else
                 {
-                    newsFeedListBox.Items.Add(string.Format("[{0}]", post.Type));
+                    listBoxNewsFeed.Items.Add(string.Format("[{0}]", post.Type));
                 }
             }
 
-            if (newsFeedListBox.Items.Count == 0)
+            if (listBoxNewsFeed.Items.Count == 0)
             {
                 MessageBox.Show("No news to retrieve :(");
             }
@@ -115,16 +115,16 @@ namespace BasicFacebookFeatures
 
         private void fetchFriendList()
         {
-            userFriendsListBox.Visible = true;
-            userFriendsListBox.Items.Clear();
-            userFriendsListBox.DisplayMember = "Name";
+            listBoxUserFriends.Visible = true;
+            listBoxUserFriends.Items.Clear();
+            listBoxUserFriends.DisplayMember = "Name";
             foreach (User User in r_AppManager.LoggedInUser.Friends)
             {
-                userFriendsListBox.Items.Add(User);
+                listBoxUserFriends.Items.Add(User);
                 //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
-            if (userFriendsListBox.Items.Count == 0)
+            if (listBoxUserFriends.Items.Count == 0)
             {
                 MessageBox.Show("No friends to retrieve :(");
             }
@@ -132,17 +132,17 @@ namespace BasicFacebookFeatures
         }
         private void fetchMyProfile()
         {
-            tabsController.TabPages.Add(MyProfileTab);
-            emailData.Text = r_AppManager.LoggedInUser.Email;
-            birthdayData.Text = r_AppManager.LoggedInUser.Birthday;
-            genderData.Text = r_AppManager.LoggedInUser.Gender.ToString();
-            fullNameData.Text = r_AppManager.LoggedInUser.Name;
-            ProfilePictureBox.Image = r_AppManager.LoggedInUser.ImageLarge;
+            tabsController.TabPages.Add(tabMyProfile);
+            labelEmailData.Text = r_AppManager.LoggedInUser.Email;
+            labelBirthdayData.Text = r_AppManager.LoggedInUser.Birthday;
+            labelGenderData.Text = r_AppManager.LoggedInUser.Gender.ToString();
+            labelFullNameData.Text = r_AppManager.LoggedInUser.Name;
+            MyProfilePictureBox.Image = r_AppManager.LoggedInUser.ImageLarge;
 
         }
         private void fetchStats()
         {
-            tabsController.TabPages.Add(StatsTab);
+            tabsController.TabPages.Add(tabStats);
             r_AppManager.StatCenter = new StatCenter(r_AppManager.LoggedInUser.Posts.ToList());
         }
 
@@ -179,45 +179,45 @@ namespace BasicFacebookFeatures
 
         private void fetchAlbums()
         {
-            userAlbumsListBox.Items.Clear();
-            userAlbumsListBox.DisplayMember = "Name";
+            listBoxUserAlbums.Items.Clear();
+            listBoxUserAlbums.DisplayMember = "Name";
             foreach (Album album in r_AppManager.LoggedInUser.Albums)
             {
-                userAlbumsListBox.Items.Add(album);
+                listBoxUserAlbums.Items.Add(album);
                 //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
-            if (userAlbumsListBox.Items.Count == 0)
+            if (listBoxUserAlbums.Items.Count == 0)
             {
                 MessageBox.Show("No Albums to retrieve :(");
             }
         }
         private void fetchFavoriteTeams()
         {
-            userFavoriteTeamsListBox.Items.Clear();
-            userFavoriteTeamsListBox.DisplayMember = "Name";
+            listBoxUserFavoriteTeams.Items.Clear();
+            listBoxUserFavoriteTeams.DisplayMember = "Name";
             foreach (Page page in r_AppManager.LoggedInUser.FavofriteTeams)
             {
-                userFavoriteTeamsListBox.Items.Add(page);
+                listBoxUserFavoriteTeams.Items.Add(page);
                 //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
-            if (userFavoriteTeamsListBox.Items.Count == 0)
+            if (listBoxUserFavoriteTeams.Items.Count == 0)
             {
                 MessageBox.Show("No Albums to retrieve :(");
             }
         }
         private void fetchGroups()
         {
-            userGroupsListBox.Items.Clear();
-            userGroupsListBox.DisplayMember = "Name";
+            listBoxUserGroups.Items.Clear();
+            listBoxUserGroups.DisplayMember = "Name";
             foreach (Group group in r_AppManager.LoggedInUser.Groups)
             {
-                userGroupsListBox.Items.Add(group);
+                listBoxUserGroups.Items.Add(group);
                 //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
-            if (userGroupsListBox.Items.Count == 0)
+            if (listBoxUserGroups.Items.Count == 0)
             {
                 MessageBox.Show("No Groups to retrieve :(");
             }
@@ -225,16 +225,16 @@ namespace BasicFacebookFeatures
 
         private void unLaunchFacebook()
         {
-            userNameLabel.Visible = false;
+            labelUserName.Visible = false;
             pictureBoxProfile.Visible = false;
         }
 
         private void fetchLikedPages()
 
         {
-            likesListBox.Visible = true;
-            likesListBox.Items.Clear(); // Assuming you have a ListBox to display likes
-            likesListBox.DisplayMember = "Name";
+            listBoxLikes.Visible = true;
+            listBoxLikes.Items.Clear(); // Assuming you have a ListBox to display likes
+            listBoxLikes.DisplayMember = "Name";
 
             try
             {
@@ -242,17 +242,17 @@ namespace BasicFacebookFeatures
                 {
                     foreach (Page likedPage in r_AppManager.LoggedInUser.LikedPages)
                     {
-                        likesListBox.Items.Add(likedPage);
+                        listBoxLikes.Items.Add(likedPage);
                     }
                 }
                 else
                 {
-                    likesListBox.Items.Add("No liked pages to display.");
+                    listBoxLikes.Items.Add("No liked pages to display.");
                 }
             }
             catch (Exception ex)
             {
-                likesListBox.Items.Add("Couldn't fetch liked pages.");
+                listBoxLikes.Items.Add("Couldn't fetch liked pages.");
                 MessageBox.Show($"Error: {ex.Message}");
             }
 
@@ -276,19 +276,19 @@ namespace BasicFacebookFeatures
 
         private void userFavoriteTeamsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (userFavoriteTeamsListBox.SelectedItems.Count == 1)
+            if (listBoxUserFavoriteTeams.SelectedItems.Count == 1)
             {
-                Page selectedTeam = userFavoriteTeamsListBox.SelectedItem as Page;
-                favoriteTeamPictureBox.LoadAsync(selectedTeam.PictureNormalURL);
+                Page selectedTeam = listBoxUserFavoriteTeams.SelectedItem as Page;
+                pictureBoxFavoriteTeam.LoadAsync(selectedTeam.PictureNormalURL);
             }
         }
 
         private void userFriendsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (userFriendsListBox.SelectedItems.Count == 1)
+            if (listBoxUserFriends.SelectedItems.Count == 1)
             {
-                User selectedUser = userFriendsListBox.SelectedItem as User;
-                userFriendPictureBox.LoadAsync(selectedUser.PictureNormalURL);
+                User selectedUser = listBoxUserFriends.SelectedItem as User;
+                pictureBoxUserFriend.LoadAsync(selectedUser.PictureNormalURL);
             }
 
         }
@@ -298,7 +298,7 @@ namespace BasicFacebookFeatures
             if (m_albumPictureCounter +1  <= m_currentAlbum.Count)
             {
                 m_albumPictureCounter++;
-                albumPicture.LoadAsync(getCurrentAlbumPictureUrl());
+                pictureBoxalbumPicture.LoadAsync(getCurrentAlbumPictureUrl());
             }
 
         }
@@ -308,24 +308,29 @@ namespace BasicFacebookFeatures
             if (m_albumPictureCounter - 1 >= 0)
             {
                 m_albumPictureCounter--;
-                albumPicture.LoadAsync(getCurrentAlbumPictureUrl());
+                pictureBoxalbumPicture.LoadAsync(getCurrentAlbumPictureUrl());
             }
 
         }
 
         private void userAlbumsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (userAlbumsListBox.SelectedItems.Count == 1)
+            if (listBoxUserAlbums.SelectedItems.Count == 1)
             {
                 m_albumPictureCounter = 0;
-                m_currentAlbum = userAlbumsListBox.SelectedItem as Album;
-                albumPicture.LoadAsync(getCurrentAlbumPictureUrl());
+                m_currentAlbum = listBoxUserAlbums.SelectedItem as Album;
+                pictureBoxalbumPicture.LoadAsync(getCurrentAlbumPictureUrl());
             }
 
         }
         private String getCurrentAlbumPictureUrl()
         {
             return m_currentAlbum.Photos[m_albumPictureCounter].PictureNormalURL;
+        }
+
+        private void MyProfileTab_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
