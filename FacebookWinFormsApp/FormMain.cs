@@ -16,6 +16,7 @@ namespace BasicFacebookFeatures
     public partial class FormMain : Form
     {
         private readonly AppManager r_AppManager;
+        private Action OnLogin;
 
         private Album m_currentAlbum = null;
         private int m_albumPictureCounter = 0;
@@ -27,6 +28,16 @@ namespace BasicFacebookFeatures
             FacebookWrapper.FacebookService.s_CollectionLimit = 25; // ????????????????????????
             tabsController.TabPages.Remove(MyProfileTab); ////
             tabsController.TabPages.Remove(StatsTab);
+            OnLogin += fetchProfileInfo;
+            OnLogin += fetchLikedPages;
+            OnLogin += fetchNewsFeed;
+            OnLogin += fetchAlbums;
+            OnLogin += fetchFriendList;
+            OnLogin += fetchMyProfile;
+            OnLogin += fetchStats;
+            OnLogin += fetchGroups;
+            OnLogin += fetchFavoriteTeams;
+            OnLogin += fetchStatusPost;
 
         }
 
@@ -48,7 +59,8 @@ namespace BasicFacebookFeatures
             {
                 r_AppManager.Login();
                 UpdateLoginButton();
-                launchFacebook();
+                //launchFacebook();
+                OnLogin?.Invoke();
             }
             catch (Exception e)
             {
@@ -64,19 +76,7 @@ namespace BasicFacebookFeatures
             buttonLogout.Enabled = true;
         }
 
-        private void launchFacebook()
-        {
-            fetchProfileInfo();
-            fetchLikedPages();
-            fetchNewsFeed();
-            fetchAlbums();
-            fetchFriendList();
-            fetchMyProfile();
-            fetchStats();
-            fetchGroups();
-            fetchFavoriteTeams();
-            fetchStatusPost();
-        }
+
 
         private void fetchProfileInfo()
         {
@@ -230,7 +230,9 @@ namespace BasicFacebookFeatures
         }
 
         private void fetchLikedPages()
+
         {
+            likesListBox.Visible = true;
             likesListBox.Items.Clear(); // Assuming you have a ListBox to display likes
             likesListBox.DisplayMember = "Name";
 
