@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.profileInfo = new System.Windows.Forms.TabPage();
+            this.MyProfileTab = new System.Windows.Forms.TabPage();
             this.ProfilePictureBox = new System.Windows.Forms.PictureBox();
             this.fullNameData = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -63,9 +63,9 @@
             this.buttonLogout = new System.Windows.Forms.Button();
             this.buttonLogin = new System.Windows.Forms.Button();
             this.tabsController = new System.Windows.Forms.TabControl();
-            this.Stats = new System.Windows.Forms.TabPage();
+            this.StatsTab = new System.Windows.Forms.TabPage();
             this.imagesListBox = new System.Windows.Forms.ListBox();
-            this.profileInfo.SuspendLayout();
+            this.MyProfileTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ProfilePictureBox)).BeginInit();
             this.homePageTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.albumPicture)).BeginInit();
@@ -73,27 +73,27 @@
             ((System.ComponentModel.ISupportInitialize)(this.favoriteTeamPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.tabsController.SuspendLayout();
-            this.Stats.SuspendLayout();
+            this.StatsTab.SuspendLayout();
             this.SuspendLayout();
             // 
-            // profileInfo
+            // MyProfileTab
             // 
-            this.profileInfo.Controls.Add(this.ProfilePictureBox);
-            this.profileInfo.Controls.Add(this.fullNameData);
-            this.profileInfo.Controls.Add(this.label5);
-            this.profileInfo.Controls.Add(this.genderData);
-            this.profileInfo.Controls.Add(this.label8);
-            this.profileInfo.Controls.Add(this.birthdayData);
-            this.profileInfo.Controls.Add(this.label6);
-            this.profileInfo.Controls.Add(this.emailData);
-            this.profileInfo.Controls.Add(this.label4);
-            this.profileInfo.Location = new System.Drawing.Point(4, 31);
-            this.profileInfo.Name = "profileInfo";
-            this.profileInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.profileInfo.Size = new System.Drawing.Size(1235, 662);
-            this.profileInfo.TabIndex = 1;
-            this.profileInfo.Text = "My Profile";
-            this.profileInfo.UseVisualStyleBackColor = true;
+            this.MyProfileTab.Controls.Add(this.ProfilePictureBox);
+            this.MyProfileTab.Controls.Add(this.fullNameData);
+            this.MyProfileTab.Controls.Add(this.label5);
+            this.MyProfileTab.Controls.Add(this.genderData);
+            this.MyProfileTab.Controls.Add(this.label8);
+            this.MyProfileTab.Controls.Add(this.birthdayData);
+            this.MyProfileTab.Controls.Add(this.label6);
+            this.MyProfileTab.Controls.Add(this.emailData);
+            this.MyProfileTab.Controls.Add(this.label4);
+            this.MyProfileTab.Location = new System.Drawing.Point(4, 31);
+            this.MyProfileTab.Name = "MyProfileTab";
+            this.MyProfileTab.Padding = new System.Windows.Forms.Padding(3);
+            this.MyProfileTab.Size = new System.Drawing.Size(1235, 662);
+            this.MyProfileTab.TabIndex = 1;
+            this.MyProfileTab.Text = "My Profile";
+            this.MyProfileTab.UseVisualStyleBackColor = true;
             // 
             // ProfilePictureBox
             // 
@@ -441,8 +441,8 @@
             // tabsController
             // 
             this.tabsController.Controls.Add(this.homePageTab);
-            this.tabsController.Controls.Add(this.profileInfo);
-            this.tabsController.Controls.Add(this.Stats);
+            this.tabsController.Controls.Add(this.MyProfileTab);
+            this.tabsController.Controls.Add(this.StatsTab);
             this.tabsController.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabsController.Location = new System.Drawing.Point(0, 0);
             this.tabsController.Name = "tabsController";
@@ -450,16 +450,16 @@
             this.tabsController.Size = new System.Drawing.Size(1243, 697);
             this.tabsController.TabIndex = 54;
             // 
-            // Stats
+            // StatsTab
             // 
-            this.Stats.Controls.Add(this.imagesListBox);
-            this.Stats.Location = new System.Drawing.Point(4, 31);
-            this.Stats.Name = "Stats";
-            this.Stats.Padding = new System.Windows.Forms.Padding(3);
-            this.Stats.Size = new System.Drawing.Size(1235, 662);
-            this.Stats.TabIndex = 2;
-            this.Stats.Text = "Stats";
-            this.Stats.UseVisualStyleBackColor = true;
+            this.StatsTab.Controls.Add(this.imagesListBox);
+            this.StatsTab.Location = new System.Drawing.Point(4, 31);
+            this.StatsTab.Name = "StatsTab";
+            this.StatsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.StatsTab.Size = new System.Drawing.Size(1235, 662);
+            this.StatsTab.TabIndex = 2;
+            this.StatsTab.Text = "Stats";
+            this.StatsTab.UseVisualStyleBackColor = true;
             // 
             // imagesListBox
             // 
@@ -481,8 +481,8 @@
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Facebook App";
-            this.profileInfo.ResumeLayout(false);
-            this.profileInfo.PerformLayout();
+            this.MyProfileTab.ResumeLayout(false);
+            this.MyProfileTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ProfilePictureBox)).EndInit();
             this.homePageTab.ResumeLayout(false);
             this.homePageTab.PerformLayout();
@@ -491,14 +491,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.favoriteTeamPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
             this.tabsController.ResumeLayout(false);
-            this.Stats.ResumeLayout(false);
+            this.StatsTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TabPage profileInfo;
+        private System.Windows.Forms.TabPage MyProfileTab;
         private System.Windows.Forms.Label fullNameData;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label genderData;
@@ -532,7 +532,7 @@
         private System.Windows.Forms.TextBox textBoxStatusPost;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ListBox newsFeedListBox;
-        private System.Windows.Forms.TabPage Stats;
+        private System.Windows.Forms.TabPage StatsTab;
         private System.Windows.Forms.ListBox imagesListBox;
         private System.Windows.Forms.PictureBox ProfilePictureBox;
     }

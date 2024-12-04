@@ -15,18 +15,18 @@ namespace BasicFacebookFeatures
     public partial class FormMain : Form
     {
         private readonly AppManager r_AppManager;
+
         private Album m_currentAlbum = null;
         private int m_albumPictureCounter = 0;
-
-        FacebookWrapper.LoginResult m_LoginResult;
-        FacebookWrapper.ObjectModel.User m_LoggedInUser;
         
         public FormMain()
         {
             InitializeComponent();
             r_AppManager = new AppManager();
-            FacebookWrapper.FacebookService.s_CollectionLimit = 25;
-            tabsController.TabPages.Remove(profileInfo);
+            FacebookWrapper.FacebookService.s_CollectionLimit = 25; // ????????????????????????
+            tabsController.TabPages.Remove(MyProfileTab); ////
+            tabsController.TabPages.Remove(StatsTab);
+
         }
 
 
@@ -34,96 +34,48 @@ namespace BasicFacebookFeatures
         {
             Clipboard.SetText("design.patterns");
 
-            if (m_LoginResult == null)
+            if (r_AppManager.LoginResult == null)
             {
                 login();
             }
 
-
-            //try
-            //{
-            //    FacebookService.LogoutWithUI();
-            //    m_LoginResult = null; // Reset the login result
-            //    buttonLogin.Text = "Login";
-            //    buttonLogin.BackColor = buttonLogout.BackColor;
-            //    pictureBoxProfile.Image = null; // Clear profile picture
-            //    buttonLogin.Enabled = true;
-            //    buttonLogout.Enabled = false;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Error during logout: {ex.Message}");
-            //}
-
         }
-        
         
         private void login()
         {
-            string appID = r_AppManager.AppId;// textBoxAppID.Text.Trim();
-
-            if(string.IsNullOrEmpty((appID)))
-            {
-                MessageBox.Show("Please enter a valid App ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; // Exit the method if App ID is invalid.
-            }
-
             try
             {
-                m_LoginResult = FacebookService.Login(
-                    appID,
-                    "email",
-                    "public_profile",
-                    "user_age_range",
-                    "user_birthday",
-                    "user_events",
-                    "user_friends",
-                    "user_gender",
-                    "user_hometown",
-                    "user_likes",
-                    "user_link",
-                    "user_location",
-                    "user_photos",
-                    "user_posts",
-                    "user_videos");
-
-
-                if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
-                {
-                    m_LoggedInUser = m_LoginResult.LoggedInUser;
-                    buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";
-                    buttonLogin.BackColor = Color.LightGreen;
-
-                    buttonLogin.Enabled = false;
-                    buttonLogout.Enabled = true;
-
-                    launchFacebook();
-
-                    r_AppManager.StatCenter = new StatCenter(m_LoggedInUser.Posts.ToList());
-                }
-                else 
-                {
-                    MessageBox.Show($"Login failed: {m_LoginResult.ErrorMessage}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                r_AppManager.Login();
+                UpdateLoginButton();
+                launchFacebook();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                MessageBox.Show($"An error occurred during login: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void UpdateLoginButton()
+        {
+            buttonLogin.Text = $"Logged in as {r_AppManager.LoggedInUser.Name}";
+            buttonLogin.BackColor = Color.LightGreen;
+            buttonLogin.Enabled = false;
+            buttonLogout.Enabled = true;
         }
 
         private void launchFacebook()
         {
             userNameLabel.Visible = true;
             pictureBoxProfile.Visible = true;
-            userNameLabel.Text = $"Hello, {m_LoginResult.LoggedInUser.FirstName}!";
-            pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
+            userNameLabel.Text = $"Hello, {r_AppManager.LoggedInUser.FirstName}!";
+            pictureBoxProfile.ImageLocation = r_AppManager.LoggedInUser.PictureNormalURL;
             likesListBox.Visible = true;
             friendsList();
             fetchNewsFeed();
             fetchAlbums();
             fetchFriendList();
-            fetchProfileInfo();
+            fetchMyProfile();
+            fetchStats();
             fetchGroups();
             fetchFavoriteTeams();
             fetchStatusPost();
@@ -131,10 +83,11 @@ namespace BasicFacebookFeatures
 
         }
 
+
         private void fetchNewsFeed()
         {
             newsFeedListBox.Items.Clear();
-            foreach (Post post in m_LoggedInUser.Posts)
+            foreach (Post post in r_AppManager.LoggedInUser.Posts)
             {
                 if (post.Message != null)
                 {
@@ -162,7 +115,7 @@ namespace BasicFacebookFeatures
             userFriendsListBox.Visible = true;
             userFriendsListBox.Items.Clear();
             userFriendsListBox.DisplayMember = "Name";
-            foreach (User User in m_LoggedInUser.Friends)
+            foreach (User User in r_AppManager.LoggedInUser.Friends)
             {
                 userFriendsListBox.Items.Add(User);
                 //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
@@ -174,15 +127,20 @@ namespace BasicFacebookFeatures
             }
             
         }
-        private void fetchProfileInfo()
+        private void fetchMyProfile()
         {
-            tabsController.TabPages.Add(profileInfo);
-            emailData.Text = m_LoggedInUser.Email;
-            birthdayData.Text = m_LoggedInUser.Birthday;
-            genderData.Text = m_LoggedInUser.Gender.ToString();
-            fullNameData.Text = m_LoggedInUser.Name;
-            ProfilePictureBox.Image = m_LoggedInUser.ImageLarge;
+            tabsController.TabPages.Add(MyProfileTab);
+            emailData.Text = r_AppManager.LoggedInUser.Email;
+            birthdayData.Text = r_AppManager.LoggedInUser.Birthday;
+            genderData.Text = r_AppManager.LoggedInUser.Gender.ToString();
+            fullNameData.Text = r_AppManager.LoggedInUser.Name;
+            ProfilePictureBox.Image = r_AppManager.LoggedInUser.ImageLarge;
 
+        }
+        private void fetchStats()
+        {
+            tabsController.TabPages.Add(StatsTab);
+            r_AppManager.StatCenter = new StatCenter(r_AppManager.LoggedInUser.Posts.ToList());
         }
 
         private void fetchStatusPost()
@@ -190,16 +148,16 @@ namespace BasicFacebookFeatures
             textBoxStatusPost.Click += textBoxStatus_Click;
             textBoxStatusPost.Leave += textBoxStatus_Leave;
 
-            if (m_LoggedInUser != null)
+            if (r_AppManager.LoggedInUser != null)
             {
-                textBoxStatusPost.Text = $"What's on your mind, {m_LoggedInUser.FirstName}";
+                textBoxStatusPost.Text = $"What's on your mind, {r_AppManager.LoggedInUser.FirstName}";
                 textBoxStatusPost.ForeColor = Color.Gray;
             }
         }
 
         private void textBoxStatus_Click(object sender, EventArgs e)
         {
-            if ( m_LoggedInUser != null)
+            if ( r_AppManager.LoggedInUser != null)
             {
                 textBoxStatusPost.Text = ""; 
                 textBoxStatusPost.ForeColor = Color.Black;
@@ -210,7 +168,7 @@ namespace BasicFacebookFeatures
         {
             if (string.IsNullOrWhiteSpace(textBoxStatusPost.Text))
             {
-                textBoxStatusPost.Text = $"What's on your mind, {m_LoggedInUser.Name}?";
+                textBoxStatusPost.Text = $"What's on your mind, {r_AppManager.LoggedInUser.Name}?";
                 textBoxStatusPost.ForeColor = Color.Gray; 
             }
         }
@@ -220,7 +178,7 @@ namespace BasicFacebookFeatures
         {
             userAlbumsListBox.Items.Clear();
             userAlbumsListBox.DisplayMember = "Name";
-            foreach (Album album in m_LoggedInUser.Albums)
+            foreach (Album album in r_AppManager.LoggedInUser.Albums)
             {
                 userAlbumsListBox.Items.Add(album);
                 //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
@@ -235,7 +193,7 @@ namespace BasicFacebookFeatures
         {
             userFavoriteTeamsListBox.Items.Clear();
             userFavoriteTeamsListBox.DisplayMember = "Name";
-            foreach (Page page in m_LoggedInUser.FavofriteTeams)
+            foreach (Page page in r_AppManager.LoggedInUser.FavofriteTeams)
             {
                 userFavoriteTeamsListBox.Items.Add(page);
                 //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
@@ -250,7 +208,7 @@ namespace BasicFacebookFeatures
         {
             userGroupsListBox.Items.Clear();
             userGroupsListBox.DisplayMember = "Name";
-            foreach (Group group in m_LoggedInUser.Groups)
+            foreach (Group group in r_AppManager.LoggedInUser.Groups)
             {
                 userGroupsListBox.Items.Add(group);
                 //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
@@ -275,9 +233,9 @@ namespace BasicFacebookFeatures
 
             try
             {
-                if (m_LoginResult.LoggedInUser.LikedPages != null && m_LoginResult.LoggedInUser.LikedPages.Count > 0)
+                if (r_AppManager.LoggedInUser.LikedPages != null && r_AppManager.LoggedInUser.LikedPages.Count > 0)
                 {
-                    foreach (Page likedPage in m_LoginResult.LoggedInUser.LikedPages)
+                    foreach (Page likedPage in r_AppManager.LoggedInUser.LikedPages)
                     {
                         likesListBox.Items.Add(likedPage);
                     }
@@ -299,7 +257,7 @@ namespace BasicFacebookFeatures
         private void buttonLogout_Click(object sender, EventArgs e)
         {
             FacebookService.LogoutWithUI();
-            m_LoginResult = null;
+            r_AppManager.LoginResult = null;
             buttonLogin.Text = "Login";
             buttonLogin.BackColor = buttonLogout.BackColor;
             buttonLogin.Enabled = true;
