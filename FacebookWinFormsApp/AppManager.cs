@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FacebookWrapper;
+using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
@@ -15,7 +16,7 @@ namespace BasicFacebookFeatures
 
         private FacebookWrapper.LoginResult m_LoginResult;
         private FacebookWrapper.ObjectModel.User m_LoggedInUser;
-        public StatCenter StatCenter { get; set; }
+        public ActivityStats StatCenter { get; set; }
         private readonly string[] r_Permssions = new string[]
                                                          {
                                                              "email",
@@ -29,6 +30,7 @@ namespace BasicFacebookFeatures
                                                              "user_likes",
                                                              "user_link",
                                                              "user_location",
+                                                             //"user_reactions",//
                                                              "user_photos",
                                                              "user_posts",
                                                              "user_videos"
@@ -62,7 +64,7 @@ namespace BasicFacebookFeatures
         {
             if (string.IsNullOrEmpty((r_AppId)))
             {
-                throw new Exception("Please enter a valid App ID."); // ??????
+                throw new Exception("Please enter a valid App ID."); 
             }
 
             m_LoginResult = FacebookService.Login(r_AppId, r_Permssions);
@@ -84,6 +86,47 @@ namespace BasicFacebookFeatures
                 throw new Exception($"An error occurred during login: {exception.Message}");
             }
         }
+
+        public List<Photo> GetPhotos()
+        {
+            List<Photo> photos = new List<Photo>();
+            if(m_LoggedInUser.Albums != null)
+            {
+                foreach(Album album in m_LoggedInUser.Albums)
+                {
+                    if(album.Photos != null)
+                    {
+                        foreach(Photo photo in album.Photos)
+                        {
+                            photos.Add(photo);
+                        }
+                    }
+                }
+            }
+
+            return photos;
+        }
+
+        //public Dictionary<string, int> FetchPhotoLikesSummary(List<Album> albums)
+        //{
+        //    var photoLikesSummary = new Dictionary<string, int>();
+
+        //    foreach (Album album in albums)
+        //    {
+        //        if (album.Photos != null)
+        //        {
+        //            foreach (Photo photo in album.Photos)
+        //            {
+        //                if (photo.
+        //                {
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return photoLikesSummary;
+        //}
+
 
         public void Logout()
         {

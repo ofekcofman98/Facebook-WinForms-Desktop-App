@@ -10,6 +10,7 @@ using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
 using System.Windows.Forms.VisualStyles;
 using CefSharp.DevTools.Fetch;
+using static System.Windows.Forms.AxHost;
 
 namespace BasicFacebookFeatures
 {
@@ -142,15 +143,32 @@ namespace BasicFacebookFeatures
         }
         private void fetchStats()
         {
+            List<Post> posts = r_AppManager.LoggedInUser.Posts.ToList();
+            List<Photo> photos = r_AppManager.GetPhotos();
             tabsController.TabPages.Add(tabStats);
-            r_AppManager.StatCenter = new StatCenter(r_AppManager.LoggedInUser.Posts.ToList());
-        }
+            r_AppManager.StatCenter = new ActivityStats(posts, photos);
 
+            foreach (Post post in posts)
+            {
+                if (post.CreatedTime.HasValue)
+                {
+                    DateTime creationTime = post.CreatedTime.Value;
+                    listBoxLikerStats.Items.Add($"year: {creationTime.Year}, month: {creationTime.Month}, hour: {creationTime.Hour}");
+                }
+            }
+
+            //List<StatCenter.likerStat> likerStats = r_AppManager.StatCenter.CalculateLikes();
+            //listBoxLikerStats.Items.Clear();
+
+            //foreach(StatCenter.likerStat stat in likerStats)
+            //{
+            //    listBoxLikerStats.Items.Add($"Name: {stat.Name}, Posts Liked: {stat.PostsLikedNumber}, Photos Liked: {stat.PhotosLikedNumber}, Total Likes: {stat.TotalLikes}");
+            //}
+        }
         private void fetchStatusPost()
         {
             textBoxStatusPost.Click += textBoxStatus_Click;
             textBoxStatusPost.Leave += textBoxStatus_Leave;
-
             if (r_AppManager.LoggedInUser != null)
             {
                 textBoxStatusPost.Text = $"What's on your mind, {r_AppManager.LoggedInUser.FirstName}";
