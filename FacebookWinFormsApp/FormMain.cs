@@ -35,12 +35,14 @@ namespace BasicFacebookFeatures
         {
             InitializeComponent();
             r_AppManager = new AppManager();
-            FacebookWrapper.FacebookService.s_CollectionLimit = 25; // ????????????????????????
-            tabsController.TabPages.Remove(tabMyProfile); ////
+            FacebookWrapper.FacebookService.s_CollectionLimit = 25;
+            tabsController.TabPages.Remove(tabMyProfile);
             tabsController.TabPages.Remove(tabStats);
+
+            tabsController.SelectedIndexChanged += tabsController_SelectedIndexChanged;
+
             OnLogin += fetchProfileInfo;
             OnLogin += fetchLikedPages;
-            OnLogin += fetchNewsFeed;
             OnLogin += fetchAlbums;
             OnLogin += fetchFriendList;
             OnLogin += fetchMyProfile;
@@ -48,6 +50,21 @@ namespace BasicFacebookFeatures
             OnLogin += fetchGroups;
             OnLogin += fetchFavoriteTeams;
             OnLogin += fetchStatusPost;
+        }
+
+        private void tabsController_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabsController.SelectedTab == tabStats || tabsController.SelectedTab == tabHomePage || tabsController.SelectedTab == tabMyProfile)
+            {
+                panelGlobal.Visible = true;
+                buttonLogin.Visible = true;
+                buttonLogin.BringToFront();
+                buttonLogout.Visible = true;
+            }
+            else
+            {
+                panelGlobal.Visible = false;
+            }
 
         }
 
@@ -97,31 +114,6 @@ namespace BasicFacebookFeatures
 
         }
 
-        private void fetchNewsFeed()
-        {
-            listBoxNewsFeed.Items.Clear();
-            foreach (Post post in r_AppManager.LoggedInUser.Posts)
-            {
-                if (post.Message != null)
-                {
-                    listBoxNewsFeed.Items.Add(post);
-                }
-                else if (post.Caption != null)
-                {
-                    listBoxNewsFeed.Items.Add(post);
-                }
-                else
-                {
-                    listBoxNewsFeed.Items.Add(string.Format("[{0}]", post.Type));
-                }
-            }
-
-            if (listBoxNewsFeed.Items.Count == 0)
-            {
-                MessageBox.Show("No news to retrieve :(");
-            }
-
-        }
 
         private void fetchFriendList()
         {
@@ -131,7 +123,6 @@ namespace BasicFacebookFeatures
             foreach (User User in r_AppManager.LoggedInUser.Friends)
             {
                 listBoxUserFriends.Items.Add(User);
-                //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
             if (listBoxUserFriends.Items.Count == 0)
@@ -168,6 +159,7 @@ namespace BasicFacebookFeatures
             listBoxHour.Items.Clear();
 
             displayYearCounts();
+            displayHoursCounts();
         }
 
         private void displayYearCounts()
@@ -179,12 +171,22 @@ namespace BasicFacebookFeatures
             }
         }
 
+        private void displayHoursCounts()
+        {
+            List<KeyValuePair<int, int>> hoursCounts = r_AppManager.ActivityCenter.GetHourCounts();
+            foreach (KeyValuePair<int, int> hour in hoursCounts)
+            {
+                listBoxHour.Items.Add($"{hour.Key}: {hour.Value} posts/photos");
+            }
+        }
+
+
         private void listBoxYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            listBoxHour.Items.Clear();
            if(listBoxYear.SelectedItem != null)
            {
                int selectedYear = int.Parse(listBoxYear.SelectedItem.ToString().Split(':')[0]);
+               labelDateOfPosts.Text = $"Your posts from {selectedYear}";
                filterPostsByTime(i_Year: selectedYear);
 
                List<KeyValuePair<int, int>> monthCounts = r_AppManager.ActivityCenter.GetMonthCounts(selectedYear);
@@ -192,7 +194,7 @@ namespace BasicFacebookFeatures
 
                foreach (KeyValuePair<int, int> month in monthCounts)
                {
-                   listBoxMonth.Items.Add($"{month.Key}: {month.Value} posts/photos");
+                   listBoxMonth.Items.Add($"{r_Months[month.Key-1]}: {month.Value} posts/photos");
                }
            }
         }
@@ -203,28 +205,20 @@ namespace BasicFacebookFeatures
             if (listBoxYear.SelectedItem != null && listBoxMonth.SelectedItem != null)
             {
                 int selectedYear = int.Parse(listBoxYear.SelectedItem.ToString().Split(':')[0]);
-                int selectedMonth = int.Parse(listBoxMonth.SelectedItem.ToString().Split(':')[0]);
+                string selectedMonthName = listBoxMonth.SelectedItem.ToString().Split(':')[0];
+                int selectedMonth = Array.IndexOf(r_Months, selectedMonthName) + 1; ;
+
+                labelDateOfPosts.Text = $"Your posts from {selectedMonthName} {selectedYear}";
                 filterPostsByTime(i_Year: selectedYear, i_Month: selectedMonth);
-
-                List<KeyValuePair<int, int>> hourCounts = r_AppManager.ActivityCenter.GetHourCounts(selectedYear, selectedMonth);
-                listBoxHour.Items.Clear();
-
-                foreach (KeyValuePair<int, int> hour in hourCounts)
-                {
-                    listBoxHour.Items.Add($"{hour.Key}: {hour.Value} posts/photos");
-                }
             }
         }
 
         private void listBoxHour_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBoxYear.SelectedItem != null && listBoxMonth.SelectedItem != null && listBoxHour.SelectedItem != null)
+            if(listBoxHour.SelectedItem != null)
             {
-                int selectedYear = int.Parse(listBoxYear.SelectedItem.ToString().Split(':')[0]);
-                int selectedMonth = int.Parse(listBoxMonth.SelectedItem.ToString().Split(':')[0]);
                 int selectedHour = int.Parse(listBoxHour.SelectedItem.ToString().Split(':')[0]);
-
-                filterPostsByTime(i_Year: selectedYear, i_Month: selectedMonth, i_Hour: selectedHour);
+                filterPostsByTime(i_Hour: selectedHour);
             }
         }
 
@@ -271,7 +265,6 @@ namespace BasicFacebookFeatures
             }
         }
 
-
         private void fetchStatusPost()
         {
             textBoxStatusPost.Click += textBoxStatus_Click;
@@ -309,7 +302,6 @@ namespace BasicFacebookFeatures
             foreach (FacebookWrapper.ObjectModel.Album album in r_AppManager.LoggedInUser.Albums)
             {
                 listBoxUserAlbums.Items.Add(album);
-                //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
             if (listBoxUserAlbums.Items.Count == 0)
@@ -324,7 +316,6 @@ namespace BasicFacebookFeatures
             foreach (Page page in r_AppManager.LoggedInUser.FavofriteTeams)
             {
                 listBoxUserFavoriteTeams.Items.Add(page);
-                //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
             if (listBoxUserFavoriteTeams.Items.Count == 0)
@@ -339,7 +330,6 @@ namespace BasicFacebookFeatures
             foreach (Group group in r_AppManager.LoggedInUser.Groups)
             {
                 listBoxUserGroups.Items.Add(group);
-                //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
             if (listBoxUserGroups.Items.Count == 0)
@@ -358,7 +348,7 @@ namespace BasicFacebookFeatures
 
         {
             listBoxLikes.Visible = true;
-            listBoxLikes.Items.Clear(); // Assuming you have a ListBox to display likes
+            listBoxLikes.Items.Clear();
             listBoxLikes.DisplayMember = "Name";
 
             try
@@ -418,41 +408,16 @@ namespace BasicFacebookFeatures
 
         }
 
-        private void nextAlbumPictureButton_Click(object sender, EventArgs e)
-        {
-            if (m_albumPictureCounter +1  <= m_currentAlbum.Count)
-            {
-                m_albumPictureCounter++;
-                pictureBoxalbumPicture.LoadAsync(getCurrentAlbumPictureUrl());
-            }
-
-        }
-
-        private void prevAlbumPictureButton_Click(object sender, EventArgs e)
-        {
-            if (m_albumPictureCounter - 1 >= 0)
-            {
-                m_albumPictureCounter--;
-                pictureBoxalbumPicture.LoadAsync(getCurrentAlbumPictureUrl());
-            }
-
-        }
-
         private void userAlbumsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBoxUserAlbums.SelectedItems.Count == 1)
             {
                 m_albumPictureCounter = 0;
                 m_currentAlbum = listBoxUserAlbums.SelectedItem as FacebookWrapper.ObjectModel.Album;
-                pictureBoxalbumPicture.LoadAsync(getCurrentAlbumPictureUrl());
+                albumUserAlbums.SetPhotos(m_currentAlbum.Photos.ToList());
             }
 
         }
-        private String getCurrentAlbumPictureUrl()
-        {
-            return m_currentAlbum.Photos[m_albumPictureCounter].PictureNormalURL;
-        }
-
         private void MyProfileTab_Click(object sender, EventArgs e)
         {
 

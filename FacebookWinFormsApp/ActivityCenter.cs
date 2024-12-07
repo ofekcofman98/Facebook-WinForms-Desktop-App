@@ -119,7 +119,7 @@ namespace BasicFacebookFeatures
         }
 
 
-        public List<KeyValuePair<int, int>> GetHourCounts(int i_Year, int i_Month)
+        public List<KeyValuePair<int, int>> GetHourCounts()
         {
             Dictionary<int, int> hourCounts = new Dictionary<int, int>();
 
@@ -127,37 +127,31 @@ namespace BasicFacebookFeatures
             {
                 if(post.CreatedTime.HasValue)
                 {
-                    DateTime createdTime = post.CreatedTime.Value;
-                    if(createdTime.Year == i_Year && createdTime.Month == i_Month)
+                    int hour = post.CreatedTime.Value.Hour;
+                    if(!hourCounts.ContainsKey(hour))
                     {
-                        if(!hourCounts.ContainsKey(createdTime.Hour))
-                        {
-                            hourCounts[createdTime.Hour] = 0;
-                        }
-
-                        hourCounts[createdTime.Hour]++;
+                        hourCounts[hour] = 0;
                     }
+
+                    hourCounts[hour]++;
                 }
             }
 
-            foreach(Photo photo in r_UserPhotos)
+            foreach (Photo photo in r_UserPhotos)
             {
-                if(photo.CreatedTime.HasValue)
+                if (photo.CreatedTime.HasValue)
                 {
-                    DateTime createdTime = photo.CreatedTime.Value;
-                    if(createdTime.Year == i_Year && createdTime.Month == i_Month)
+                    int hour = photo.CreatedTime.Value.Hour;
+                    if (!hourCounts.ContainsKey(hour))
                     {
-                        if(!hourCounts.ContainsKey(createdTime.Hour))
-                        {
-                            hourCounts[createdTime.Hour] = 0;
-                        }
-
-                        hourCounts[createdTime.Hour]++;
+                        hourCounts[hour] = 0;
                     }
+
+                    hourCounts[hour]++;
                 }
             }
 
-            return hourCounts.OrderByDescending(pair => pair.Value).ToList();
+            return hourCounts.OrderByDescending(pair => (int)pair.Key).ToList();
         }
 
 
