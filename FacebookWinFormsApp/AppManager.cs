@@ -12,11 +12,9 @@ namespace BasicFacebookFeatures
     internal class AppManager
     {
         private readonly string r_AppId = "945333600988492";
-        //LoginResult result = FacebookWrapper.FBService.Login("272862089537667",
-
         private FacebookWrapper.LoginResult m_LoginResult;
         private FacebookWrapper.ObjectModel.User m_LoggedInUser;
-        public ActivityStats StatCenter { get; set; }
+        public ActivityCenter ActivityCenter { get; set; }
         private readonly string[] r_Permssions = new string[]
                                                          {
                                                              "email",
@@ -35,6 +33,10 @@ namespace BasicFacebookFeatures
                                                              "user_posts",
                                                              "user_videos"
                                                          };
+
+        public List<Post> UserPosts { get; set; }
+        public List<Photo> UserPhotos { get; set; }
+
 
         public string AppId
         {
@@ -74,6 +76,8 @@ namespace BasicFacebookFeatures
                 if(string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
                 {
                     m_LoggedInUser = m_LoginResult.LoggedInUser;
+                    getUserData();
+                    ActivityCenter = new ActivityCenter(this);
                 }
                 else
                 {
@@ -87,12 +91,18 @@ namespace BasicFacebookFeatures
             }
         }
 
+        private void getUserData()
+        {
+            UserPosts = m_LoggedInUser.Posts.ToList();
+            UserPhotos = GetPhotos();
+        }
+
         public List<Photo> GetPhotos()
         {
             List<Photo> photos = new List<Photo>();
             if(m_LoggedInUser.Albums != null)
             {
-                foreach(Album album in m_LoggedInUser.Albums)
+                foreach(FacebookWrapper.ObjectModel.Album album in m_LoggedInUser.Albums)
                 {
                     if(album.Photos != null)
                     {
@@ -107,33 +117,14 @@ namespace BasicFacebookFeatures
             return photos;
         }
 
-        //public Dictionary<string, int> FetchPhotoLikesSummary(List<Album> albums)
-        //{
-        //    var photoLikesSummary = new Dictionary<string, int>();
-
-        //    foreach (Album album in albums)
-        //    {
-        //        if (album.Photos != null)
-        //        {
-        //            foreach (Photo photo in album.Photos)
-        //            {
-        //                if (photo.
-        //                {
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return photoLikesSummary;
-        //}
-
-
         public void Logout()
         {
             
             FacebookService.LogoutWithUI();
             m_LoginResult = null;
             m_LoggedInUser = null;
+            UserPhotos = null;
+            UserPosts = null;
         }
 
 

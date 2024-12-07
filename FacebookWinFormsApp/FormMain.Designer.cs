@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabMyProfile = new System.Windows.Forms.TabPage();
-            this.MyProfilePictureBox = new System.Windows.Forms.PictureBox();
+            this.PictureBoxMyProfile = new System.Windows.Forms.PictureBox();
             this.labelFullNameData = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.labelGenderData = new System.Windows.Forms.Label();
@@ -64,10 +65,16 @@
             this.buttonLogin = new System.Windows.Forms.Button();
             this.tabsController = new System.Windows.Forms.TabControl();
             this.tabStats = new System.Windows.Forms.TabPage();
-            this.listBoxLikerStats = new System.Windows.Forms.ListBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.albumFilteredPhotos = new BasicFacebookFeatures.Album();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.listBoxFilteredPosts = new System.Windows.Forms.ListBox();
+            this.listBoxHour = new System.Windows.Forms.ListBox();
+            this.listBoxMonth = new System.Windows.Forms.ListBox();
+            this.listBoxYear = new System.Windows.Forms.ListBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tabMyProfile.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MyProfilePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMyProfile)).BeginInit();
             this.tabHomePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxalbumPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUserFriend)).BeginInit();
@@ -79,7 +86,7 @@
             // 
             // tabMyProfile
             // 
-            this.tabMyProfile.Controls.Add(this.MyProfilePictureBox);
+            this.tabMyProfile.Controls.Add(this.PictureBoxMyProfile);
             this.tabMyProfile.Controls.Add(this.labelFullNameData);
             this.tabMyProfile.Controls.Add(this.label5);
             this.tabMyProfile.Controls.Add(this.labelGenderData);
@@ -97,14 +104,14 @@
             this.tabMyProfile.UseVisualStyleBackColor = true;
             this.tabMyProfile.Click += new System.EventHandler(this.MyProfileTab_Click);
             // 
-            // MyProfilePictureBox
+            // PictureBoxMyProfile
             // 
-            this.MyProfilePictureBox.Location = new System.Drawing.Point(167, 21);
-            this.MyProfilePictureBox.Name = "MyProfilePictureBox";
-            this.MyProfilePictureBox.Size = new System.Drawing.Size(207, 234);
-            this.MyProfilePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.MyProfilePictureBox.TabIndex = 8;
-            this.MyProfilePictureBox.TabStop = false;
+            this.PictureBoxMyProfile.Location = new System.Drawing.Point(167, 21);
+            this.PictureBoxMyProfile.Name = "PictureBoxMyProfile";
+            this.PictureBoxMyProfile.Size = new System.Drawing.Size(207, 234);
+            this.PictureBoxMyProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.PictureBoxMyProfile.TabIndex = 8;
+            this.PictureBoxMyProfile.TabStop = false;
             // 
             // labelFullNameData
             // 
@@ -454,8 +461,13 @@
             // 
             // tabStats
             // 
-            this.tabStats.Controls.Add(this.listBox1);
-            this.tabStats.Controls.Add(this.listBoxLikerStats);
+            this.tabStats.Controls.Add(this.albumFilteredPhotos);
+            this.tabStats.Controls.Add(this.label12);
+            this.tabStats.Controls.Add(this.label11);
+            this.tabStats.Controls.Add(this.listBoxFilteredPosts);
+            this.tabStats.Controls.Add(this.listBoxHour);
+            this.tabStats.Controls.Add(this.listBoxMonth);
+            this.tabStats.Controls.Add(this.listBoxYear);
             this.tabStats.Location = new System.Drawing.Point(4, 31);
             this.tabStats.Name = "tabStats";
             this.tabStats.Padding = new System.Windows.Forms.Padding(3);
@@ -464,23 +476,78 @@
             this.tabStats.Text = "Stats";
             this.tabStats.UseVisualStyleBackColor = true;
             // 
-            // listBoxLikerStats
+            // albumFilteredPhotos
             // 
-            this.listBoxLikerStats.FormattingEnabled = true;
-            this.listBoxLikerStats.ItemHeight = 22;
-            this.listBoxLikerStats.Location = new System.Drawing.Point(111, 104);
-            this.listBoxLikerStats.Name = "listBoxLikerStats";
-            this.listBoxLikerStats.Size = new System.Drawing.Size(341, 180);
-            this.listBoxLikerStats.TabIndex = 0;
+            this.albumFilteredPhotos.Location = new System.Drawing.Point(301, 319);
+            this.albumFilteredPhotos.Margin = new System.Windows.Forms.Padding(4);
+            this.albumFilteredPhotos.Name = "albumFilteredPhotos";
+            this.albumFilteredPhotos.Size = new System.Drawing.Size(156, 185);
+            this.albumFilteredPhotos.TabIndex = 74;
             // 
-            // listBox1
+            // label12
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 22;
-            this.listBox1.Location = new System.Drawing.Point(513, 104);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(341, 180);
-            this.listBox1.TabIndex = 1;
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(394, 40);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(229, 38);
+            this.label12.TabIndex = 6;
+            this.label12.Text = "Activity Center";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(54, 102);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(164, 24);
+            this.label11.TabIndex = 5;
+            this.label11.Text = "Your busiest years";
+            // 
+            // listBoxFilteredPosts
+            // 
+            this.listBoxFilteredPosts.FormattingEnabled = true;
+            this.listBoxFilteredPosts.ItemHeight = 22;
+            this.listBoxFilteredPosts.Location = new System.Drawing.Point(58, 319);
+            this.listBoxFilteredPosts.Name = "listBoxFilteredPosts";
+            this.listBoxFilteredPosts.Size = new System.Drawing.Size(212, 158);
+            this.listBoxFilteredPosts.TabIndex = 4;
+            this.listBoxFilteredPosts.SelectedIndexChanged += new System.EventHandler(this.listBoxFilteredPosts_SelectedIndexChanged);
+            // 
+            // listBoxHour
+            // 
+            this.listBoxHour.FormattingEnabled = true;
+            this.listBoxHour.ItemHeight = 22;
+            this.listBoxHour.Location = new System.Drawing.Point(539, 140);
+            this.listBoxHour.Name = "listBoxHour";
+            this.listBoxHour.Size = new System.Drawing.Size(212, 114);
+            this.listBoxHour.TabIndex = 3;
+            this.listBoxHour.SelectedIndexChanged += new System.EventHandler(this.listBoxHour_SelectedIndexChanged);
+            // 
+            // listBoxMonth
+            // 
+            this.listBoxMonth.FormattingEnabled = true;
+            this.listBoxMonth.ItemHeight = 22;
+            this.listBoxMonth.Location = new System.Drawing.Point(301, 140);
+            this.listBoxMonth.Name = "listBoxMonth";
+            this.listBoxMonth.Size = new System.Drawing.Size(212, 114);
+            this.listBoxMonth.TabIndex = 2;
+            this.listBoxMonth.SelectedIndexChanged += new System.EventHandler(this.listBoxMonth_SelectedIndexChanged);
+            // 
+            // listBoxYear
+            // 
+            this.listBoxYear.FormattingEnabled = true;
+            this.listBoxYear.ItemHeight = 22;
+            this.listBoxYear.Location = new System.Drawing.Point(58, 140);
+            this.listBoxYear.Name = "listBoxYear";
+            this.listBoxYear.Size = new System.Drawing.Size(212, 114);
+            this.listBoxYear.TabIndex = 1;
+            this.listBoxYear.SelectedIndexChanged += new System.EventHandler(this.listBoxYear_SelectedIndexChanged);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // FormMain
             // 
@@ -495,7 +562,7 @@
             this.Text = "Facebook App";
             this.tabMyProfile.ResumeLayout(false);
             this.tabMyProfile.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MyProfilePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMyProfile)).EndInit();
             this.tabHomePage.ResumeLayout(false);
             this.tabHomePage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxalbumPicture)).EndInit();
@@ -504,6 +571,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
             this.tabsController.ResumeLayout(false);
             this.tabStats.ResumeLayout(false);
+            this.tabStats.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -545,9 +613,15 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ListBox listBoxNewsFeed;
         private System.Windows.Forms.TabPage tabStats;
-        private System.Windows.Forms.ListBox listBoxLikerStats;
-        private System.Windows.Forms.PictureBox MyProfilePictureBox;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.PictureBox PictureBoxMyProfile;
+        private System.Windows.Forms.ListBox listBoxYear;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ListBox listBoxHour;
+        private System.Windows.Forms.ListBox listBoxMonth;
+        private System.Windows.Forms.ListBox listBoxFilteredPosts;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private Album albumFilteredPhotos;
     }
 }
 
