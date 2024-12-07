@@ -332,5 +332,10 @@ namespace BasicFacebookFeatures
         {
 
         }
+
+        private void labelUserName_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -406,6 +406,7 @@
             this.labelUserName.TabIndex = 56;
             this.labelUserName.Text = "Hello, ";
             this.labelUserName.Visible = false;
+            this.labelUserName.Click += new System.EventHandler(this.labelUserName_Click);
             // 
             // pictureBoxProfile
             // 
