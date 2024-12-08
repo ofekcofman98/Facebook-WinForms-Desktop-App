@@ -79,6 +79,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppManager.cs" />
+    <Compile Include="Filterable.cs" />
+    <Compile Include="FilterAge.cs" />
+    <Compile Include="FilterGender.cs" />
+    <Compile Include="FilterLikedPages.cs" />
+    <Compile Include="FilterRelationshipStatus.cs" />
     <Compile Include="FindFriends.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
