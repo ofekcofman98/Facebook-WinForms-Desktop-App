@@ -15,7 +15,7 @@ namespace BasicFacebookFeatures
         private User m_FriendUser;
 
 
-        public HashSet<User> getFriendUserCommmonFriendsPages(List<Filterable> i_filters, User i_SelectedFriendToGetFriendsFrom)
+        public HashSet<User> getFriendUserCommmonFriendsPages(List<IFilterable> i_filters, User i_SelectedFriendToGetFriendsFrom)
         {
             HashSet<User> filterdFriends = new HashSet<User>(i_SelectedFriendToGetFriendsFrom.Friends);
 
@@ -24,7 +24,7 @@ namespace BasicFacebookFeatures
             foreach (User user in filterdFriends)
             {
                 // Check each filter for the current user
-                foreach (Filterable filterable in i_filters)
+                foreach (IFilterable filterable in i_filters)
                 {
                     if (!filterable.filter(user))
                     {

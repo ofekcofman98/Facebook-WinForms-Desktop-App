@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures
 {
-    public class FilterLikedPages : Filterable
+    public class FilterLikedPages : IFilterable
     {
         private HashSet<String> m_LikedPagesId;
         public FilterLikedPages(HashSet<String> i_LikedPagesId)

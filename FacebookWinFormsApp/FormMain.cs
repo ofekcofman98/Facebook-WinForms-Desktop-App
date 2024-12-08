@@ -56,7 +56,7 @@ namespace BasicFacebookFeatures
             OnLogin += fetchAlbums;
             OnLogin += fetchFriendList;
             OnLogin += fetchMyProfile;
-            OnLogin += fetchStats;
+            OnLogin += fetchActivityCenter;
             OnLogin += fetchFriendsLookupPage;
             OnLogin += fetchGroups;
             OnLogin += fetchFavoriteTeams;
@@ -243,19 +243,22 @@ namespace BasicFacebookFeatures
             PictureBoxMyProfile.Image = r_AppManager.LoggedInUser.ImageLarge;
 
         }
-        private void fetchStats()
+        private void fetchActivityCenter()
         {
             listBoxFilteredPosts.Visible = true;
             listBoxFilteredPosts.Items.Clear();
 
             listBoxYear.Visible = true;
             listBoxYear.Items.Clear();
+            populateSortComboBox(comboBoxYearSort, "Year");
 
             listBoxMonth.Visible = true;
             listBoxMonth.Items.Clear();
+            populateSortComboBox(comboBoxMonthSort, "Month");
 
             listBoxHour.Visible = true;
             listBoxHour.Items.Clear();
+            populateSortComboBox(comboBoxHourSort, "Hour");
 
             displayYearCounts();
             displayHoursCounts();
@@ -279,6 +282,14 @@ namespace BasicFacebookFeatures
             }
         }
 
+
+        private void populateSortComboBox(ComboBox i_ComboBox, string i_TimeType)
+        {
+            i_ComboBox.Items.Add($"Sort by {i_TimeType} Ascending");
+            i_ComboBox.Items.Add($"Sort by {i_TimeType} Descending");
+            i_ComboBox.Items.Add("Sort by Count Ascending");
+            i_ComboBox.Items.Add("Sort by Count Descending");
+        }
 
         private void listBoxYear_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -522,34 +533,23 @@ namespace BasicFacebookFeatures
             }
 
         }
-        private void MyProfileTab_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void listBoxFilteredPosts_SelectedIndexChanged(object sender, EventArgs e)
+        private void updateFilteredFriendsListBox(HashSet<User> i_filterdFriends)
         {
-            //pictureBoxFilteredPosts.Image = 
-        }
-
-        private void updateFilterdFriendsComboBox(HashSet<User> i_filterdFriends)
-        {
-            comboBoxFilterdUsers.Items.Clear();
-            comboBoxFilterdUsers.SelectedItem = null;
-            comboBoxFilterdUsers.SelectedIndex = -1;
-            comboBoxFilterdUsers.Text = "";
-            if (i_filterdFriends.Count > 0)
+            listBoxFilteredUsers.Items.Clear();
+            listBoxUserFavoriteTeams.DisplayMember = "Name";
+            foreach(User user in i_filterdFriends)
             {
-                comboBoxFilterdUsers.DisplayMember = "Name";
+                listBoxFilteredUsers.Items.Add(user);
+            }
 
-                foreach (User user in i_filterdFriends)
-                {
-                    comboBoxFilterdUsers.Items.Add(user);
-                }
-
-                comboBoxFilterdUsers.SelectedIndex = 0;
+            if(listBoxFilteredUsers.Items.Count == 0)
+            {
+                listBoxFilteredUsers.Items.Add("No Users to retrieve");
             }
         }
+
+
         private HashSet<User.eRelationshipStatus> getUserSelectedRelationshipStatuses()
         {
             HashSet<User.eRelationshipStatus> selectedStatuses = new HashSet<User.eRelationshipStatus>();
@@ -584,7 +584,7 @@ namespace BasicFacebookFeatures
 
         private void buttonApplySearch_Click(object sender, EventArgs e)
         {
-            List<Filterable> filterable = new List<Filterable>();
+            List<IFilterable> filterable = new List<IFilterable>();
             if (comboBoxFriendList.SelectedItem == null)
             {//show alart 
                 return;
@@ -609,8 +609,7 @@ namespace BasicFacebookFeatures
             filterable.Add(new FilterLikedPages(getUserSelectedLikedPagesId()));
 
             HashSet<User> filterdFriends = m_FindFriends.getFriendUserCommmonFriendsPages(filterable, selectedFriend);
-            updateFilterdFriendsComboBox(filterdFriends);
-
+            updateFilteredFriendsListBox(filterdFriends);
         }
 
         private void numericUpDownMaximumAge_ValueChanged(object sender, EventArgs e)
@@ -640,9 +639,10 @@ namespace BasicFacebookFeatures
             }
 
         }
-        private void comboBoxFriendList_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void listBoxFilteredUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pictureBoxSelectedFriendToFilter.Image = (comboBoxFriendList.SelectedItem as User).ImageNormal;
+            pictureBoxFilteredUsers.Image = (listBoxFilteredUsers.SelectedItem as User).ImageNormal;
         }
     }
 }

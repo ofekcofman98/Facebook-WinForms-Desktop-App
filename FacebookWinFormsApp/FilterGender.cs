@@ -7,7 +7,7 @@ using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
-    public class FilterGender : Filterable
+    public class FilterGender : IFilterable
     {
         User.eGender m_preferanceGender;
         public FilterGender(User.eGender gender)

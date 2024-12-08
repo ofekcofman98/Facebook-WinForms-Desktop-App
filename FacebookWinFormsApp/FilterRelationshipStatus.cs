@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures
 {
-    public class FilterRelationshipStatus : Filterable
+    public class FilterRelationshipStatus : IFilterable
     {
         private HashSet<User.eRelationshipStatus> m_RelationshipStatusesSet = new HashSet<User.eRelationshipStatus>();
         public FilterRelationshipStatus(HashSet<User.eRelationshipStatus> i_RelationshipStatusesSet)

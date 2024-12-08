@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppManager.cs" />
-    <Compile Include="Filterable.cs" />
+    <Compile Include="IFilterable.cs" />
     <Compile Include="FilterAge.cs" />
     <Compile Include="FilterGender.cs" />
     <Compile Include="FilterLikedPages.cs" />

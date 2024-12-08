@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures
 {
-    public class FilterAge : Filterable
+    public class FilterAge : IFilterable
     {
         private int m_MinAge;
         private int m_MaxAge;

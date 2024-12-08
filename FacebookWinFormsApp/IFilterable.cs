@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures
 {
-    public interface Filterable
+    public interface IFilterable
     {
         bool filter(User user);
     }
