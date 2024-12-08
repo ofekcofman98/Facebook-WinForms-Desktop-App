@@ -79,6 +79,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppManager.cs" />
+    <Compile Include="Filterable.cs" />
+    <Compile Include="FilterAge.cs" />
+    <Compile Include="FilterGender.cs" />
+    <Compile Include="FilterLikedPages.cs" />
+    <Compile Include="FilterRelationshipStatus.cs" />
+    <Compile Include="FindFriends.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +100,7 @@
     <Compile Include="Album.Designer.cs">
       <DependentUpon>Album.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserUtils.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>

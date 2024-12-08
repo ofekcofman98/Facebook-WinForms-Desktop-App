@@ -48,7 +48,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.listBoxUserGroups = new System.Windows.Forms.ListBox();
             this.panelAlbums = new System.Windows.Forms.Panel();
-            this.albumUserAlbums = new BasicFacebookFeatures.Album();
             this.label1 = new System.Windows.Forms.Label();
             this.listBoxUserAlbums = new System.Windows.Forms.ListBox();
             this.panelStatusPost = new System.Windows.Forms.Panel();
@@ -70,20 +69,39 @@
             this.pictureBoxIcon = new System.Windows.Forms.PictureBox();
             this.tabsController = new System.Windows.Forms.TabControl();
             this.tabActivityCenter = new System.Windows.Forms.TabPage();
+            this.comboBoxMonth = new System.Windows.Forms.ComboBox();
+            this.comboBoxYear = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.labelDateOfPosts = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.albumFilteredPhotos = new BasicFacebookFeatures.Album();
             this.listBoxFilteredPosts = new System.Windows.Forms.ListBox();
             this.listBoxHour = new System.Windows.Forms.ListBox();
             this.listBoxMonth = new System.Windows.Forms.ListBox();
             this.listBoxYear = new System.Windows.Forms.ListBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.comboBoxYear = new System.Windows.Forms.ComboBox();
-            this.comboBoxMonth = new System.Windows.Forms.ComboBox();
+            this.comboBoxFilterdUsers = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.comboBoxGender = new System.Windows.Forms.ComboBox();
+            this.buttonApplySearch = new System.Windows.Forms.Button();
+            this.pictureBoxSelectedFriendToFilter = new System.Windows.Forms.PictureBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.comboBoxFriendList = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.checkedListBoxlikedPages = new System.Windows.Forms.CheckedListBox();
+            this.checkedListBoxRealitionshipStatus = new System.Windows.Forms.CheckedListBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.numericUpDownMaximumAge = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMinimumAge = new System.Windows.Forms.NumericUpDown();
+            this.albumUserAlbums = new BasicFacebookFeatures.Album();
+            this.albumFilteredPhotos = new BasicFacebookFeatures.Album();
             this.tabMyProfile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMyProfile)).BeginInit();
             this.tabHomePage.SuspendLayout();
@@ -100,7 +118,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
             this.tabsController.SuspendLayout();
             this.tabActivityCenter.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSelectedFriendToFilter)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumAge)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumAge)).BeginInit();
             this.SuspendLayout();
             // 
             // tabMyProfile
@@ -322,14 +344,6 @@
             this.panelAlbums.TabIndex = 77;
             this.panelAlbums.Visible = false;
             // 
-            // albumUserAlbums
-            // 
-            this.albumUserAlbums.Location = new System.Drawing.Point(35, 204);
-            this.albumUserAlbums.Margin = new System.Windows.Forms.Padding(4);
-            this.albumUserAlbums.Name = "albumUserAlbums";
-            this.albumUserAlbums.Size = new System.Drawing.Size(188, 210);
-            this.albumUserAlbums.TabIndex = 74;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -534,6 +548,7 @@
             this.tabsController.Controls.Add(this.tabHomePage);
             this.tabsController.Controls.Add(this.tabMyProfile);
             this.tabsController.Controls.Add(this.tabActivityCenter);
+            this.tabsController.Controls.Add(this.tabPage1);
             this.tabsController.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabsController.Location = new System.Drawing.Point(3, 107);
             this.tabsController.Name = "tabsController";
@@ -562,6 +577,22 @@
             this.tabActivityCenter.TabIndex = 2;
             this.tabActivityCenter.Text = "Activity Center";
             this.tabActivityCenter.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxMonth
+            // 
+            this.comboBoxMonth.FormattingEnabled = true;
+            this.comboBoxMonth.Location = new System.Drawing.Point(405, 96);
+            this.comboBoxMonth.Name = "comboBoxMonth";
+            this.comboBoxMonth.Size = new System.Drawing.Size(139, 30);
+            this.comboBoxMonth.TabIndex = 79;
+            // 
+            // comboBoxYear
+            // 
+            this.comboBoxYear.FormattingEnabled = true;
+            this.comboBoxYear.Location = new System.Drawing.Point(153, 96);
+            this.comboBoxYear.Name = "comboBoxYear";
+            this.comboBoxYear.Size = new System.Drawing.Size(147, 30);
+            this.comboBoxYear.TabIndex = 78;
             // 
             // label12
             // 
@@ -610,14 +641,6 @@
             this.label11.TabIndex = 5;
             this.label11.Text = "Years";
             // 
-            // albumFilteredPhotos
-            // 
-            this.albumFilteredPhotos.Location = new System.Drawing.Point(331, 320);
-            this.albumFilteredPhotos.Margin = new System.Windows.Forms.Padding(4);
-            this.albumFilteredPhotos.Name = "albumFilteredPhotos";
-            this.albumFilteredPhotos.Size = new System.Drawing.Size(156, 186);
-            this.albumFilteredPhotos.TabIndex = 74;
-            // 
             // listBoxFilteredPosts
             // 
             this.listBoxFilteredPosts.FormattingEnabled = true;
@@ -658,6 +681,33 @@
             this.listBoxYear.TabIndex = 1;
             this.listBoxYear.SelectedIndexChanged += new System.EventHandler(this.listBoxYear_SelectedIndexChanged);
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.comboBoxFilterdUsers);
+            this.tabPage1.Controls.Add(this.label18);
+            this.tabPage1.Controls.Add(this.label17);
+            this.tabPage1.Controls.Add(this.comboBoxGender);
+            this.tabPage1.Controls.Add(this.buttonApplySearch);
+            this.tabPage1.Controls.Add(this.pictureBoxSelectedFriendToFilter);
+            this.tabPage1.Controls.Add(this.label16);
+            this.tabPage1.Controls.Add(this.comboBoxFriendList);
+            this.tabPage1.Controls.Add(this.label15);
+            this.tabPage1.Controls.Add(this.checkedListBoxlikedPages);
+            this.tabPage1.Controls.Add(this.checkedListBoxRealitionshipStatus);
+            this.tabPage1.Controls.Add(this.label14);
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.label19);
+            this.tabPage1.Controls.Add(this.label20);
+            this.tabPage1.Controls.Add(this.numericUpDownMaximumAge);
+            this.tabPage1.Controls.Add(this.numericUpDownMinimumAge);
+            this.tabPage1.Location = new System.Drawing.Point(4, 31);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1229, 552);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -679,21 +729,179 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1243, 697);
             this.tableLayoutPanel1.TabIndex = 76;
             // 
-            // comboBoxYear
+            // comboBoxFilterdUsers
             // 
-            this.comboBoxYear.FormattingEnabled = true;
-            this.comboBoxYear.Location = new System.Drawing.Point(153, 96);
-            this.comboBoxYear.Name = "comboBoxYear";
-            this.comboBoxYear.Size = new System.Drawing.Size(147, 30);
-            this.comboBoxYear.TabIndex = 78;
+            this.comboBoxFilterdUsers.FormattingEnabled = true;
+            this.comboBoxFilterdUsers.Location = new System.Drawing.Point(497, 418);
+            this.comboBoxFilterdUsers.Name = "comboBoxFilterdUsers";
+            this.comboBoxFilterdUsers.Size = new System.Drawing.Size(121, 30);
+            this.comboBoxFilterdUsers.TabIndex = 36;
             // 
-            // comboBoxMonth
+            // label18
             // 
-            this.comboBoxMonth.FormattingEnabled = true;
-            this.comboBoxMonth.Location = new System.Drawing.Point(405, 96);
-            this.comboBoxMonth.Name = "comboBoxMonth";
-            this.comboBoxMonth.Size = new System.Drawing.Size(139, 30);
-            this.comboBoxMonth.TabIndex = 79;
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(492, 361);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(105, 24);
+            this.label18.TabIndex = 35;
+            this.label18.Text = "filterd users";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(530, 310);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(64, 24);
+            this.label17.TabIndex = 34;
+            this.label17.Text = "results";
+            // 
+            // comboBoxGender
+            // 
+            this.comboBoxGender.FormattingEnabled = true;
+            this.comboBoxGender.Location = new System.Drawing.Point(94, 183);
+            this.comboBoxGender.Name = "comboBoxGender";
+            this.comboBoxGender.Size = new System.Drawing.Size(121, 30);
+            this.comboBoxGender.TabIndex = 33;
+            // 
+            // buttonApplySearch
+            // 
+            this.buttonApplySearch.Location = new System.Drawing.Point(466, 211);
+            this.buttonApplySearch.Name = "buttonApplySearch";
+            this.buttonApplySearch.Size = new System.Drawing.Size(205, 63);
+            this.buttonApplySearch.TabIndex = 32;
+            this.buttonApplySearch.Text = "Apply search";
+            this.buttonApplySearch.UseVisualStyleBackColor = true;
+            this.buttonApplySearch.Click += new System.EventHandler(this.buttonApplySearch_Click);
+            // 
+            // pictureBoxSelectedFriendToFilter
+            // 
+            this.pictureBoxSelectedFriendToFilter.Location = new System.Drawing.Point(754, 40);
+            this.pictureBoxSelectedFriendToFilter.Name = "pictureBoxSelectedFriendToFilter";
+            this.pictureBoxSelectedFriendToFilter.Size = new System.Drawing.Size(123, 72);
+            this.pictureBoxSelectedFriendToFilter.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBoxSelectedFriendToFilter.TabIndex = 31;
+            this.pictureBoxSelectedFriendToFilter.TabStop = false;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(557, 40);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(99, 24);
+            this.label16.TabIndex = 30;
+            this.label16.Text = "user friend";
+            // 
+            // comboBoxFriendList
+            // 
+            this.comboBoxFriendList.FormattingEnabled = true;
+            this.comboBoxFriendList.Location = new System.Drawing.Point(557, 80);
+            this.comboBoxFriendList.Name = "comboBoxFriendList";
+            this.comboBoxFriendList.Size = new System.Drawing.Size(121, 30);
+            this.comboBoxFriendList.TabIndex = 29;
+            this.comboBoxFriendList.SelectedIndexChanged += new System.EventHandler(this.comboBoxFriendList_SelectedIndexChanged);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(89, 426);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(107, 24);
+            this.label15.TabIndex = 28;
+            this.label15.Text = "liked Pages";
+            // 
+            // checkedListBoxlikedPages
+            // 
+            this.checkedListBoxlikedPages.FormattingEnabled = true;
+            this.checkedListBoxlikedPages.Location = new System.Drawing.Point(86, 465);
+            this.checkedListBoxlikedPages.Name = "checkedListBoxlikedPages";
+            this.checkedListBoxlikedPages.Size = new System.Drawing.Size(249, 73);
+            this.checkedListBoxlikedPages.TabIndex = 27;
+            // 
+            // checkedListBoxRealitionshipStatus
+            // 
+            this.checkedListBoxRealitionshipStatus.FormattingEnabled = true;
+            this.checkedListBoxRealitionshipStatus.Location = new System.Drawing.Point(86, 310);
+            this.checkedListBoxRealitionshipStatus.Name = "checkedListBoxRealitionshipStatus";
+            this.checkedListBoxRealitionshipStatus.Size = new System.Drawing.Size(178, 73);
+            this.checkedListBoxRealitionshipStatus.TabIndex = 26;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(81, 265);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(169, 24);
+            this.label14.TabIndex = 25;
+            this.label14.Text = "Realitionship status";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(87, 132);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 24);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "Gender";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(262, 40);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(130, 24);
+            this.label19.TabIndex = 23;
+            this.label19.Text = "Maximum age";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(81, 40);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(125, 24);
+            this.label20.TabIndex = 22;
+            this.label20.Text = "Minimum age";
+            // 
+            // numericUpDownMaximumAge
+            // 
+            this.numericUpDownMaximumAge.Location = new System.Drawing.Point(267, 80);
+            this.numericUpDownMaximumAge.Name = "numericUpDownMaximumAge";
+            this.numericUpDownMaximumAge.Size = new System.Drawing.Size(120, 28);
+            this.numericUpDownMaximumAge.TabIndex = 21;
+            this.numericUpDownMaximumAge.Value = new decimal(new int[] {
+            18,
+            0,
+            0,
+            0});
+            this.numericUpDownMaximumAge.ValueChanged += new System.EventHandler(this.numericUpDownMaximumAge_ValueChanged);
+            // 
+            // numericUpDownMinimumAge
+            // 
+            this.numericUpDownMinimumAge.Location = new System.Drawing.Point(92, 80);
+            this.numericUpDownMinimumAge.Name = "numericUpDownMinimumAge";
+            this.numericUpDownMinimumAge.Size = new System.Drawing.Size(120, 28);
+            this.numericUpDownMinimumAge.TabIndex = 20;
+            this.numericUpDownMinimumAge.Value = new decimal(new int[] {
+            18,
+            0,
+            0,
+            0});
+            this.numericUpDownMinimumAge.ValueChanged += new System.EventHandler(this.numericUpDownMinimumAge_ValueChanged);
+            // 
+            // albumUserAlbums
+            // 
+            this.albumUserAlbums.Location = new System.Drawing.Point(35, 204);
+            this.albumUserAlbums.Margin = new System.Windows.Forms.Padding(4);
+            this.albumUserAlbums.Name = "albumUserAlbums";
+            this.albumUserAlbums.Size = new System.Drawing.Size(188, 210);
+            this.albumUserAlbums.TabIndex = 74;
+            // 
+            // albumFilteredPhotos
+            // 
+            this.albumFilteredPhotos.Location = new System.Drawing.Point(331, 320);
+            this.albumFilteredPhotos.Margin = new System.Windows.Forms.Padding(4);
+            this.albumFilteredPhotos.Name = "albumFilteredPhotos";
+            this.albumFilteredPhotos.Size = new System.Drawing.Size(156, 186);
+            this.albumFilteredPhotos.TabIndex = 74;
             // 
             // FormMain
             // 
@@ -730,7 +938,12 @@
             this.tabsController.ResumeLayout(false);
             this.tabActivityCenter.ResumeLayout(false);
             this.tabActivityCenter.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSelectedFriendToFilter)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumAge)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumAge)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -792,6 +1005,24 @@
         private System.Windows.Forms.PictureBox pictureBoxIcon;
         private System.Windows.Forms.ComboBox comboBoxMonth;
         private System.Windows.Forms.ComboBox comboBoxYear;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.ComboBox comboBoxFilterdUsers;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ComboBox comboBoxGender;
+        private System.Windows.Forms.Button buttonApplySearch;
+        private System.Windows.Forms.PictureBox pictureBoxSelectedFriendToFilter;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ComboBox comboBoxFriendList;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.CheckedListBox checkedListBoxlikedPages;
+        private System.Windows.Forms.CheckedListBox checkedListBoxRealitionshipStatus;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.NumericUpDown numericUpDownMaximumAge;
+        private System.Windows.Forms.NumericUpDown numericUpDownMinimumAge;
     }
 }
 

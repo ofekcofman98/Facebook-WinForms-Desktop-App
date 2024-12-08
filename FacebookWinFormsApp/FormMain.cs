@@ -23,7 +23,7 @@ namespace BasicFacebookFeatures
 
         private FacebookWrapper.ObjectModel.Album m_currentAlbum = null;
         private int m_albumPictureCounter = 0;
-
+        private FindFriends m_FindFriends = new FindFriends();
         private int m_FilteredPhotoIndex = -1;
 
         private readonly string[] r_Months =
@@ -49,7 +49,7 @@ namespace BasicFacebookFeatures
                                panelLikes,
                                panelGroups
                            };
-            m_AddedTabs = new List<TabPage> { tabMyProfile, tabActivityCenter };
+            m_AddedTabs = new List<TabPage> { tabMyProfile, tabActivityCenter, tabPage1 };
             updateTabs();
             OnLogin += fetchProfileInfo;
             OnLogin += fetchLikedPages;
@@ -57,6 +57,7 @@ namespace BasicFacebookFeatures
             OnLogin += fetchFriendList;
             OnLogin += fetchMyProfile;
             OnLogin += fetchStats;
+            OnLogin += fetchFriendsLookupPage;
             OnLogin += fetchGroups;
             OnLogin += fetchFavoriteTeams;
             OnLogin += fetchStatusPost;
@@ -135,6 +136,79 @@ namespace BasicFacebookFeatures
         }
 
 
+        private void fetchFriendsLookupPage()
+        {
+            fetchFriendsComboBox();
+            populateRealitionshipStatusList();
+            populateLikedPagesList();
+            PopulateGenderComboBox();
+
+        }
+
+        private void PopulateGenderComboBox()
+        {
+            comboBoxGender.Items.Clear();
+            comboBoxGender.SelectedItem = null;
+            comboBoxGender.SelectedIndex = -1;
+            comboBoxGender.Text = "";
+            // Add "No Preference" as the first option
+
+            // Add all enum values to the ComboBox
+            foreach (User.eGender gender in Enum.GetValues(typeof(User.eGender)))
+            {
+                comboBoxGender.Items.Add(gender);
+            }
+            comboBoxGender.Items.Add("No Preference");
+
+            // Set the default selected item to "No Preference"
+            comboBoxGender.SelectedIndex = 0;
+        }
+
+        private void populateRealitionshipStatusList()
+        {
+            checkedListBoxRealitionshipStatus.Visible = true;
+            checkedListBoxRealitionshipStatus.Items.Clear();
+
+            foreach (User.eRelationshipStatus relationshipStatus in Enum.GetValues(typeof(User.eRelationshipStatus)))
+            {
+                checkedListBoxRealitionshipStatus.Items.Add(relationshipStatus);
+            }
+
+        }
+
+        private void populateLikedPagesList()
+        {
+            checkedListBoxlikedPages.Items.Clear();
+            checkedListBoxlikedPages.DisplayMember = "Name";
+            foreach (Page page in r_AppManager.LoggedInUser.LikedPages)
+            {
+                checkedListBoxlikedPages.Items.Add(page);
+                //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
+            }
+
+            if (checkedListBoxlikedPages.Items.Count == 0)
+            {
+                MessageBox.Show("No liked pages to retrieve :(");
+            }
+        }
+
+
+        private void fetchFriendsComboBox()
+        {
+            comboBoxFriendList.Items.Clear();
+            comboBoxFriendList.SelectedItem = null;
+            comboBoxFriendList.SelectedIndex = -1;
+            comboBoxFriendList.Text = "";
+            comboBoxFriendList.DisplayMember = "Name";
+
+
+            foreach (User user in r_AppManager.LoggedInUser.Friends)
+            {
+                comboBoxFriendList.Items.Add(user);
+            }
+
+            comboBoxFriendList.SelectedIndex = 0;
+        }
         private void fetchProfileInfo()
         {
             labelUserName.Visible = true;
@@ -458,5 +532,117 @@ namespace BasicFacebookFeatures
             //pictureBoxFilteredPosts.Image = 
         }
 
+        private void updateFilterdFriendsComboBox(HashSet<User> i_filterdFriends)
+        {
+            comboBoxFilterdUsers.Items.Clear();
+            comboBoxFilterdUsers.SelectedItem = null;
+            comboBoxFilterdUsers.SelectedIndex = -1;
+            comboBoxFilterdUsers.Text = "";
+            if (i_filterdFriends.Count > 0)
+            {
+                comboBoxFilterdUsers.DisplayMember = "Name";
+
+                foreach (User user in i_filterdFriends)
+                {
+                    comboBoxFilterdUsers.Items.Add(user);
+                }
+
+                comboBoxFilterdUsers.SelectedIndex = 0;
+            }
+        }
+        private HashSet<User.eRelationshipStatus> getUserSelectedRelationshipStatuses()
+        {
+            HashSet<User.eRelationshipStatus> selectedStatuses = new HashSet<User.eRelationshipStatus>();
+
+            foreach (User.eRelationshipStatus item in checkedListBoxRealitionshipStatus.CheckedItems)
+            {
+                if (item is User.eRelationshipStatus status)
+                {
+                    selectedStatuses.Add(status);
+                }
+            }
+
+            return selectedStatuses;
+        }
+
+        private HashSet<String> getUserSelectedLikedPagesId()
+        {
+            HashSet<String> selectedLikedPages = new HashSet<String>();
+
+            foreach (Page item in checkedListBoxlikedPages.CheckedItems)
+            {
+                if (item is Page page)
+                {
+                    selectedLikedPages.Add(page.Id);
+                }
+            }
+
+            return selectedLikedPages;
+        }
+
+
+
+        private void buttonApplySearch_Click(object sender, EventArgs e)
+        {
+            List<Filterable> filterable = new List<Filterable>();
+            if (comboBoxFriendList.SelectedItem == null)
+            {//show alart 
+                return;
+            }
+            User selectedFriend = comboBoxFriendList.SelectedItem as User;
+            int minAge = (int)numericUpDownMinimumAge.Value;
+            int maxAge = (int)numericUpDownMaximumAge.Value;
+            if (minAge > maxAge)
+            {
+                //show alart...
+            }
+            else
+            {
+                filterable.Add(new FilterAge(minAge, maxAge));
+            }
+            if (comboBoxGender.SelectedItem != null && !comboBoxGender.SelectedItem.Equals("No Preference"))
+            {
+
+                filterable.Add(new FilterGender((User.eGender)comboBoxGender.SelectedItem));
+            }
+            filterable.Add(new FilterRelationshipStatus(getUserSelectedRelationshipStatuses()));
+            filterable.Add(new FilterLikedPages(getUserSelectedLikedPagesId()));
+
+            HashSet<User> filterdFriends = m_FindFriends.getFriendUserCommmonFriendsPages(filterable, selectedFriend);
+            updateFilterdFriendsComboBox(filterdFriends);
+
+        }
+
+        private void numericUpDownMaximumAge_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDownMinimumAge.Value < 18)
+            {
+                numericUpDownMinimumAge.Value = 18;
+            }
+
+            if (numericUpDownMaximumAge.Value < numericUpDownMinimumAge.Value)
+            {
+                numericUpDownMaximumAge.Value = numericUpDownMinimumAge.Value;
+            }
+
+        }
+
+        private void numericUpDownMinimumAge_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDownMaximumAge.Value < 18)
+            {
+                numericUpDownMaximumAge.Value = 18;
+            }
+
+            if (numericUpDownMaximumAge.Value < numericUpDownMinimumAge.Value)
+            {
+                numericUpDownMaximumAge.Value = numericUpDownMinimumAge.Value;
+            }
+
+        }
+        private void comboBoxFriendList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pictureBoxSelectedFriendToFilter.Image = (comboBoxFriendList.SelectedItem as User).ImageNormal;
+        }
     }
 }
