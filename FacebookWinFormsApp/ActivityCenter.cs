@@ -92,12 +92,12 @@ namespace BasicFacebookFeatures
                 }
         }
 
-        public List<KeyValuePair<int, int>> GetYearCounts()
+        public List<KeyValuePair<int, int>> GetYearCounts(string i_SortBy = "CountDescending")
         {
-            return r_YearCounts.OrderByDescending(pair => pair.Value).ToList();
+            return sortCountsList(r_YearCounts, i_SortBy);
         }
 
-        public List<KeyValuePair<int, int>> GetMonthCounts(int i_Year)
+        public List<KeyValuePair<int, int>> GetMonthCounts(int i_Year, string i_SortBy = "CountDescending")
         {
             Dictionary<int, int> monthCounts = new Dictionary<int, int>();
             foreach(Post post in r_UserPosts)
@@ -114,12 +114,11 @@ namespace BasicFacebookFeatures
                     monthCounts[month]++;
                 }
             }
-
-            return monthCounts.OrderByDescending(pair => pair.Value).ToList();
+            return sortCountsList(monthCounts, i_SortBy);
         }
 
 
-        public List<KeyValuePair<int, int>> GetHourCounts()
+        public List<KeyValuePair<int, int>> GetHourCounts(string i_SortBy = "CountDescending")
         {
             Dictionary<int, int> hourCounts = new Dictionary<int, int>();
 
@@ -151,7 +150,30 @@ namespace BasicFacebookFeatures
                 }
             }
 
-            return hourCounts.OrderByDescending(pair => (int)pair.Key).ToList();
+            return sortCountsList(hourCounts, i_SortBy);
+        }
+
+        private List<KeyValuePair<int, int>> sortCountsList(Dictionary<int, int> i_CountsList, string i_SortBy)
+        {
+            List<KeyValuePair<int, int>> sortedCounts = i_CountsList.ToList();
+
+            switch (i_SortBy)
+            {
+                case "CountAscending":
+                    sortedCounts = sortedCounts.OrderBy(pair => pair.Value).ToList();
+                    break;
+                case "CountDescending":
+                    sortedCounts = sortedCounts.OrderByDescending(pair => pair.Value).ToList();
+                    break;
+                case "TimeAscending":
+                    sortedCounts = sortedCounts.OrderBy(pair => pair.Key).ToList();
+                    break;
+                case "TimeDescending":
+                    sortedCounts = sortedCounts.OrderByDescending(pair => pair.Key).ToList();
+                    break;
+            }
+
+            return sortedCounts;
         }
 
 

@@ -249,46 +249,113 @@ namespace BasicFacebookFeatures
             listBoxFilteredPosts.Items.Clear();
 
             listBoxYear.Visible = true;
-            listBoxYear.Items.Clear();
-            populateSortComboBox(comboBoxYearSort, "Year");
-
             listBoxMonth.Visible = true;
-            listBoxMonth.Items.Clear();
-            populateSortComboBox(comboBoxMonthSort, "Month");
-
             listBoxHour.Visible = true;
-            listBoxHour.Items.Clear();
-            populateSortComboBox(comboBoxHourSort, "Hour");
 
             displayYearCounts();
             displayHoursCounts();
         }
 
-        private void displayYearCounts()
+        private void displayYearCounts(string i_SortBy = "CountDescending")
         {
-            List<KeyValuePair<int, int>> yearCounts = r_AppManager.ActivityCenter.GetYearCounts();
+            listBoxYear.Items.Clear();
+            List<KeyValuePair<int, int>> yearCounts = r_AppManager.ActivityCenter.GetYearCounts(i_SortBy);
             foreach (KeyValuePair<int, int> year in yearCounts)
             {
                 listBoxYear.Items.Add($"{year.Key}: {year.Value} posts/photos");
             }
-        }
 
-        private void displayHoursCounts()
-        {
-            List<KeyValuePair<int, int>> hoursCounts = r_AppManager.ActivityCenter.GetHourCounts();
-            foreach (KeyValuePair<int, int> hour in hoursCounts)
+            if(listBoxYear.Items.Count > 0)
             {
-                listBoxHour.Items.Add($"{hour.Key}: {hour.Value} posts/photos");
+                populateSortComboBox(comboBoxYearSort, "Year");
             }
         }
 
+        private void displayMonthCounts(int i_SelectedYear, string i_SortBy = "CountDescending")
+        {
+            listBoxMonth.Items.Clear();
+            List<KeyValuePair<int, int>> monthCounts = r_AppManager.ActivityCenter.GetMonthCounts(i_SelectedYear, i_SortBy);
+            listBoxMonth.Items.Clear();
+
+            foreach (KeyValuePair<int, int> month in monthCounts)
+            {
+                listBoxMonth.Items.Add($"{r_Months[month.Key - 1]}: {month.Value} posts/photos");
+            }
+
+            if(listBoxMonth.Items.Count > 0)
+            {
+                populateSortComboBox(comboBoxMonthSort, "Month");
+            }
+        }
+
+        private void displayHoursCounts(string i_SortBy = "CountDescending")
+        {
+            listBoxHour.Items.Clear();
+            List<KeyValuePair<int, int>> hoursCounts = r_AppManager.ActivityCenter.GetHourCounts(i_SortBy);
+            foreach (KeyValuePair<int, int> hour in hoursCounts)
+            {
+                listBoxHour.Items.Add($"{makeHourFormat(hour.Key)}: {hour.Value} posts/photos");
+            }
+
+            if(listBoxHour.Items.Count > 0)
+            {
+                populateSortComboBox(comboBoxHourSort, "Hour");
+            }
+        }
 
         private void populateSortComboBox(ComboBox i_ComboBox, string i_TimeType)
         {
+            i_ComboBox.Items.Clear();
             i_ComboBox.Items.Add($"Sort by {i_TimeType} Ascending");
             i_ComboBox.Items.Add($"Sort by {i_TimeType} Descending");
             i_ComboBox.Items.Add("Sort by Count Ascending");
             i_ComboBox.Items.Add("Sort by Count Descending");
+        }
+
+        private void comboBoxYearSort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listBoxMonth.Items.Clear();
+            comboBoxMonthSort.Items.Clear();
+            string sorting = getSorting(comboBoxYearSort.SelectedIndex);
+            displayYearCounts(sorting);
+        }
+
+        private void comboBoxMonthSort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int selectedYear = int.Parse(listBoxYear.SelectedItem.ToString().Split(':')[0]);
+            string sorting = getSorting(comboBoxMonthSort.SelectedIndex);
+            displayMonthCounts(selectedYear, sorting);
+        }
+
+        private void comboBoxHourSort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string sorting = getSorting(comboBoxHourSort.SelectedIndex);
+            displayHoursCounts(sorting);
+        }
+
+        private string getSorting(int i_ComboBoxIndex)
+        {
+            string sorting;
+            switch (i_ComboBoxIndex)
+            {
+                case 0:
+                    sorting = "TimeAscending";
+                    break;
+                case 1:
+                    sorting = "TimeDescending";
+                    break;
+                case 2:
+                    sorting = "CountAscending";
+                    break;
+                case 3:
+                    sorting = "CountDescending";
+                    break;
+                default:
+                    sorting = "CountDescending";
+                    break;
+            }
+
+            return sorting;
         }
 
         private void listBoxYear_SelectedIndexChanged(object sender, EventArgs e)
@@ -299,13 +366,7 @@ namespace BasicFacebookFeatures
                labelDateOfPosts.Text = $"Your posts from {selectedYear}";
                filterPostsByTime(i_Year: selectedYear);
 
-               List<KeyValuePair<int, int>> monthCounts = r_AppManager.ActivityCenter.GetMonthCounts(selectedYear);
-               listBoxMonth.Items.Clear();
-
-               foreach (KeyValuePair<int, int> month in monthCounts)
-               {
-                   listBoxMonth.Items.Add($"{r_Months[month.Key-1]}: {month.Value} posts/photos");
-               }
+               displayMonthCounts(selectedYear);
            }
         }
 
@@ -328,8 +389,15 @@ namespace BasicFacebookFeatures
             if(listBoxHour.SelectedItem != null)
             {
                 int selectedHour = int.Parse(listBoxHour.SelectedItem.ToString().Split(':')[0]);
+                labelDateOfPosts.Text = $"Your posts from {makeHourFormat(selectedHour)}: ";
+
                 filterPostsByTime(i_Hour: selectedHour);
             }
+        }
+
+        private string makeHourFormat(int i_Hour)
+        {
+            return $"{i_Hour.ToString("D2")}:00";
         }
 
         private void filterPostsByTime(int? i_Year = null, int? i_Month = null, int? i_Hour = null)
@@ -644,5 +712,6 @@ namespace BasicFacebookFeatures
         {
             pictureBoxFilteredUsers.Image = (listBoxFilteredUsers.SelectedItem as User).ImageNormal;
         }
+
     }
 }

@@ -70,18 +70,22 @@
             this.pictureBoxIcon = new System.Windows.Forms.PictureBox();
             this.tabsController = new System.Windows.Forms.TabControl();
             this.tabActivityCenter = new System.Windows.Forms.TabPage();
-            this.comboBoxMonthSort = new System.Windows.Forms.ComboBox();
-            this.comboBoxYearSort = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.labelDateOfPosts = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.comboBoxMonthSort = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.comboBoxYearSort = new System.Windows.Forms.ComboBox();
+            this.listBoxYear = new System.Windows.Forms.ListBox();
+            this.listBoxMonth = new System.Windows.Forms.ListBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.comboBoxHourSort = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.listBoxHour = new System.Windows.Forms.ListBox();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.labelDateOfPosts = new System.Windows.Forms.Label();
             this.albumFilteredPhotos = new BasicFacebookFeatures.Album();
             this.listBoxFilteredPosts = new System.Windows.Forms.ListBox();
-            this.listBoxHour = new System.Windows.Forms.ListBox();
-            this.listBoxMonth = new System.Windows.Forms.ListBox();
-            this.listBoxYear = new System.Windows.Forms.ListBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.listBoxFilteredUsers = new System.Windows.Forms.ListBox();
             this.label21 = new System.Windows.Forms.Label();
@@ -102,9 +106,6 @@
             this.numericUpDownMinimumAge = new System.Windows.Forms.NumericUpDown();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.comboBoxHourSort = new System.Windows.Forms.ComboBox();
             this.tabMyProfile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMyProfile)).BeginInit();
             this.tabHomePage.SuspendLayout();
@@ -121,13 +122,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
             this.tabsController.SuspendLayout();
             this.tabActivityCenter.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFilteredUsers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumAge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumAge)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabMyProfile
@@ -488,16 +490,16 @@
             // 
             this.labelUserName.BackColor = System.Drawing.Color.Navy;
             this.labelUserName.ForeColor = System.Drawing.Color.Transparent;
-            this.labelUserName.Location = new System.Drawing.Point(397, 15);
+            this.labelUserName.Location = new System.Drawing.Point(397, 62);
             this.labelUserName.Name = "labelUserName";
-            this.labelUserName.Size = new System.Drawing.Size(319, 41);
+            this.labelUserName.Size = new System.Drawing.Size(231, 25);
             this.labelUserName.TabIndex = 56;
             this.labelUserName.Text = "Hello, ";
             this.labelUserName.Visible = false;
             // 
             // pictureBoxProfile
             // 
-            this.pictureBoxProfile.Location = new System.Drawing.Point(298, 15);
+            this.pictureBoxProfile.Location = new System.Drawing.Point(298, 9);
             this.pictureBoxProfile.Name = "pictureBoxProfile";
             this.pictureBoxProfile.Size = new System.Drawing.Size(79, 78);
             this.pictureBoxProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -571,12 +573,9 @@
             // tabActivityCenter
             // 
             this.tabActivityCenter.Controls.Add(this.label12);
-            this.tabActivityCenter.Controls.Add(this.labelDateOfPosts);
-            this.tabActivityCenter.Controls.Add(this.albumFilteredPhotos);
-            this.tabActivityCenter.Controls.Add(this.listBoxFilteredPosts);
-            this.tabActivityCenter.Controls.Add(this.listBoxHour);
             this.tabActivityCenter.Controls.Add(this.panel2);
             this.tabActivityCenter.Controls.Add(this.panel3);
+            this.tabActivityCenter.Controls.Add(this.panel4);
             this.tabActivityCenter.Location = new System.Drawing.Point(4, 31);
             this.tabActivityCenter.Name = "tabActivityCenter";
             this.tabActivityCenter.Padding = new System.Windows.Forms.Padding(3);
@@ -585,59 +584,41 @@
             this.tabActivityCenter.Text = "Activity Center";
             this.tabActivityCenter.UseVisualStyleBackColor = true;
             // 
-            // comboBoxMonthSort
-            // 
-            this.comboBoxMonthSort.FormattingEnabled = true;
-            this.comboBoxMonthSort.Location = new System.Drawing.Point(111, 239);
-            this.comboBoxMonthSort.Name = "comboBoxMonthSort";
-            this.comboBoxMonthSort.Size = new System.Drawing.Size(139, 30);
-            this.comboBoxMonthSort.TabIndex = 79;
-            // 
-            // comboBoxYearSort
-            // 
-            this.comboBoxYearSort.FormattingEnabled = true;
-            this.comboBoxYearSort.Location = new System.Drawing.Point(103, 33);
-            this.comboBoxYearSort.Name = "comboBoxYearSort";
-            this.comboBoxYearSort.Size = new System.Drawing.Size(147, 30);
-            this.comboBoxYearSort.TabIndex = 78;
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label12.Location = new System.Drawing.Point(444, 27);
+            this.label12.Location = new System.Drawing.Point(444, 19);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(291, 48);
             this.label12.TabIndex = 6;
             this.label12.Text = "Activity Center";
             // 
-            // label10
+            // panel2
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(25, 33);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(116, 24);
-            this.label10.TabIndex = 77;
-            this.label10.Text = "Hours in day";
+            this.panel2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel2.Controls.Add(this.comboBoxMonthSort);
+            this.panel2.Controls.Add(this.label11);
+            this.panel2.Controls.Add(this.comboBoxYearSort);
+            this.panel2.Controls.Add(this.listBoxYear);
+            this.panel2.Controls.Add(this.listBoxMonth);
+            this.panel2.Controls.Add(this.label13);
+            this.panel2.Location = new System.Drawing.Point(52, 88);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(289, 425);
+            this.panel2.TabIndex = 80;
             // 
-            // labelDateOfPosts
+            // comboBoxMonthSort
             // 
-            this.labelDateOfPosts.AutoSize = true;
-            this.labelDateOfPosts.Location = new System.Drawing.Point(685, 169);
-            this.labelDateOfPosts.Name = "labelDateOfPosts";
-            this.labelDateOfPosts.Size = new System.Drawing.Size(48, 24);
-            this.labelDateOfPosts.TabIndex = 76;
-            this.labelDateOfPosts.Text = "Date";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(33, 239);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(72, 24);
-            this.label13.TabIndex = 75;
-            this.label13.Text = "Months";
+            this.comboBoxMonthSort.AllowDrop = true;
+            this.comboBoxMonthSort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMonthSort.FormattingEnabled = true;
+            this.comboBoxMonthSort.Location = new System.Drawing.Point(111, 239);
+            this.comboBoxMonthSort.Name = "comboBoxMonthSort";
+            this.comboBoxMonthSort.Size = new System.Drawing.Size(163, 30);
+            this.comboBoxMonthSort.TabIndex = 79;
+            this.comboBoxMonthSort.SelectedIndexChanged += new System.EventHandler(this.comboBoxMonthSort_SelectedIndexChanged);
             // 
             // label11
             // 
@@ -648,9 +629,109 @@
             this.label11.TabIndex = 5;
             this.label11.Text = "Years";
             // 
+            // comboBoxYearSort
+            // 
+            this.comboBoxYearSort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxYearSort.FormattingEnabled = true;
+            this.comboBoxYearSort.Location = new System.Drawing.Point(103, 33);
+            this.comboBoxYearSort.Name = "comboBoxYearSort";
+            this.comboBoxYearSort.Size = new System.Drawing.Size(171, 30);
+            this.comboBoxYearSort.TabIndex = 78;
+            this.comboBoxYearSort.SelectedIndexChanged += new System.EventHandler(this.comboBoxYearSort_SelectedIndexChanged);
+            // 
+            // listBoxYear
+            // 
+            this.listBoxYear.FormattingEnabled = true;
+            this.listBoxYear.ItemHeight = 22;
+            this.listBoxYear.Location = new System.Drawing.Point(38, 78);
+            this.listBoxYear.Name = "listBoxYear";
+            this.listBoxYear.Size = new System.Drawing.Size(236, 114);
+            this.listBoxYear.TabIndex = 1;
+            this.listBoxYear.SelectedIndexChanged += new System.EventHandler(this.listBoxYear_SelectedIndexChanged);
+            // 
+            // listBoxMonth
+            // 
+            this.listBoxMonth.FormattingEnabled = true;
+            this.listBoxMonth.ItemHeight = 22;
+            this.listBoxMonth.Location = new System.Drawing.Point(37, 284);
+            this.listBoxMonth.Name = "listBoxMonth";
+            this.listBoxMonth.Size = new System.Drawing.Size(237, 114);
+            this.listBoxMonth.TabIndex = 2;
+            this.listBoxMonth.SelectedIndexChanged += new System.EventHandler(this.listBoxMonth_SelectedIndexChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(33, 239);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(72, 24);
+            this.label13.TabIndex = 75;
+            this.label13.Text = "Months";
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel3.Controls.Add(this.comboBoxHourSort);
+            this.panel3.Controls.Add(this.label10);
+            this.panel3.Controls.Add(this.listBoxHour);
+            this.panel3.Location = new System.Drawing.Point(368, 88);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(344, 425);
+            this.panel3.TabIndex = 81;
+            // 
+            // comboBoxHourSort
+            // 
+            this.comboBoxHourSort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxHourSort.FormattingEnabled = true;
+            this.comboBoxHourSort.Location = new System.Drawing.Point(147, 33);
+            this.comboBoxHourSort.Name = "comboBoxHourSort";
+            this.comboBoxHourSort.Size = new System.Drawing.Size(172, 30);
+            this.comboBoxHourSort.TabIndex = 80;
+            this.comboBoxHourSort.SelectedIndexChanged += new System.EventHandler(this.comboBoxHourSort_SelectedIndexChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(25, 33);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(116, 24);
+            this.label10.TabIndex = 77;
+            this.label10.Text = "Hours in day";
+            // 
+            // listBoxHour
+            // 
+            this.listBoxHour.FormattingEnabled = true;
+            this.listBoxHour.ItemHeight = 22;
+            this.listBoxHour.Location = new System.Drawing.Point(55, 78);
+            this.listBoxHour.Name = "listBoxHour";
+            this.listBoxHour.Size = new System.Drawing.Size(224, 312);
+            this.listBoxHour.TabIndex = 3;
+            this.listBoxHour.SelectedIndexChanged += new System.EventHandler(this.listBoxHour_SelectedIndexChanged);
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel4.Controls.Add(this.labelDateOfPosts);
+            this.panel4.Controls.Add(this.albumFilteredPhotos);
+            this.panel4.Controls.Add(this.listBoxFilteredPosts);
+            this.panel4.Location = new System.Drawing.Point(736, 88);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(444, 425);
+            this.panel4.TabIndex = 82;
+            // 
+            // labelDateOfPosts
+            // 
+            this.labelDateOfPosts.AutoSize = true;
+            this.labelDateOfPosts.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDateOfPosts.Location = new System.Drawing.Point(25, 78);
+            this.labelDateOfPosts.Name = "labelDateOfPosts";
+            this.labelDateOfPosts.Size = new System.Drawing.Size(66, 29);
+            this.labelDateOfPosts.TabIndex = 76;
+            this.labelDateOfPosts.Text = "Date";
+            // 
             // albumFilteredPhotos
             // 
-            this.albumFilteredPhotos.Location = new System.Drawing.Point(932, 212);
+            this.albumFilteredPhotos.Location = new System.Drawing.Point(275, 142);
             this.albumFilteredPhotos.Margin = new System.Windows.Forms.Padding(4);
             this.albumFilteredPhotos.Name = "albumFilteredPhotos";
             this.albumFilteredPhotos.Size = new System.Drawing.Size(156, 186);
@@ -660,40 +741,10 @@
             // 
             this.listBoxFilteredPosts.FormattingEnabled = true;
             this.listBoxFilteredPosts.ItemHeight = 22;
-            this.listBoxFilteredPosts.Location = new System.Drawing.Point(689, 212);
+            this.listBoxFilteredPosts.Location = new System.Drawing.Point(30, 127);
             this.listBoxFilteredPosts.Name = "listBoxFilteredPosts";
-            this.listBoxFilteredPosts.Size = new System.Drawing.Size(212, 158);
+            this.listBoxFilteredPosts.Size = new System.Drawing.Size(227, 224);
             this.listBoxFilteredPosts.TabIndex = 4;
-            // 
-            // listBoxHour
-            // 
-            this.listBoxHour.FormattingEnabled = true;
-            this.listBoxHour.ItemHeight = 22;
-            this.listBoxHour.Location = new System.Drawing.Point(397, 169);
-            this.listBoxHour.Name = "listBoxHour";
-            this.listBoxHour.Size = new System.Drawing.Size(212, 312);
-            this.listBoxHour.TabIndex = 3;
-            this.listBoxHour.SelectedIndexChanged += new System.EventHandler(this.listBoxHour_SelectedIndexChanged);
-            // 
-            // listBoxMonth
-            // 
-            this.listBoxMonth.FormattingEnabled = true;
-            this.listBoxMonth.ItemHeight = 22;
-            this.listBoxMonth.Location = new System.Drawing.Point(37, 284);
-            this.listBoxMonth.Name = "listBoxMonth";
-            this.listBoxMonth.Size = new System.Drawing.Size(212, 114);
-            this.listBoxMonth.TabIndex = 2;
-            this.listBoxMonth.SelectedIndexChanged += new System.EventHandler(this.listBoxMonth_SelectedIndexChanged);
-            // 
-            // listBoxYear
-            // 
-            this.listBoxYear.FormattingEnabled = true;
-            this.listBoxYear.ItemHeight = 22;
-            this.listBoxYear.Location = new System.Drawing.Point(38, 78);
-            this.listBoxYear.Name = "listBoxYear";
-            this.listBoxYear.Size = new System.Drawing.Size(212, 114);
-            this.listBoxYear.TabIndex = 1;
-            this.listBoxYear.SelectedIndexChanged += new System.EventHandler(this.listBoxYear_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -903,38 +954,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1243, 697);
             this.tableLayoutPanel1.TabIndex = 76;
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.panel2.Controls.Add(this.comboBoxMonthSort);
-            this.panel2.Controls.Add(this.label11);
-            this.panel2.Controls.Add(this.comboBoxYearSort);
-            this.panel2.Controls.Add(this.listBoxYear);
-            this.panel2.Controls.Add(this.listBoxMonth);
-            this.panel2.Controls.Add(this.label13);
-            this.panel2.Location = new System.Drawing.Point(52, 88);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(289, 425);
-            this.panel2.TabIndex = 80;
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.panel3.Controls.Add(this.comboBoxHourSort);
-            this.panel3.Controls.Add(this.label10);
-            this.panel3.Location = new System.Drawing.Point(368, 88);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(270, 425);
-            this.panel3.TabIndex = 81;
-            // 
-            // comboBoxHourSort
-            // 
-            this.comboBoxHourSort.FormattingEnabled = true;
-            this.comboBoxHourSort.Location = new System.Drawing.Point(147, 33);
-            this.comboBoxHourSort.Name = "comboBoxHourSort";
-            this.comboBoxHourSort.Size = new System.Drawing.Size(94, 30);
-            this.comboBoxHourSort.TabIndex = 80;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
@@ -970,16 +989,18 @@
             this.tabsController.ResumeLayout(false);
             this.tabActivityCenter.ResumeLayout(false);
             this.tabActivityCenter.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFilteredUsers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumAge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumAge)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1062,6 +1083,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.ComboBox comboBoxHourSort;
+        private System.Windows.Forms.Panel panel4;
     }
 }
 
