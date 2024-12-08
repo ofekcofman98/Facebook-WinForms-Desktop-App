@@ -19,6 +19,7 @@ namespace BasicFacebookFeatures
     {
         private readonly AppManager r_AppManager;
         private Action OnLogin;
+        private Action OnLogout;
 
         private FacebookWrapper.ObjectModel.Album m_currentAlbum = null;
         private int m_albumPictureCounter = 0;
@@ -31,16 +32,24 @@ namespace BasicFacebookFeatures
                 "July", "August", "September", "October", "November", "December"
             };
 
+        private readonly List<Panel> m_Panels;
+
         public FormMain()
         {
             InitializeComponent();
             r_AppManager = new AppManager();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
             tabsController.TabPages.Remove(tabMyProfile);
-            tabsController.TabPages.Remove(tabStats);
-
-            tabsController.SelectedIndexChanged += tabsController_SelectedIndexChanged;
-
+            tabsController.TabPages.Remove(tabActivityCenter);
+            m_Panels = new List<Panel>
+                           {
+                               panelAlbums,
+                               panelStatusPost,
+                               panelFavoriteTeams,
+                               panelFriends,
+                               panelLikes,
+                               panelGroups
+                           };
             OnLogin += fetchProfileInfo;
             OnLogin += fetchLikedPages;
             OnLogin += fetchAlbums;
@@ -51,23 +60,6 @@ namespace BasicFacebookFeatures
             OnLogin += fetchFavoriteTeams;
             OnLogin += fetchStatusPost;
         }
-
-        private void tabsController_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (tabsController.SelectedTab == tabStats || tabsController.SelectedTab == tabHomePage || tabsController.SelectedTab == tabMyProfile)
-            {
-                panelGlobal.Visible = true;
-                buttonLogin.Visible = true;
-                buttonLogin.BringToFront();
-                buttonLogout.Visible = true;
-            }
-            else
-            {
-                panelGlobal.Visible = false;
-            }
-
-        }
-
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
@@ -86,12 +78,20 @@ namespace BasicFacebookFeatures
             {
                 r_AppManager.Login();
                 UpdateLoginButton();
-                //launchFacebook();
+                SetHomePanelsVisible();
                 OnLogin?.Invoke();
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SetHomePanelsVisible(bool i_Visibile = true)
+        {
+            foreach(Panel panel in m_Panels)
+            {
+                panel.Visible = i_Visibile;
             }
         }
 
@@ -104,20 +104,18 @@ namespace BasicFacebookFeatures
         }
 
 
-
         private void fetchProfileInfo()
         {
             labelUserName.Visible = true;
             pictureBoxProfile.Visible = true;
             labelUserName.Text = $"Hello, {r_AppManager.LoggedInUser.FirstName}!";
             pictureBoxProfile.ImageLocation = r_AppManager.LoggedInUser.PictureNormalURL;
-
         }
 
 
         private void fetchFriendList()
         {
-            listBoxUserFriends.Visible = true;
+            panelFriends.Visible = true;
             listBoxUserFriends.Items.Clear();
             listBoxUserFriends.DisplayMember = "Name";
             foreach (User User in r_AppManager.LoggedInUser.Friends)
@@ -143,8 +141,7 @@ namespace BasicFacebookFeatures
         }
         private void fetchStats()
         {
-            tabsController.TabPages.Add(tabStats);
-
+            tabsController.TabPages.Add(tabActivityCenter);
 
             listBoxFilteredPosts.Visible = true;
             listBoxFilteredPosts.Items.Clear();
@@ -267,6 +264,7 @@ namespace BasicFacebookFeatures
 
         private void fetchStatusPost()
         {
+            panelStatusPost.Visible = true;
             textBoxStatusPost.Click += textBoxStatus_Click;
             textBoxStatusPost.Leave += textBoxStatus_Leave;
             if (r_AppManager.LoggedInUser != null)
@@ -297,6 +295,7 @@ namespace BasicFacebookFeatures
 
         private void fetchAlbums()
         {
+            panelAlbums.Visible = true;
             listBoxUserAlbums.Items.Clear();
             listBoxUserAlbums.DisplayMember = "Name";
             foreach (FacebookWrapper.ObjectModel.Album album in r_AppManager.LoggedInUser.Albums)
@@ -311,6 +310,7 @@ namespace BasicFacebookFeatures
         }
         private void fetchFavoriteTeams()
         {
+            panelFavoriteTeams.Visible = true;
             listBoxUserFavoriteTeams.Items.Clear();
             listBoxUserFavoriteTeams.DisplayMember = "Name";
             foreach (Page page in r_AppManager.LoggedInUser.FavofriteTeams)
@@ -325,6 +325,7 @@ namespace BasicFacebookFeatures
         }
         private void fetchGroups()
         {
+            panelGroups.Visible = true;
             listBoxUserGroups.Items.Clear();
             listBoxUserGroups.DisplayMember = "Name";
             foreach (Group group in r_AppManager.LoggedInUser.Groups)
@@ -345,9 +346,8 @@ namespace BasicFacebookFeatures
         }
 
         private void fetchLikedPages()
-
         {
-            listBoxLikes.Visible = true;
+            panelLikes.Visible = true;
             listBoxLikes.Items.Clear();
             listBoxLikes.DisplayMember = "Name";
 
@@ -386,6 +386,9 @@ namespace BasicFacebookFeatures
             buttonLogin.BackColor = buttonLogout.BackColor;
             buttonLogin.Enabled = true;
             buttonLogout.Enabled = false;
+            SetHomePanelsVisible(false);
+            tabsController.TabPages.Remove(tabMyProfile);
+            tabsController.TabPages.Remove(tabActivityCenter);
             unLaunchFacebook();
         }
 

@@ -128,5 +128,8 @@
       <Version>131.2.70</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="facebook-new.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

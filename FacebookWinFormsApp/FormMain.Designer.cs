@@ -50,7 +50,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.listBoxUserFriends = new System.Windows.Forms.ListBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelLikes = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.listBoxUserAlbums = new System.Windows.Forms.ListBox();
             this.listBoxLikes = new System.Windows.Forms.ListBox();
@@ -60,7 +60,7 @@
             this.buttonLogin = new System.Windows.Forms.Button();
             this.panelGlobal = new System.Windows.Forms.Panel();
             this.tabsController = new System.Windows.Forms.TabControl();
-            this.tabStats = new System.Windows.Forms.TabPage();
+            this.tabActivityCenter = new System.Windows.Forms.TabPage();
             this.label12 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.labelDateOfPosts = new System.Windows.Forms.Label();
@@ -72,6 +72,14 @@
             this.listBoxYear = new System.Windows.Forms.ListBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panelLikes = new System.Windows.Forms.Panel();
+            this.panelGroups = new System.Windows.Forms.Panel();
+            this.panelAlbums = new System.Windows.Forms.Panel();
+            this.panelStatusPost = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelFavoriteTeams = new System.Windows.Forms.Panel();
+            this.panelFriends = new System.Windows.Forms.Panel();
+            this.pictureBoxIcon = new System.Windows.Forms.PictureBox();
             this.albumUserAlbums = new BasicFacebookFeatures.Album();
             this.albumFilteredPhotos = new BasicFacebookFeatures.Album();
             this.tabMyProfile.SuspendLayout();
@@ -82,8 +90,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.panelGlobal.SuspendLayout();
             this.tabsController.SuspendLayout();
-            this.tabStats.SuspendLayout();
+            this.tabActivityCenter.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panelLikes.SuspendLayout();
+            this.panelGroups.SuspendLayout();
+            this.panelAlbums.SuspendLayout();
+            this.panelStatusPost.SuspendLayout();
+            this.panelFavoriteTeams.SuspendLayout();
+            this.panelFriends.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // tabMyProfile
@@ -216,21 +231,12 @@
             // 
             // tabHomePage
             // 
-            this.tabHomePage.Controls.Add(this.albumUserAlbums);
-            this.tabHomePage.Controls.Add(this.buttonSetStatusPost);
-            this.tabHomePage.Controls.Add(this.textBoxStatusPost);
-            this.tabHomePage.Controls.Add(this.pictureBoxUserFriend);
-            this.tabHomePage.Controls.Add(this.pictureBoxFavoriteTeam);
-            this.tabHomePage.Controls.Add(this.listBoxUserFavoriteTeams);
-            this.tabHomePage.Controls.Add(this.label9);
-            this.tabHomePage.Controls.Add(this.listBoxUserGroups);
-            this.tabHomePage.Controls.Add(this.label7);
-            this.tabHomePage.Controls.Add(this.label3);
-            this.tabHomePage.Controls.Add(this.listBoxUserFriends);
-            this.tabHomePage.Controls.Add(this.label2);
-            this.tabHomePage.Controls.Add(this.label1);
-            this.tabHomePage.Controls.Add(this.listBoxUserAlbums);
-            this.tabHomePage.Controls.Add(this.listBoxLikes);
+            this.tabHomePage.Controls.Add(this.panelLikes);
+            this.tabHomePage.Controls.Add(this.panelGroups);
+            this.tabHomePage.Controls.Add(this.panelAlbums);
+            this.tabHomePage.Controls.Add(this.panelStatusPost);
+            this.tabHomePage.Controls.Add(this.panelFavoriteTeams);
+            this.tabHomePage.Controls.Add(this.panelFriends);
             this.tabHomePage.Location = new System.Drawing.Point(4, 31);
             this.tabHomePage.Name = "tabHomePage";
             this.tabHomePage.Padding = new System.Windows.Forms.Padding(3);
@@ -242,7 +248,7 @@
             // buttonSetStatusPost
             // 
             this.buttonSetStatusPost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSetStatusPost.Location = new System.Drawing.Point(612, 22);
+            this.buttonSetStatusPost.Location = new System.Drawing.Point(393, 17);
             this.buttonSetStatusPost.Margin = new System.Windows.Forms.Padding(4);
             this.buttonSetStatusPost.Name = "buttonSetStatusPost";
             this.buttonSetStatusPost.Size = new System.Drawing.Size(100, 28);
@@ -254,15 +260,15 @@
             // 
             this.textBoxStatusPost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxStatusPost.Location = new System.Drawing.Point(305, 22);
+            this.textBoxStatusPost.Location = new System.Drawing.Point(71, 17);
             this.textBoxStatusPost.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxStatusPost.Name = "textBoxStatusPost";
-            this.textBoxStatusPost.Size = new System.Drawing.Size(287, 28);
+            this.textBoxStatusPost.Size = new System.Drawing.Size(302, 28);
             this.textBoxStatusPost.TabIndex = 72;
             // 
             // pictureBoxUserFriend
             // 
-            this.pictureBoxUserFriend.Location = new System.Drawing.Point(326, 550);
+            this.pictureBoxUserFriend.Location = new System.Drawing.Point(41, 162);
             this.pictureBoxUserFriend.Name = "pictureBoxUserFriend";
             this.pictureBoxUserFriend.Size = new System.Drawing.Size(156, 71);
             this.pictureBoxUserFriend.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -271,7 +277,7 @@
             // 
             // pictureBoxFavoriteTeam
             // 
-            this.pictureBoxFavoriteTeam.Location = new System.Drawing.Point(556, 550);
+            this.pictureBoxFavoriteTeam.Location = new System.Drawing.Point(61, 162);
             this.pictureBoxFavoriteTeam.Name = "pictureBoxFavoriteTeam";
             this.pictureBoxFavoriteTeam.Size = new System.Drawing.Size(130, 71);
             this.pictureBoxFavoriteTeam.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -282,7 +288,7 @@
             // 
             this.listBoxUserFavoriteTeams.FormattingEnabled = true;
             this.listBoxUserFavoriteTeams.ItemHeight = 22;
-            this.listBoxUserFavoriteTeams.Location = new System.Drawing.Point(140, 346);
+            this.listBoxUserFavoriteTeams.Location = new System.Drawing.Point(17, 42);
             this.listBoxUserFavoriteTeams.Name = "listBoxUserFavoriteTeams";
             this.listBoxUserFavoriteTeams.Size = new System.Drawing.Size(230, 114);
             this.listBoxUserFavoriteTeams.TabIndex = 66;
@@ -291,7 +297,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(407, 300);
+            this.label9.Location = new System.Drawing.Point(12, 15);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(185, 24);
             this.label9.TabIndex = 65;
@@ -301,7 +307,7 @@
             // 
             this.listBoxUserGroups.FormattingEnabled = true;
             this.listBoxUserGroups.ItemHeight = 22;
-            this.listBoxUserGroups.Location = new System.Drawing.Point(411, 159);
+            this.listBoxUserGroups.Location = new System.Drawing.Point(16, 69);
             this.listBoxUserGroups.Name = "listBoxUserGroups";
             this.listBoxUserGroups.Size = new System.Drawing.Size(208, 114);
             this.listBoxUserGroups.TabIndex = 64;
@@ -309,7 +315,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(407, 109);
+            this.label7.Location = new System.Drawing.Point(12, 19);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(114, 24);
             this.label7.TabIndex = 63;
@@ -318,7 +324,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(136, 300);
+            this.label3.Location = new System.Drawing.Point(13, 15);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(119, 24);
             this.label3.TabIndex = 62;
@@ -328,25 +334,25 @@
             // 
             this.listBoxUserFriends.FormattingEnabled = true;
             this.listBoxUserFriends.ItemHeight = 22;
-            this.listBoxUserFriends.Location = new System.Drawing.Point(411, 346);
+            this.listBoxUserFriends.Location = new System.Drawing.Point(15, 42);
             this.listBoxUserFriends.Name = "listBoxUserFriends";
             this.listBoxUserFriends.Size = new System.Drawing.Size(230, 114);
             this.listBoxUserFriends.TabIndex = 61;
             this.listBoxUserFriends.SelectedIndexChanged += new System.EventHandler(this.userFriendsListBox_SelectedIndexChanged);
             // 
-            // label2
+            // labelLikes
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(136, 109);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(140, 24);
-            this.label2.TabIndex = 60;
-            this.label2.Text = "user liked posts";
+            this.labelLikes.AutoSize = true;
+            this.labelLikes.Location = new System.Drawing.Point(13, 19);
+            this.labelLikes.Name = "labelLikes";
+            this.labelLikes.Size = new System.Drawing.Size(140, 24);
+            this.labelLikes.TabIndex = 60;
+            this.labelLikes.Text = "user liked posts";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(706, 109);
+            this.label1.Location = new System.Drawing.Point(30, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(119, 24);
             this.label1.TabIndex = 59;
@@ -356,7 +362,7 @@
             // 
             this.listBoxUserAlbums.FormattingEnabled = true;
             this.listBoxUserAlbums.ItemHeight = 22;
-            this.listBoxUserAlbums.Location = new System.Drawing.Point(710, 159);
+            this.listBoxUserAlbums.Location = new System.Drawing.Point(34, 69);
             this.listBoxUserAlbums.Name = "listBoxUserAlbums";
             this.listBoxUserAlbums.Size = new System.Drawing.Size(206, 114);
             this.listBoxUserAlbums.TabIndex = 58;
@@ -366,11 +372,10 @@
             // 
             this.listBoxLikes.FormattingEnabled = true;
             this.listBoxLikes.ItemHeight = 22;
-            this.listBoxLikes.Location = new System.Drawing.Point(140, 159);
+            this.listBoxLikes.Location = new System.Drawing.Point(17, 69);
             this.listBoxLikes.Name = "listBoxLikes";
             this.listBoxLikes.Size = new System.Drawing.Size(239, 114);
             this.listBoxLikes.TabIndex = 57;
-            this.listBoxLikes.Visible = false;
             // 
             // labelUserName
             // 
@@ -394,6 +399,7 @@
             // 
             // buttonLogout
             // 
+            this.buttonLogout.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttonLogout.Enabled = false;
             this.buttonLogout.Location = new System.Drawing.Point(10, 55);
             this.buttonLogout.Margin = new System.Windows.Forms.Padding(4);
@@ -401,23 +407,25 @@
             this.buttonLogout.Size = new System.Drawing.Size(268, 32);
             this.buttonLogout.TabIndex = 52;
             this.buttonLogout.Text = "Logout";
-            this.buttonLogout.UseVisualStyleBackColor = true;
+            this.buttonLogout.UseVisualStyleBackColor = false;
             this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
             // buttonLogin
             // 
+            this.buttonLogin.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttonLogin.Location = new System.Drawing.Point(10, 15);
             this.buttonLogin.Margin = new System.Windows.Forms.Padding(4);
             this.buttonLogin.Name = "buttonLogin";
             this.buttonLogin.Size = new System.Drawing.Size(268, 32);
             this.buttonLogin.TabIndex = 36;
             this.buttonLogin.Text = "Login";
-            this.buttonLogin.UseVisualStyleBackColor = true;
+            this.buttonLogin.UseVisualStyleBackColor = false;
             this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
             // 
             // panelGlobal
             // 
             this.panelGlobal.BackColor = System.Drawing.Color.Navy;
+            this.panelGlobal.Controls.Add(this.pictureBoxIcon);
             this.panelGlobal.Controls.Add(this.pictureBoxProfile);
             this.panelGlobal.Controls.Add(this.buttonLogin);
             this.panelGlobal.Controls.Add(this.buttonLogout);
@@ -432,7 +440,7 @@
             // 
             this.tabsController.Controls.Add(this.tabHomePage);
             this.tabsController.Controls.Add(this.tabMyProfile);
-            this.tabsController.Controls.Add(this.tabStats);
+            this.tabsController.Controls.Add(this.tabActivityCenter);
             this.tabsController.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabsController.Location = new System.Drawing.Point(3, 107);
             this.tabsController.Name = "tabsController";
@@ -440,25 +448,25 @@
             this.tabsController.Size = new System.Drawing.Size(1237, 587);
             this.tabsController.TabIndex = 54;
             // 
-            // tabStats
+            // tabActivityCenter
             // 
-            this.tabStats.Controls.Add(this.label12);
-            this.tabStats.Controls.Add(this.label10);
-            this.tabStats.Controls.Add(this.labelDateOfPosts);
-            this.tabStats.Controls.Add(this.label13);
-            this.tabStats.Controls.Add(this.label11);
-            this.tabStats.Controls.Add(this.albumFilteredPhotos);
-            this.tabStats.Controls.Add(this.listBoxFilteredPosts);
-            this.tabStats.Controls.Add(this.listBoxHour);
-            this.tabStats.Controls.Add(this.listBoxMonth);
-            this.tabStats.Controls.Add(this.listBoxYear);
-            this.tabStats.Location = new System.Drawing.Point(4, 31);
-            this.tabStats.Name = "tabStats";
-            this.tabStats.Padding = new System.Windows.Forms.Padding(3);
-            this.tabStats.Size = new System.Drawing.Size(1229, 552);
-            this.tabStats.TabIndex = 2;
-            this.tabStats.Text = "Stats";
-            this.tabStats.UseVisualStyleBackColor = true;
+            this.tabActivityCenter.Controls.Add(this.label12);
+            this.tabActivityCenter.Controls.Add(this.label10);
+            this.tabActivityCenter.Controls.Add(this.labelDateOfPosts);
+            this.tabActivityCenter.Controls.Add(this.label13);
+            this.tabActivityCenter.Controls.Add(this.label11);
+            this.tabActivityCenter.Controls.Add(this.albumFilteredPhotos);
+            this.tabActivityCenter.Controls.Add(this.listBoxFilteredPosts);
+            this.tabActivityCenter.Controls.Add(this.listBoxHour);
+            this.tabActivityCenter.Controls.Add(this.listBoxMonth);
+            this.tabActivityCenter.Controls.Add(this.listBoxYear);
+            this.tabActivityCenter.Location = new System.Drawing.Point(4, 31);
+            this.tabActivityCenter.Name = "tabActivityCenter";
+            this.tabActivityCenter.Padding = new System.Windows.Forms.Padding(3);
+            this.tabActivityCenter.Size = new System.Drawing.Size(1229, 552);
+            this.tabActivityCenter.TabIndex = 2;
+            this.tabActivityCenter.Text = "Activity Center";
+            this.tabActivityCenter.UseVisualStyleBackColor = true;
             // 
             // label12
             // 
@@ -568,9 +576,92 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1243, 697);
             this.tableLayoutPanel1.TabIndex = 76;
             // 
+            // panelLikes
+            // 
+            this.panelLikes.Controls.Add(this.panel1);
+            this.panelLikes.Controls.Add(this.listBoxLikes);
+            this.panelLikes.Controls.Add(this.labelLikes);
+            this.panelLikes.Location = new System.Drawing.Point(145, 82);
+            this.panelLikes.Name = "panelLikes";
+            this.panelLikes.Size = new System.Drawing.Size(266, 198);
+            this.panelLikes.TabIndex = 75;
+            this.panelLikes.Visible = false;
+            // 
+            // panelGroups
+            // 
+            this.panelGroups.Controls.Add(this.label7);
+            this.panelGroups.Controls.Add(this.listBoxUserGroups);
+            this.panelGroups.Location = new System.Drawing.Point(417, 82);
+            this.panelGroups.Name = "panelGroups";
+            this.panelGroups.Size = new System.Drawing.Size(266, 198);
+            this.panelGroups.TabIndex = 76;
+            this.panelGroups.Visible = false;
+            // 
+            // panelAlbums
+            // 
+            this.panelAlbums.Controls.Add(this.albumUserAlbums);
+            this.panelAlbums.Controls.Add(this.label1);
+            this.panelAlbums.Controls.Add(this.listBoxUserAlbums);
+            this.panelAlbums.Location = new System.Drawing.Point(705, 82);
+            this.panelAlbums.Name = "panelAlbums";
+            this.panelAlbums.Size = new System.Drawing.Size(266, 450);
+            this.panelAlbums.TabIndex = 77;
+            this.panelAlbums.Visible = false;
+            // 
+            // panelStatusPost
+            // 
+            this.panelStatusPost.Controls.Add(this.textBoxStatusPost);
+            this.panelStatusPost.Controls.Add(this.buttonSetStatusPost);
+            this.panelStatusPost.Location = new System.Drawing.Point(294, 6);
+            this.panelStatusPost.Name = "panelStatusPost";
+            this.panelStatusPost.Size = new System.Drawing.Size(531, 70);
+            this.panelStatusPost.TabIndex = 78;
+            this.panelStatusPost.Visible = false;
+            // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(0, 201);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(266, 300);
+            this.panel1.TabIndex = 79;
+            // 
+            // panelFavoriteTeams
+            // 
+            this.panelFavoriteTeams.Controls.Add(this.label9);
+            this.panelFavoriteTeams.Controls.Add(this.pictureBoxUserFriend);
+            this.panelFavoriteTeams.Controls.Add(this.listBoxUserFriends);
+            this.panelFavoriteTeams.Location = new System.Drawing.Point(417, 286);
+            this.panelFavoriteTeams.Name = "panelFavoriteTeams";
+            this.panelFavoriteTeams.Size = new System.Drawing.Size(266, 246);
+            this.panelFavoriteTeams.TabIndex = 80;
+            this.panelFavoriteTeams.Visible = false;
+            // 
+            // panelFriends
+            // 
+            this.panelFriends.Controls.Add(this.listBoxUserFavoriteTeams);
+            this.panelFriends.Controls.Add(this.pictureBoxFavoriteTeam);
+            this.panelFriends.Controls.Add(this.label3);
+            this.panelFriends.Location = new System.Drawing.Point(145, 286);
+            this.panelFriends.Name = "panelFriends";
+            this.panelFriends.Size = new System.Drawing.Size(266, 246);
+            this.panelFriends.TabIndex = 81;
+            this.panelFriends.Visible = false;
+            // 
+            // pictureBoxIcon
+            // 
+            this.pictureBoxIcon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxIcon.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBoxIcon.Image = global::BasicFacebookFeatures.Properties.Resources.facebook_new;
+            this.pictureBoxIcon.Location = new System.Drawing.Point(1142, 5);
+            this.pictureBoxIcon.Name = "pictureBoxIcon";
+            this.pictureBoxIcon.Size = new System.Drawing.Size(86, 82);
+            this.pictureBoxIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxIcon.TabIndex = 57;
+            this.pictureBoxIcon.TabStop = false;
+            // 
             // albumUserAlbums
             // 
-            this.albumUserAlbums.Location = new System.Drawing.Point(710, 346);
+            this.albumUserAlbums.Location = new System.Drawing.Point(35, 204);
             this.albumUserAlbums.Margin = new System.Windows.Forms.Padding(4);
             this.albumUserAlbums.Name = "albumUserAlbums";
             this.albumUserAlbums.Size = new System.Drawing.Size(188, 210);
@@ -599,15 +690,27 @@
             this.tabMyProfile.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMyProfile)).EndInit();
             this.tabHomePage.ResumeLayout(false);
-            this.tabHomePage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUserFriend)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFavoriteTeam)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
             this.panelGlobal.ResumeLayout(false);
             this.tabsController.ResumeLayout(false);
-            this.tabStats.ResumeLayout(false);
-            this.tabStats.PerformLayout();
+            this.tabActivityCenter.ResumeLayout(false);
+            this.tabActivityCenter.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.panelLikes.ResumeLayout(false);
+            this.panelLikes.PerformLayout();
+            this.panelGroups.ResumeLayout(false);
+            this.panelGroups.PerformLayout();
+            this.panelAlbums.ResumeLayout(false);
+            this.panelAlbums.PerformLayout();
+            this.panelStatusPost.ResumeLayout(false);
+            this.panelStatusPost.PerformLayout();
+            this.panelFavoriteTeams.ResumeLayout(false);
+            this.panelFavoriteTeams.PerformLayout();
+            this.panelFriends.ResumeLayout(false);
+            this.panelFriends.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -626,7 +729,7 @@
         private System.Windows.Forms.TabPage tabHomePage;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox listBoxUserFriends;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelLikes;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox listBoxUserAlbums;
         private System.Windows.Forms.ListBox listBoxLikes;
@@ -643,7 +746,7 @@
         private System.Windows.Forms.PictureBox pictureBoxUserFriend;
         private System.Windows.Forms.Button buttonSetStatusPost;
         private System.Windows.Forms.TextBox textBoxStatusPost;
-        private System.Windows.Forms.TabPage tabStats;
+        private System.Windows.Forms.TabPage tabActivityCenter;
         private System.Windows.Forms.PictureBox PictureBoxMyProfile;
         private System.Windows.Forms.ListBox listBoxYear;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
@@ -659,6 +762,14 @@
         private System.Windows.Forms.Panel panelGlobal;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panelLikes;
+        private System.Windows.Forms.Panel panelGroups;
+        private System.Windows.Forms.Panel panelAlbums;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panelStatusPost;
+        private System.Windows.Forms.Panel panelFavoriteTeams;
+        private System.Windows.Forms.Panel panelFriends;
+        private System.Windows.Forms.PictureBox pictureBoxIcon;
     }
 }
 
