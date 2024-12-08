@@ -32,16 +32,15 @@ namespace BasicFacebookFeatures
                 "July", "August", "September", "October", "November", "December"
             };
 
-        private readonly List<Panel> m_Panels;
+        private readonly List<Panel> m_HomePanels;
+        private readonly List<TabPage> m_AddedTabs;
 
         public FormMain()
         {
             InitializeComponent();
             r_AppManager = new AppManager();
-            FacebookWrapper.FacebookService.s_CollectionLimit = 25;
-            tabsController.TabPages.Remove(tabMyProfile);
-            tabsController.TabPages.Remove(tabActivityCenter);
-            m_Panels = new List<Panel>
+            //FacebookWrapper.FacebookService.s_CollectionLimit = 25;
+            m_HomePanels = new List<Panel>
                            {
                                panelAlbums,
                                panelStatusPost,
@@ -50,6 +49,8 @@ namespace BasicFacebookFeatures
                                panelLikes,
                                panelGroups
                            };
+            m_AddedTabs = new List<TabPage> { tabMyProfile, tabActivityCenter };
+            updateTabs();
             OnLogin += fetchProfileInfo;
             OnLogin += fetchLikedPages;
             OnLogin += fetchAlbums;
@@ -63,7 +64,7 @@ namespace BasicFacebookFeatures
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText("design.patterns");
+            //Clipboard.SetText("design.patterns");
 
             if (r_AppManager.LoginResult == null)
             {
@@ -77,8 +78,9 @@ namespace BasicFacebookFeatures
             try
             {
                 r_AppManager.Login();
-                UpdateLoginButton();
-                SetHomePanelsVisible();
+                updateLoginButton();
+                updateHomePanelsVisible();
+                updateTabs();
                 OnLogin?.Invoke();
             }
             catch (Exception e)
@@ -87,15 +89,44 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void SetHomePanelsVisible(bool i_Visibile = true)
+        private void updateHomePanelsVisible()
         {
-            foreach(Panel panel in m_Panels)
+            bool i_IsVisibile;
+            if(r_AppManager.IsLoggedIn)
             {
-                panel.Visible = i_Visibile;
+                i_IsVisibile = true;
+            }
+            else
+            {
+                i_IsVisibile = false;
+            }
+
+            foreach(Panel panel in m_HomePanels)
+            {
+                panel.Visible = i_IsVisibile;
+            }
+        }
+        private void updateTabs()
+        {
+            tabsController.SelectedIndex = 0;
+            if (r_AppManager.IsLoggedIn)
+            {
+                foreach (TabPage tab in m_AddedTabs)
+                {
+                    tabsController.TabPages.Add(tab);
+                }
+            }
+            else
+            {
+                foreach (TabPage tab in m_AddedTabs)
+                {
+                    tabsController.TabPages.Remove(tab);
+                }
             }
         }
 
-        private void UpdateLoginButton()
+
+        private void updateLoginButton()
         {
             buttonLogin.Text = $"Logged in as {r_AppManager.LoggedInUser.Name}";
             buttonLogin.BackColor = Color.LightGreen;
@@ -131,7 +162,6 @@ namespace BasicFacebookFeatures
         }
         private void fetchMyProfile()
         {
-            tabsController.TabPages.Add(tabMyProfile);
             labelEmailData.Text = r_AppManager.LoggedInUser.Email;
             labelBirthdayData.Text = r_AppManager.LoggedInUser.Birthday;
             labelGenderData.Text = r_AppManager.LoggedInUser.Gender.ToString();
@@ -141,8 +171,6 @@ namespace BasicFacebookFeatures
         }
         private void fetchStats()
         {
-            tabsController.TabPages.Add(tabActivityCenter);
-
             listBoxFilteredPosts.Visible = true;
             listBoxFilteredPosts.Items.Clear();
 
@@ -382,14 +410,13 @@ namespace BasicFacebookFeatures
 
         private void performLogout()
         {
-            buttonLogin.Text = "Login";
+            updateHomePanelsVisible();
+            updateTabs();
+            unLaunchFacebook();
             buttonLogin.BackColor = buttonLogout.BackColor;
             buttonLogin.Enabled = true;
             buttonLogout.Enabled = false;
-            SetHomePanelsVisible(false);
-            tabsController.TabPages.Remove(tabMyProfile);
-            tabsController.TabPages.Remove(tabActivityCenter);
-            unLaunchFacebook();
+            buttonLogin.Text = "Login";
         }
 
         private void userFavoriteTeamsListBox_SelectedIndexChanged(object sender, EventArgs e)

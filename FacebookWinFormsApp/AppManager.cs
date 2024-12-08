@@ -14,6 +14,8 @@ namespace BasicFacebookFeatures
         private readonly string r_AppId = "945333600988492";
         private FacebookWrapper.LoginResult m_LoginResult;
         private FacebookWrapper.ObjectModel.User m_LoggedInUser;
+
+        public bool IsLoggedIn { get; private set; } = false;
         public ActivityCenter ActivityCenter { get; set; }
         private readonly string[] r_Permssions = new string[]
                                                          {
@@ -28,7 +30,6 @@ namespace BasicFacebookFeatures
                                                              "user_likes",
                                                              "user_link",
                                                              "user_location",
-                                                             //"user_reactions",//
                                                              "user_photos",
                                                              "user_posts",
                                                              "user_videos"
@@ -36,7 +37,6 @@ namespace BasicFacebookFeatures
 
         public List<Post> UserPosts { get; set; }
         public List<Photo> UserPhotos { get; set; }
-
 
         public string AppId
         {
@@ -75,6 +75,7 @@ namespace BasicFacebookFeatures
             {
                 if(string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
                 {
+                    IsLoggedIn = true;
                     m_LoggedInUser = m_LoginResult.LoggedInUser;
                     getUserData();
                     ActivityCenter = new ActivityCenter(this);
@@ -119,12 +120,12 @@ namespace BasicFacebookFeatures
 
         public void Logout()
         {
-            
             FacebookService.LogoutWithUI();
             m_LoginResult = null;
             m_LoggedInUser = null;
             UserPhotos = null;
             UserPosts = null;
+            IsLoggedIn = false; 
         }
 
 
