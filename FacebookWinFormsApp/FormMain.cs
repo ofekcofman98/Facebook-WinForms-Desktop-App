@@ -682,6 +682,21 @@ namespace BasicFacebookFeatures
 
         private void numericUpDownMaximumAge_ValueChanged(object sender, EventArgs e)
         {
+            if (numericUpDownMaximumAge.Value < 18)
+            {
+                numericUpDownMaximumAge.Value = 18;
+              
+            }
+
+            if (numericUpDownMaximumAge.Value < numericUpDownMinimumAge.Value)
+            {
+                numericUpDownMaximumAge.Value = numericUpDownMinimumAge.Value;
+            }
+
+        }
+
+        private void numericUpDownMinimumAge_ValueChanged(object sender, EventArgs e)
+        {
             if (numericUpDownMinimumAge.Value < 18)
             {
                 numericUpDownMinimumAge.Value = 18;
@@ -694,24 +709,11 @@ namespace BasicFacebookFeatures
 
         }
 
-        private void numericUpDownMinimumAge_ValueChanged(object sender, EventArgs e)
-        {
-            if (numericUpDownMaximumAge.Value < 18)
-            {
-                numericUpDownMaximumAge.Value = 18;
-            }
-
-            if (numericUpDownMaximumAge.Value < numericUpDownMinimumAge.Value)
-            {
-                numericUpDownMaximumAge.Value = numericUpDownMinimumAge.Value;
-            }
-
-        }
-
         private void listBoxFilteredUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pictureBoxFilteredUsers.Image = (listBoxFilteredUsers.SelectedItem as User).ImageNormal;
+            pictureBoxFilteredUsers.Image = (listBoxFilteredUsers.SelectedItem as User).ImageLarge;
         }
 
+  
     }
 }
