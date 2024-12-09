@@ -48,7 +48,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.listBoxUserGroups = new System.Windows.Forms.ListBox();
             this.panelAlbums = new System.Windows.Forms.Panel();
-            this.albumUserAlbums = new BasicFacebookFeatures.Album();
             this.label1 = new System.Windows.Forms.Label();
             this.listBoxUserAlbums = new System.Windows.Forms.ListBox();
             this.panelStatusPost = new System.Windows.Forms.Panel();
@@ -84,7 +83,6 @@
             this.listBoxHour = new System.Windows.Forms.ListBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.labelDateOfPosts = new System.Windows.Forms.Label();
-            this.albumFilteredPhotos = new BasicFacebookFeatures.Album();
             this.listBoxFilteredPosts = new System.Windows.Forms.ListBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.listBoxFilteredUsers = new System.Windows.Forms.ListBox();
@@ -106,6 +104,8 @@
             this.numericUpDownMinimumAge = new System.Windows.Forms.NumericUpDown();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.albumUserAlbums = new BasicFacebookFeatures.Album();
+            this.albumFilteredPhotos = new BasicFacebookFeatures.Album();
             this.tabMyProfile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMyProfile)).BeginInit();
             this.tabHomePage.SuspendLayout();
@@ -277,6 +277,7 @@
             // 
             // panelLikes
             // 
+            this.panelLikes.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panelLikes.Controls.Add(this.panel1);
             this.panelLikes.Controls.Add(this.listBoxLikes);
             this.panelLikes.Controls.Add(this.labelLikes);
@@ -313,6 +314,7 @@
             // 
             // panelGroups
             // 
+            this.panelGroups.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panelGroups.Controls.Add(this.label7);
             this.panelGroups.Controls.Add(this.listBoxUserGroups);
             this.panelGroups.Location = new System.Drawing.Point(417, 82);
@@ -341,6 +343,7 @@
             // 
             // panelAlbums
             // 
+            this.panelAlbums.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panelAlbums.Controls.Add(this.albumUserAlbums);
             this.panelAlbums.Controls.Add(this.label1);
             this.panelAlbums.Controls.Add(this.listBoxUserAlbums);
@@ -349,14 +352,6 @@
             this.panelAlbums.Size = new System.Drawing.Size(266, 450);
             this.panelAlbums.TabIndex = 77;
             this.panelAlbums.Visible = false;
-            // 
-            // albumUserAlbums
-            // 
-            this.albumUserAlbums.Location = new System.Drawing.Point(35, 204);
-            this.albumUserAlbums.Margin = new System.Windows.Forms.Padding(4);
-            this.albumUserAlbums.Name = "albumUserAlbums";
-            this.albumUserAlbums.Size = new System.Drawing.Size(188, 210);
-            this.albumUserAlbums.TabIndex = 74;
             // 
             // label1
             // 
@@ -410,6 +405,7 @@
             // 
             // panelFavoriteTeams
             // 
+            this.panelFavoriteTeams.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panelFavoriteTeams.Controls.Add(this.label9);
             this.panelFavoriteTeams.Controls.Add(this.pictureBoxUserFriend);
             this.panelFavoriteTeams.Controls.Add(this.listBoxUserFriends);
@@ -449,6 +445,7 @@
             // 
             // panelFriends
             // 
+            this.panelFriends.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panelFriends.Controls.Add(this.listBoxUserFavoriteTeams);
             this.panelFriends.Controls.Add(this.pictureBoxFavoriteTeam);
             this.panelFriends.Controls.Add(this.label3);
@@ -729,14 +726,6 @@
             this.labelDateOfPosts.TabIndex = 76;
             this.labelDateOfPosts.Text = "Date";
             // 
-            // albumFilteredPhotos
-            // 
-            this.albumFilteredPhotos.Location = new System.Drawing.Point(275, 142);
-            this.albumFilteredPhotos.Margin = new System.Windows.Forms.Padding(4);
-            this.albumFilteredPhotos.Name = "albumFilteredPhotos";
-            this.albumFilteredPhotos.Size = new System.Drawing.Size(156, 186);
-            this.albumFilteredPhotos.TabIndex = 74;
-            // 
             // listBoxFilteredPosts
             // 
             this.listBoxFilteredPosts.FormattingEnabled = true;
@@ -953,6 +942,22 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1243, 697);
             this.tableLayoutPanel1.TabIndex = 76;
+            // 
+            // albumUserAlbums
+            // 
+            this.albumUserAlbums.Location = new System.Drawing.Point(35, 204);
+            this.albumUserAlbums.Margin = new System.Windows.Forms.Padding(4);
+            this.albumUserAlbums.Name = "albumUserAlbums";
+            this.albumUserAlbums.Size = new System.Drawing.Size(188, 210);
+            this.albumUserAlbums.TabIndex = 74;
+            // 
+            // albumFilteredPhotos
+            // 
+            this.albumFilteredPhotos.Location = new System.Drawing.Point(275, 142);
+            this.albumFilteredPhotos.Margin = new System.Windows.Forms.Padding(4);
+            this.albumFilteredPhotos.Name = "albumFilteredPhotos";
+            this.albumFilteredPhotos.Size = new System.Drawing.Size(156, 186);
+            this.albumFilteredPhotos.TabIndex = 74;
             // 
             // FormMain
             // 

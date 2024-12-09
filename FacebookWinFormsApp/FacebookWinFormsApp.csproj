@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppManager.cs" />
+    <Compile Include="IFetchable.cs" />
     <Compile Include="IFilterable.cs" />
     <Compile Include="FilterAge.cs" />
     <Compile Include="FilterGender.cs" />
@@ -117,6 +118,7 @@
     <EmbeddedResource Include="Album.resx">
       <DependentUpon>Album.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -133,6 +135,9 @@
   <ItemGroup>
     <PackageReference Include="CefSharp.WinForms">
       <Version>131.2.70</Version>
+    </PackageReference>
+    <PackageReference Include="PlantUml.Net">
+      <Version>1.4.80</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

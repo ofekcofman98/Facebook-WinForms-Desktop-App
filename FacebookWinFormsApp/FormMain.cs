@@ -126,7 +126,6 @@ namespace BasicFacebookFeatures
             }
         }
 
-
         private void updateLoginButton()
         {
             buttonLogin.Text = $"Logged in as {r_AppManager.LoggedInUser.Name}";
@@ -134,6 +133,15 @@ namespace BasicFacebookFeatures
             buttonLogin.Enabled = false;
             buttonLogout.Enabled = true;
         }
+
+        private void fetchProfileInfo()
+        {
+            labelUserName.Visible = true;
+            pictureBoxProfile.Visible = true;
+            labelUserName.Text = $"Hello, {r_AppManager.LoggedInUser.FirstName}!";
+            pictureBoxProfile.ImageLocation = r_AppManager.LoggedInUser.PictureNormalURL;
+        }
+
 
 
         private void fetchFriendsLookupPage()
@@ -208,13 +216,6 @@ namespace BasicFacebookFeatures
             }
 
             comboBoxFriendList.SelectedIndex = 0;
-        }
-        private void fetchProfileInfo()
-        {
-            labelUserName.Visible = true;
-            pictureBoxProfile.Visible = true;
-            labelUserName.Text = $"Hello, {r_AppManager.LoggedInUser.FirstName}!";
-            pictureBoxProfile.ImageLocation = r_AppManager.LoggedInUser.PictureNormalURL;
         }
 
 
@@ -312,27 +313,6 @@ namespace BasicFacebookFeatures
             i_ComboBox.Items.Add("Sort by Count Descending");
         }
 
-        private void comboBoxYearSort_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            listBoxMonth.Items.Clear();
-            comboBoxMonthSort.Items.Clear();
-            string sorting = getSorting(comboBoxYearSort.SelectedIndex);
-            displayYearCounts(sorting);
-        }
-
-        private void comboBoxMonthSort_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int selectedYear = int.Parse(listBoxYear.SelectedItem.ToString().Split(':')[0]);
-            string sorting = getSorting(comboBoxMonthSort.SelectedIndex);
-            displayMonthCounts(selectedYear, sorting);
-        }
-
-        private void comboBoxHourSort_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string sorting = getSorting(comboBoxHourSort.SelectedIndex);
-            displayHoursCounts(sorting);
-        }
-
         private string getSorting(int i_ComboBoxIndex)
         {
             string sorting;
@@ -357,6 +337,29 @@ namespace BasicFacebookFeatures
 
             return sorting;
         }
+
+
+        private void comboBoxYearSort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listBoxMonth.Items.Clear();
+            comboBoxMonthSort.Items.Clear();
+            string sorting = getSorting(comboBoxYearSort.SelectedIndex);
+            displayYearCounts(sorting);
+        }
+
+        private void comboBoxMonthSort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int selectedYear = int.Parse(listBoxYear.SelectedItem.ToString().Split(':')[0]);
+            string sorting = getSorting(comboBoxMonthSort.SelectedIndex);
+            displayMonthCounts(selectedYear, sorting);
+        }
+
+        private void comboBoxHourSort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string sorting = getSorting(comboBoxHourSort.SelectedIndex);
+            displayHoursCounts(sorting);
+        }
+
 
         private void listBoxYear_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -551,8 +554,6 @@ namespace BasicFacebookFeatures
                 listBoxLikes.Items.Add("Couldn't fetch liked pages.");
                 MessageBox.Show($"Error: {ex.Message}");
             }
-
-
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
