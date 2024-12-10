@@ -10,6 +10,12 @@ namespace BasicFacebookFeatures
     public static class UserUtils
     {
         private static readonly String facebookDateFormat = "MM/dd/yyyy";
+        public static readonly string[] r_Months =
+            {
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            };
+
         public static int getUserAge(User user)
         {
             String birthDateString = user.Birthday;
@@ -34,7 +40,5 @@ namespace BasicFacebookFeatures
                 throw new ArgumentException("Invalid date format. Please provide a date in MM/dd/yyyy format.");
             }
         }
-
-
     }
 }

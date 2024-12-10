@@ -16,7 +16,7 @@ namespace BasicFacebookFeatures
         private FacebookWrapper.ObjectModel.User m_LoggedInUser;
 
         public bool IsLoggedIn { get; private set; } = false;
-        public ActivityCenter ActivityCenter { get; set; }
+        //public ActivityCenter ActivityCenter { get; set; }
         private readonly string[] r_Permssions = new string[]
                                                          {
                                                              "email",
@@ -78,7 +78,7 @@ namespace BasicFacebookFeatures
                     IsLoggedIn = true;
                     m_LoggedInUser = m_LoginResult.LoggedInUser;
                     getUserData();
-                    ActivityCenter = new ActivityCenter(this);
+                    //ActivityCenter = new ActivityCenter(this);
                 }
                 else
                 {

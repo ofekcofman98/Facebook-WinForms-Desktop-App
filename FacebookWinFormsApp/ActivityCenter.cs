@@ -114,6 +114,22 @@ namespace BasicFacebookFeatures
                     monthCounts[month]++;
                 }
             }
+
+            foreach(Photo photo in r_UserPhotos)
+            {
+                if(photo.CreatedTime.HasValue && photo.CreatedTime.Value.Year == i_Year)
+                {
+                    int month = photo.CreatedTime.Value.Month;
+
+                    if(!monthCounts.ContainsKey(month))
+                    {
+                        monthCounts[month] = 0;
+                    }
+
+                    monthCounts[month]++;
+                }
+            }
+
             return sortCountsList(monthCounts, i_SortBy);
         }
 

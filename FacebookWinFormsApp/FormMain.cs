@@ -20,17 +20,8 @@ namespace BasicFacebookFeatures
         private readonly AppManager r_AppManager;
         private Action OnLogin;
         private Action OnLogout;
-
-        private FacebookWrapper.ObjectModel.Album m_currentAlbum = null;
-        private int m_albumPictureCounter = 0;
-        private FindFriends m_FindFriends = new FindFriends();
-        private int m_FilteredPhotoIndex = -1;
-
-        private readonly string[] r_Months =
-            {
-                "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-            };
+        private FindFriends m_FindFriends;
+        private ActivityCenter m_ActivityCenter;
 
         private readonly List<Panel> m_HomePanels;
         private readonly List<TabPage> m_AddedTabs;
@@ -39,6 +30,8 @@ namespace BasicFacebookFeatures
         {
             InitializeComponent();
             r_AppManager = new AppManager();
+
+            m_FindFriends = new FindFriends();
             //FacebookWrapper.FacebookService.s_CollectionLimit = 25;
             m_HomePanels = new List<Panel>
                            {
@@ -50,7 +43,11 @@ namespace BasicFacebookFeatures
                                panelGroups
                            };
             m_AddedTabs = new List<TabPage> { tabMyProfile, tabActivityCenter, tabPage1 };
-            updateTabs();
+
+            updateTabs(false);
+
+            OnLogin += updateLoginButton;
+            OnLogin += updateHomePanelsVisible;
             OnLogin += fetchProfileInfo;
             OnLogin += fetchLikedPages;
             OnLogin += fetchAlbums;
@@ -61,6 +58,26 @@ namespace BasicFacebookFeatures
             OnLogin += fetchGroups;
             OnLogin += fetchFavoriteTeams;
             OnLogin += fetchStatusPost;
+
+            OnLogout += updateHomePanelsVisible;
+            OnLogout += unLaunchFacebook;
+            OnLogout += updateLoginButton;
+        }
+
+        internal ActivityCenter ActivityCenter
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        internal AppManager AppManager
+        {
+            get => default;
+            set
+            {
+            }
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
@@ -71,7 +88,6 @@ namespace BasicFacebookFeatures
             {
                 performLogin();
             }
-
         }
          
         private void performLogin()
@@ -79,9 +95,7 @@ namespace BasicFacebookFeatures
             try
             {
                 r_AppManager.Login();
-                updateLoginButton();
-                updateHomePanelsVisible();
-                updateTabs();
+                updateTabs(r_AppManager.IsLoggedIn);
                 OnLogin?.Invoke();
             }
             catch (Exception e)
@@ -89,6 +103,27 @@ namespace BasicFacebookFeatures
                 MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void buttonLogout_Click(object sender, EventArgs e)
+        {
+            performLogout();
+        }
+
+        private void performLogout()
+        {
+            try
+            {
+                r_AppManager.Logout();
+                updateTabs(r_AppManager.IsLoggedIn);
+                OnLogout?.Invoke();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
 
         private void updateHomePanelsVisible()
         {
@@ -107,10 +142,11 @@ namespace BasicFacebookFeatures
                 panel.Visible = i_IsVisibile;
             }
         }
-        private void updateTabs()
+
+        private void updateTabs(bool i_IsVisible = true)
         {
             tabsController.SelectedIndex = 0;
-            if (r_AppManager.IsLoggedIn)
+            if (i_IsVisible)
             {
                 foreach (TabPage tab in m_AddedTabs)
                 {
@@ -128,10 +164,20 @@ namespace BasicFacebookFeatures
 
         private void updateLoginButton()
         {
-            buttonLogin.Text = $"Logged in as {r_AppManager.LoggedInUser.Name}";
-            buttonLogin.BackColor = Color.LightGreen;
-            buttonLogin.Enabled = false;
-            buttonLogout.Enabled = true;
+            if(r_AppManager.IsLoggedIn)
+            {
+                buttonLogin.Text = $"Logged in as {r_AppManager.LoggedInUser.Name}";
+                buttonLogin.BackColor = Color.LightGreen;
+                buttonLogin.Enabled = false;
+                buttonLogout.Enabled = true;
+            }
+            else
+            {
+                buttonLogin.BackColor = buttonLogout.BackColor;
+                buttonLogin.Enabled = true;
+                buttonLogout.Enabled = false;
+                buttonLogin.Text = "Login";
+            }
         }
 
         private void fetchProfileInfo()
@@ -141,7 +187,6 @@ namespace BasicFacebookFeatures
             labelUserName.Text = $"Hello, {r_AppManager.LoggedInUser.FirstName}!";
             pictureBoxProfile.ImageLocation = r_AppManager.LoggedInUser.PictureNormalURL;
         }
-
 
 
         private void fetchFriendsLookupPage()
@@ -196,7 +241,8 @@ namespace BasicFacebookFeatures
 
             if (checkedListBoxlikedPages.Items.Count == 0)
             {
-                MessageBox.Show("No liked pages to retrieve :(");
+                checkedListBoxlikedPages.Items.Add("No liked pages to retrieve");
+                //MessageBox.Show("No liked pages to retrieve :(");
             }
         }
 
@@ -231,7 +277,8 @@ namespace BasicFacebookFeatures
 
             if (listBoxUserFriends.Items.Count == 0)
             {
-                MessageBox.Show("No friends to retrieve :(");
+                listBoxUserFriends.Items.Add("No friends to retrieve");
+                //MessageBox.Show("No friends to retrieve :(");
             }
             
         }
@@ -246,6 +293,8 @@ namespace BasicFacebookFeatures
         }
         private void fetchActivityCenter()
         {
+            m_ActivityCenter = new ActivityCenter(r_AppManager);
+
             listBoxFilteredPosts.Visible = true;
             listBoxFilteredPosts.Items.Clear();
 
@@ -260,7 +309,7 @@ namespace BasicFacebookFeatures
         private void displayYearCounts(string i_SortBy = "CountDescending")
         {
             listBoxYear.Items.Clear();
-            List<KeyValuePair<int, int>> yearCounts = r_AppManager.ActivityCenter.GetYearCounts(i_SortBy);
+            List<KeyValuePair<int, int>> yearCounts = m_ActivityCenter.GetYearCounts(i_SortBy);
             foreach (KeyValuePair<int, int> year in yearCounts)
             {
                 listBoxYear.Items.Add($"{year.Key}: {year.Value} posts/photos");
@@ -275,12 +324,12 @@ namespace BasicFacebookFeatures
         private void displayMonthCounts(int i_SelectedYear, string i_SortBy = "CountDescending")
         {
             listBoxMonth.Items.Clear();
-            List<KeyValuePair<int, int>> monthCounts = r_AppManager.ActivityCenter.GetMonthCounts(i_SelectedYear, i_SortBy);
+            List<KeyValuePair<int, int>> monthCounts = m_ActivityCenter.GetMonthCounts(i_SelectedYear, i_SortBy);
             listBoxMonth.Items.Clear();
 
             foreach (KeyValuePair<int, int> month in monthCounts)
             {
-                listBoxMonth.Items.Add($"{r_Months[month.Key - 1]}: {month.Value} posts/photos");
+                listBoxMonth.Items.Add($"{UserUtils.r_Months[month.Key - 1]}: {month.Value} posts/photos");
             }
 
             if(listBoxMonth.Items.Count > 0)
@@ -292,7 +341,7 @@ namespace BasicFacebookFeatures
         private void displayHoursCounts(string i_SortBy = "CountDescending")
         {
             listBoxHour.Items.Clear();
-            List<KeyValuePair<int, int>> hoursCounts = r_AppManager.ActivityCenter.GetHourCounts(i_SortBy);
+            List<KeyValuePair<int, int>> hoursCounts = m_ActivityCenter.GetHourCounts(i_SortBy);
             foreach (KeyValuePair<int, int> hour in hoursCounts)
             {
                 listBoxHour.Items.Add($"{makeHourFormat(hour.Key)}: {hour.Value} posts/photos");
@@ -380,7 +429,7 @@ namespace BasicFacebookFeatures
             {
                 int selectedYear = int.Parse(listBoxYear.SelectedItem.ToString().Split(':')[0]);
                 string selectedMonthName = listBoxMonth.SelectedItem.ToString().Split(':')[0];
-                int selectedMonth = Array.IndexOf(r_Months, selectedMonthName) + 1; ;
+                int selectedMonth = Array.IndexOf(UserUtils.r_Months, selectedMonthName) + 1; ;
 
                 labelDateOfPosts.Text = $"Your posts from {selectedMonthName} {selectedYear}";
                 filterPostsByTime(i_Year: selectedYear, i_Month: selectedMonth);
@@ -392,7 +441,7 @@ namespace BasicFacebookFeatures
             if(listBoxHour.SelectedItem != null)
             {
                 int selectedHour = int.Parse(listBoxHour.SelectedItem.ToString().Split(':')[0]);
-                labelDateOfPosts.Text = $"Your posts from {makeHourFormat(selectedHour)}: ";
+                labelDateOfPosts.Text = $"Your posts from {makeHourFormat(selectedHour)} in total: ";
 
                 filterPostsByTime(i_Hour: selectedHour);
             }
@@ -405,8 +454,8 @@ namespace BasicFacebookFeatures
 
         private void filterPostsByTime(int? i_Year = null, int? i_Month = null, int? i_Hour = null)
         {
-            List<Post> posts = r_AppManager.ActivityCenter.GetPostsByTime(i_Year, i_Month, i_Hour);
-            List<Photo> photos = r_AppManager.ActivityCenter.GetPhotosByTime(i_Year, i_Month, i_Hour);
+            List<Post> posts = m_ActivityCenter.GetPostsByTime(i_Year, i_Month, i_Hour);
+            List<Photo> photos = m_ActivityCenter.GetPhotosByTime(i_Year, i_Month, i_Hour);
 
             listBoxFilteredPosts.Items.Clear();
             addPostsToListbox(posts, listBoxFilteredPosts);
@@ -489,7 +538,7 @@ namespace BasicFacebookFeatures
 
             if (listBoxUserAlbums.Items.Count == 0)
             {
-                MessageBox.Show("No Albums to retrieve :(");
+                listBoxUserAlbums.Items.Add("No Albums to retrieve");
             }
         }
         private void fetchFavoriteTeams()
@@ -504,7 +553,8 @@ namespace BasicFacebookFeatures
 
             if (listBoxUserFavoriteTeams.Items.Count == 0)
             {
-                MessageBox.Show("No Albums to retrieve :(");
+                listBoxUserFavoriteTeams.Items.Add("No Albums to retrieve");
+                //MessageBox.Show("No Albums to retrieve :(");
             }
         }
         private void fetchGroups()
@@ -519,7 +569,8 @@ namespace BasicFacebookFeatures
 
             if (listBoxUserGroups.Items.Count == 0)
             {
-                MessageBox.Show("No Groups to retrieve :(");
+                listBoxUserGroups.Items.Add("No Groups to retrieve");
+                //MessageBox.Show("No Groups to retrieve :(");
             }
         }
 
@@ -556,23 +607,6 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void buttonLogout_Click(object sender, EventArgs e)
-        {
-            r_AppManager.Logout();
-            performLogout();
-        }
-
-        private void performLogout()
-        {
-            updateHomePanelsVisible();
-            updateTabs();
-            unLaunchFacebook();
-            buttonLogin.BackColor = buttonLogout.BackColor;
-            buttonLogin.Enabled = true;
-            buttonLogout.Enabled = false;
-            buttonLogin.Text = "Login";
-        }
-
         private void userFavoriteTeamsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBoxUserFavoriteTeams.SelectedItems.Count == 1)
@@ -596,9 +630,12 @@ namespace BasicFacebookFeatures
         {
             if (listBoxUserAlbums.SelectedItems.Count == 1)
             {
-                m_albumPictureCounter = 0;
-                m_currentAlbum = listBoxUserAlbums.SelectedItem as FacebookWrapper.ObjectModel.Album;
-                albumUserAlbums.SetPhotos(m_currentAlbum.Photos.ToList());
+                FacebookWrapper.ObjectModel.Album selectedAlbum = listBoxUserAlbums.SelectedItem as FacebookWrapper.ObjectModel.Album;
+
+                if (selectedAlbum != null)
+                {
+                    albumUserAlbums.SetPhotos(selectedAlbum.Photos.ToList());
+                }
             }
 
         }
