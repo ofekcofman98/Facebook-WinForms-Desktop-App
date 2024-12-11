@@ -31,15 +31,17 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.tabMyProfile = new System.Windows.Forms.TabPage();
+            this.label22 = new System.Windows.Forms.Label();
+            this.panel11 = new System.Windows.Forms.Panel();
             this.PictureBoxMyProfile = new System.Windows.Forms.PictureBox();
             this.labelFullNameData = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.labelEmailData = new System.Windows.Forms.Label();
             this.labelGenderData = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.labelBirthdayData = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.labelEmailData = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.tabHomePage = new System.Windows.Forms.TabPage();
             this.panelLikes = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -49,6 +51,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.listBoxUserGroups = new System.Windows.Forms.ListBox();
             this.panelAlbums = new System.Windows.Forms.Panel();
+            this.albumUserAlbums = new BasicFacebookFeatures.Album();
             this.label1 = new System.Windows.Forms.Label();
             this.listBoxUserAlbums = new System.Windows.Forms.ListBox();
             this.panelStatusPost = new System.Windows.Forms.Panel();
@@ -70,6 +73,7 @@
             this.pictureBoxIcon = new System.Windows.Forms.PictureBox();
             this.tabsController = new System.Windows.Forms.TabControl();
             this.tabActivityCenter = new System.Windows.Forms.TabPage();
+            this.labelActivityCenterDiscription = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.comboBoxMonthSort = new System.Windows.Forms.ComboBox();
@@ -84,40 +88,37 @@
             this.listBoxHour = new System.Windows.Forms.ListBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.labelDateOfPosts = new System.Windows.Forms.Label();
+            this.albumFilteredPhotos = new BasicFacebookFeatures.Album();
             this.listBoxFilteredPosts = new System.Windows.Forms.ListBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.listBoxFilteredUsers = new System.Windows.Forms.ListBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.comboBoxGender = new System.Windows.Forms.ComboBox();
             this.buttonApplySearch = new System.Windows.Forms.Button();
-            this.pictureBoxFilteredUsers = new System.Windows.Forms.PictureBox();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.label19 = new System.Windows.Forms.Label();
+            this.numericUpDownMinimumAge = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMaximumAge = new System.Windows.Forms.NumericUpDown();
+            this.label20 = new System.Windows.Forms.Label();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.comboBoxGender = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel7 = new System.Windows.Forms.Panel();
             this.label16 = new System.Windows.Forms.Label();
             this.comboBoxFriendList = new System.Windows.Forms.ComboBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.checkedListBoxlikedPages = new System.Windows.Forms.CheckedListBox();
+            this.panel8 = new System.Windows.Forms.Panel();
             this.checkedListBoxRealitionshipStatus = new System.Windows.Forms.CheckedListBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.numericUpDownMaximumAge = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownMinimumAge = new System.Windows.Forms.NumericUpDown();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.checkedListBoxlikedPages = new System.Windows.Forms.CheckedListBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.listBoxFilteredUsers = new System.Windows.Forms.ListBox();
+            this.pictureBoxFilteredUsers = new System.Windows.Forms.PictureBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.albumUserAlbums = new BasicFacebookFeatures.Album();
-            this.albumFilteredPhotos = new BasicFacebookFeatures.Album();
-            this.labelActivityCenterDiscription = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.panel11 = new System.Windows.Forms.Panel();
-            this.label22 = new System.Windows.Forms.Label();
             this.tabMyProfile.SuspendLayout();
+            this.panel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMyProfile)).BeginInit();
             this.tabHomePage.SuspendLayout();
             this.panelLikes.SuspendLayout();
@@ -137,30 +138,56 @@
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFilteredUsers)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumAge)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumAge)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
             this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumAge)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumAge)).BeginInit();
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel10.SuspendLayout();
-            this.panel11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFilteredUsers)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabMyProfile
             // 
             this.tabMyProfile.Controls.Add(this.label22);
             this.tabMyProfile.Controls.Add(this.panel11);
-            this.tabMyProfile.Location = new System.Drawing.Point(4, 31);
+            this.tabMyProfile.Location = new System.Drawing.Point(4, 35);
             this.tabMyProfile.Name = "tabMyProfile";
             this.tabMyProfile.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMyProfile.Size = new System.Drawing.Size(1229, 552);
+            this.tabMyProfile.Size = new System.Drawing.Size(1229, 548);
             this.tabMyProfile.TabIndex = 1;
             this.tabMyProfile.Text = "My Profile";
             this.tabMyProfile.UseVisualStyleBackColor = true;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 23F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(516, 22);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(227, 53);
+            this.label22.TabIndex = 10;
+            this.label22.Text = "My Profile";
+            // 
+            // panel11
+            // 
+            this.panel11.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel11.Controls.Add(this.PictureBoxMyProfile);
+            this.panel11.Controls.Add(this.labelFullNameData);
+            this.panel11.Controls.Add(this.label4);
+            this.panel11.Controls.Add(this.label5);
+            this.panel11.Controls.Add(this.labelEmailData);
+            this.panel11.Controls.Add(this.labelGenderData);
+            this.panel11.Controls.Add(this.label6);
+            this.panel11.Controls.Add(this.label8);
+            this.panel11.Controls.Add(this.labelBirthdayData);
+            this.panel11.Location = new System.Drawing.Point(449, 87);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(346, 416);
+            this.panel11.TabIndex = 9;
             // 
             // PictureBoxMyProfile
             // 
@@ -169,7 +196,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PictureBoxMyProfile.Location = new System.Drawing.Point(30, 16);
             this.PictureBoxMyProfile.Name = "PictureBoxMyProfile";
-            this.PictureBoxMyProfile.Size = new System.Drawing.Size(207, 234);
+            this.PictureBoxMyProfile.Size = new System.Drawing.Size(282, 234);
             this.PictureBoxMyProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.PictureBoxMyProfile.TabIndex = 8;
             this.PictureBoxMyProfile.TabStop = false;
@@ -182,9 +209,21 @@
             this.labelFullNameData.AutoSize = true;
             this.labelFullNameData.Location = new System.Drawing.Point(177, 262);
             this.labelFullNameData.Name = "labelFullNameData";
-            this.labelFullNameData.Size = new System.Drawing.Size(70, 24);
+            this.labelFullNameData.Size = new System.Drawing.Size(82, 26);
             this.labelFullNameData.TabIndex = 7;
             this.labelFullNameData.Text = "label10";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(26, 301);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(74, 26);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Email:";
             // 
             // label5
             // 
@@ -194,9 +233,21 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(26, 262);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(102, 24);
+            this.label5.Size = new System.Drawing.Size(118, 26);
             this.label5.TabIndex = 6;
             this.label5.Text = "Full Name:";
+            // 
+            // labelEmailData
+            // 
+            this.labelEmailData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelEmailData.AutoSize = true;
+            this.labelEmailData.Location = new System.Drawing.Point(177, 301);
+            this.labelEmailData.Name = "labelEmailData";
+            this.labelEmailData.Size = new System.Drawing.Size(70, 26);
+            this.labelEmailData.TabIndex = 1;
+            this.labelEmailData.Text = "label5";
             // 
             // labelGenderData
             // 
@@ -206,9 +257,21 @@
             this.labelGenderData.AutoSize = true;
             this.labelGenderData.Location = new System.Drawing.Point(177, 376);
             this.labelGenderData.Name = "labelGenderData";
-            this.labelGenderData.Size = new System.Drawing.Size(35, 24);
+            this.labelGenderData.Size = new System.Drawing.Size(41, 26);
             this.labelGenderData.TabIndex = 5;
             this.labelGenderData.Text = "tex";
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(26, 339);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(98, 26);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Birthday:";
             // 
             // label8
             // 
@@ -218,7 +281,7 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(26, 376);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(79, 24);
+            this.label8.Size = new System.Drawing.Size(90, 26);
             this.label8.TabIndex = 4;
             this.label8.Text = "Gender:";
             // 
@@ -230,45 +293,9 @@
             this.labelBirthdayData.AutoSize = true;
             this.labelBirthdayData.Location = new System.Drawing.Point(177, 339);
             this.labelBirthdayData.Name = "labelBirthdayData";
-            this.labelBirthdayData.Size = new System.Drawing.Size(60, 24);
+            this.labelBirthdayData.Size = new System.Drawing.Size(70, 26);
             this.labelBirthdayData.TabIndex = 3;
             this.labelBirthdayData.Text = "label7";
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(26, 339);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(82, 24);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Birthday:";
-            // 
-            // labelEmailData
-            // 
-            this.labelEmailData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelEmailData.AutoSize = true;
-            this.labelEmailData.Location = new System.Drawing.Point(177, 301);
-            this.labelEmailData.Name = "labelEmailData";
-            this.labelEmailData.Size = new System.Drawing.Size(60, 24);
-            this.labelEmailData.TabIndex = 1;
-            this.labelEmailData.Text = "label5";
-            // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 301);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(62, 24);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Email:";
             // 
             // tabHomePage
             // 
@@ -278,10 +305,10 @@
             this.tabHomePage.Controls.Add(this.panelStatusPost);
             this.tabHomePage.Controls.Add(this.panelFavoriteTeams);
             this.tabHomePage.Controls.Add(this.panelFriends);
-            this.tabHomePage.Location = new System.Drawing.Point(4, 31);
+            this.tabHomePage.Location = new System.Drawing.Point(4, 35);
             this.tabHomePage.Name = "tabHomePage";
             this.tabHomePage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHomePage.Size = new System.Drawing.Size(1229, 552);
+            this.tabHomePage.Size = new System.Drawing.Size(1229, 548);
             this.tabHomePage.TabIndex = 0;
             this.tabHomePage.Text = "Home Page";
             this.tabHomePage.UseVisualStyleBackColor = true;
@@ -308,10 +335,10 @@
             // listBoxLikes
             // 
             this.listBoxLikes.FormattingEnabled = true;
-            this.listBoxLikes.ItemHeight = 22;
+            this.listBoxLikes.ItemHeight = 26;
             this.listBoxLikes.Location = new System.Drawing.Point(17, 69);
             this.listBoxLikes.Name = "listBoxLikes";
-            this.listBoxLikes.Size = new System.Drawing.Size(239, 114);
+            this.listBoxLikes.Size = new System.Drawing.Size(239, 108);
             this.listBoxLikes.TabIndex = 57;
             // 
             // labelLikes
@@ -319,7 +346,7 @@
             this.labelLikes.AutoSize = true;
             this.labelLikes.Location = new System.Drawing.Point(13, 19);
             this.labelLikes.Name = "labelLikes";
-            this.labelLikes.Size = new System.Drawing.Size(140, 24);
+            this.labelLikes.Size = new System.Drawing.Size(163, 26);
             this.labelLikes.TabIndex = 60;
             this.labelLikes.Text = "user liked posts";
             // 
@@ -339,17 +366,17 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(12, 19);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(114, 24);
+            this.label7.Size = new System.Drawing.Size(131, 26);
             this.label7.TabIndex = 63;
             this.label7.Text = "user Groups";
             // 
             // listBoxUserGroups
             // 
             this.listBoxUserGroups.FormattingEnabled = true;
-            this.listBoxUserGroups.ItemHeight = 22;
+            this.listBoxUserGroups.ItemHeight = 26;
             this.listBoxUserGroups.Location = new System.Drawing.Point(16, 69);
             this.listBoxUserGroups.Name = "listBoxUserGroups";
-            this.listBoxUserGroups.Size = new System.Drawing.Size(208, 114);
+            this.listBoxUserGroups.Size = new System.Drawing.Size(208, 108);
             this.listBoxUserGroups.TabIndex = 64;
             // 
             // panelAlbums
@@ -360,26 +387,34 @@
             this.panelAlbums.Controls.Add(this.listBoxUserAlbums);
             this.panelAlbums.Location = new System.Drawing.Point(705, 82);
             this.panelAlbums.Name = "panelAlbums";
-            this.panelAlbums.Size = new System.Drawing.Size(266, 450);
+            this.panelAlbums.Size = new System.Drawing.Size(266, 463);
             this.panelAlbums.TabIndex = 77;
             this.panelAlbums.Visible = false;
+            // 
+            // albumUserAlbums
+            // 
+            this.albumUserAlbums.Location = new System.Drawing.Point(35, 204);
+            this.albumUserAlbums.Margin = new System.Windows.Forms.Padding(4);
+            this.albumUserAlbums.Name = "albumUserAlbums";
+            this.albumUserAlbums.Size = new System.Drawing.Size(188, 210);
+            this.albumUserAlbums.TabIndex = 74;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(30, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 24);
+            this.label1.Size = new System.Drawing.Size(139, 26);
             this.label1.TabIndex = 59;
             this.label1.Text = "Your Albums";
             // 
             // listBoxUserAlbums
             // 
             this.listBoxUserAlbums.FormattingEnabled = true;
-            this.listBoxUserAlbums.ItemHeight = 22;
+            this.listBoxUserAlbums.ItemHeight = 26;
             this.listBoxUserAlbums.Location = new System.Drawing.Point(34, 69);
             this.listBoxUserAlbums.Name = "listBoxUserAlbums";
-            this.listBoxUserAlbums.Size = new System.Drawing.Size(206, 114);
+            this.listBoxUserAlbums.Size = new System.Drawing.Size(206, 108);
             this.listBoxUserAlbums.TabIndex = 58;
             this.listBoxUserAlbums.SelectedIndexChanged += new System.EventHandler(this.userAlbumsListBox_SelectedIndexChanged);
             // 
@@ -400,7 +435,7 @@
             this.textBoxStatusPost.Location = new System.Drawing.Point(71, 17);
             this.textBoxStatusPost.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxStatusPost.Name = "textBoxStatusPost";
-            this.textBoxStatusPost.Size = new System.Drawing.Size(302, 28);
+            this.textBoxStatusPost.Size = new System.Drawing.Size(302, 32);
             this.textBoxStatusPost.TabIndex = 72;
             // 
             // buttonSetStatusPost
@@ -413,6 +448,7 @@
             this.buttonSetStatusPost.TabIndex = 73;
             this.buttonSetStatusPost.Text = "Post";
             this.buttonSetStatusPost.UseVisualStyleBackColor = true;
+            this.buttonSetStatusPost.Click += new System.EventHandler(this.buttonSetStatusPost_Click);
             // 
             // panelFavoriteTeams
             // 
@@ -422,7 +458,7 @@
             this.panelFavoriteTeams.Controls.Add(this.label3);
             this.panelFavoriteTeams.Location = new System.Drawing.Point(417, 286);
             this.panelFavoriteTeams.Name = "panelFavoriteTeams";
-            this.panelFavoriteTeams.Size = new System.Drawing.Size(266, 246);
+            this.panelFavoriteTeams.Size = new System.Drawing.Size(266, 259);
             this.panelFavoriteTeams.TabIndex = 80;
             this.panelFavoriteTeams.Visible = false;
             // 
@@ -438,10 +474,10 @@
             // listBoxUserFriends
             // 
             this.listBoxUserFriends.FormattingEnabled = true;
-            this.listBoxUserFriends.ItemHeight = 22;
+            this.listBoxUserFriends.ItemHeight = 26;
             this.listBoxUserFriends.Location = new System.Drawing.Point(15, 42);
             this.listBoxUserFriends.Name = "listBoxUserFriends";
-            this.listBoxUserFriends.Size = new System.Drawing.Size(230, 114);
+            this.listBoxUserFriends.Size = new System.Drawing.Size(230, 108);
             this.listBoxUserFriends.TabIndex = 61;
             this.listBoxUserFriends.SelectedIndexChanged += new System.EventHandler(this.userFriendsListBox_SelectedIndexChanged);
             // 
@@ -450,7 +486,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 15);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(119, 24);
+            this.label3.Size = new System.Drawing.Size(137, 26);
             this.label3.TabIndex = 62;
             this.label3.Text = "Your Friends";
             // 
@@ -462,7 +498,7 @@
             this.panelFriends.Controls.Add(this.pictureBoxFavoriteTeam);
             this.panelFriends.Location = new System.Drawing.Point(145, 286);
             this.panelFriends.Name = "panelFriends";
-            this.panelFriends.Size = new System.Drawing.Size(266, 246);
+            this.panelFriends.Size = new System.Drawing.Size(266, 259);
             this.panelFriends.TabIndex = 81;
             this.panelFriends.Visible = false;
             // 
@@ -471,17 +507,17 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(13, 15);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(185, 24);
+            this.label9.Size = new System.Drawing.Size(215, 26);
             this.label9.TabIndex = 65;
             this.label9.Text = "Your Favorite Teams";
             // 
             // listBoxUserFavoriteTeams
             // 
             this.listBoxUserFavoriteTeams.FormattingEnabled = true;
-            this.listBoxUserFavoriteTeams.ItemHeight = 22;
+            this.listBoxUserFavoriteTeams.ItemHeight = 26;
             this.listBoxUserFavoriteTeams.Location = new System.Drawing.Point(17, 42);
             this.listBoxUserFavoriteTeams.Name = "listBoxUserFavoriteTeams";
-            this.listBoxUserFavoriteTeams.Size = new System.Drawing.Size(230, 114);
+            this.listBoxUserFavoriteTeams.Size = new System.Drawing.Size(230, 108);
             this.listBoxUserFavoriteTeams.TabIndex = 66;
             this.listBoxUserFavoriteTeams.SelectedIndexChanged += new System.EventHandler(this.userFavoriteTeamsListBox_SelectedIndexChanged);
             // 
@@ -585,13 +621,25 @@
             this.tabActivityCenter.Controls.Add(this.panel2);
             this.tabActivityCenter.Controls.Add(this.panel3);
             this.tabActivityCenter.Controls.Add(this.panel4);
-            this.tabActivityCenter.Location = new System.Drawing.Point(4, 31);
+            this.tabActivityCenter.Location = new System.Drawing.Point(4, 35);
             this.tabActivityCenter.Name = "tabActivityCenter";
             this.tabActivityCenter.Padding = new System.Windows.Forms.Padding(3);
-            this.tabActivityCenter.Size = new System.Drawing.Size(1229, 552);
+            this.tabActivityCenter.Size = new System.Drawing.Size(1229, 548);
             this.tabActivityCenter.TabIndex = 2;
             this.tabActivityCenter.Text = "Activity Center";
             this.tabActivityCenter.UseVisualStyleBackColor = true;
+            // 
+            // labelActivityCenterDiscription
+            // 
+            this.labelActivityCenterDiscription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelActivityCenterDiscription.AutoSize = true;
+            this.labelActivityCenterDiscription.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelActivityCenterDiscription.Location = new System.Drawing.Point(380, 60);
+            this.labelActivityCenterDiscription.Name = "labelActivityCenterDiscription";
+            this.labelActivityCenterDiscription.Size = new System.Drawing.Size(605, 30);
+            this.labelActivityCenterDiscription.TabIndex = 83;
+            this.labelActivityCenterDiscription.Text = "discover your most active times for revisit memories";
             // 
             // label12
             // 
@@ -602,7 +650,7 @@
             this.label12.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label12.Location = new System.Drawing.Point(492, 12);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(291, 48);
+            this.label12.Size = new System.Drawing.Size(347, 58);
             this.label12.TabIndex = 6;
             this.label12.Text = "Activity Center";
             // 
@@ -627,7 +675,7 @@
             this.comboBoxMonthSort.FormattingEnabled = true;
             this.comboBoxMonthSort.Location = new System.Drawing.Point(111, 239);
             this.comboBoxMonthSort.Name = "comboBoxMonthSort";
-            this.comboBoxMonthSort.Size = new System.Drawing.Size(163, 30);
+            this.comboBoxMonthSort.Size = new System.Drawing.Size(163, 34);
             this.comboBoxMonthSort.TabIndex = 79;
             this.comboBoxMonthSort.SelectedIndexChanged += new System.EventHandler(this.comboBoxMonthSort_SelectedIndexChanged);
             // 
@@ -636,7 +684,7 @@
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(34, 33);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(58, 24);
+            this.label11.Size = new System.Drawing.Size(70, 26);
             this.label11.TabIndex = 5;
             this.label11.Text = "Years";
             // 
@@ -646,27 +694,27 @@
             this.comboBoxYearSort.FormattingEnabled = true;
             this.comboBoxYearSort.Location = new System.Drawing.Point(103, 33);
             this.comboBoxYearSort.Name = "comboBoxYearSort";
-            this.comboBoxYearSort.Size = new System.Drawing.Size(171, 30);
+            this.comboBoxYearSort.Size = new System.Drawing.Size(171, 34);
             this.comboBoxYearSort.TabIndex = 78;
             this.comboBoxYearSort.SelectedIndexChanged += new System.EventHandler(this.comboBoxYearSort_SelectedIndexChanged);
             // 
             // listBoxYear
             // 
             this.listBoxYear.FormattingEnabled = true;
-            this.listBoxYear.ItemHeight = 22;
+            this.listBoxYear.ItemHeight = 26;
             this.listBoxYear.Location = new System.Drawing.Point(38, 78);
             this.listBoxYear.Name = "listBoxYear";
-            this.listBoxYear.Size = new System.Drawing.Size(236, 114);
+            this.listBoxYear.Size = new System.Drawing.Size(236, 108);
             this.listBoxYear.TabIndex = 1;
             this.listBoxYear.SelectedIndexChanged += new System.EventHandler(this.listBoxYear_SelectedIndexChanged);
             // 
             // listBoxMonth
             // 
             this.listBoxMonth.FormattingEnabled = true;
-            this.listBoxMonth.ItemHeight = 22;
+            this.listBoxMonth.ItemHeight = 26;
             this.listBoxMonth.Location = new System.Drawing.Point(37, 284);
             this.listBoxMonth.Name = "listBoxMonth";
-            this.listBoxMonth.Size = new System.Drawing.Size(237, 114);
+            this.listBoxMonth.Size = new System.Drawing.Size(237, 108);
             this.listBoxMonth.TabIndex = 2;
             this.listBoxMonth.SelectedIndexChanged += new System.EventHandler(this.listBoxMonth_SelectedIndexChanged);
             // 
@@ -675,7 +723,7 @@
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(33, 239);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(72, 24);
+            this.label13.Size = new System.Drawing.Size(83, 26);
             this.label13.TabIndex = 75;
             this.label13.Text = "Months";
             // 
@@ -696,7 +744,7 @@
             this.comboBoxHourSort.FormattingEnabled = true;
             this.comboBoxHourSort.Location = new System.Drawing.Point(159, 33);
             this.comboBoxHourSort.Name = "comboBoxHourSort";
-            this.comboBoxHourSort.Size = new System.Drawing.Size(172, 30);
+            this.comboBoxHourSort.Size = new System.Drawing.Size(172, 34);
             this.comboBoxHourSort.TabIndex = 80;
             this.comboBoxHourSort.SelectedIndexChanged += new System.EventHandler(this.comboBoxHourSort_SelectedIndexChanged);
             // 
@@ -705,17 +753,17 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(37, 33);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(116, 24);
+            this.label10.Size = new System.Drawing.Size(134, 26);
             this.label10.TabIndex = 77;
             this.label10.Text = "Hours in day";
             // 
             // listBoxHour
             // 
             this.listBoxHour.FormattingEnabled = true;
-            this.listBoxHour.ItemHeight = 22;
+            this.listBoxHour.ItemHeight = 26;
             this.listBoxHour.Location = new System.Drawing.Point(55, 78);
             this.listBoxHour.Name = "listBoxHour";
-            this.listBoxHour.Size = new System.Drawing.Size(224, 312);
+            this.listBoxHour.Size = new System.Drawing.Size(224, 290);
             this.listBoxHour.TabIndex = 3;
             this.listBoxHour.SelectedIndexChanged += new System.EventHandler(this.listBoxHour_SelectedIndexChanged);
             // 
@@ -736,17 +784,25 @@
             this.labelDateOfPosts.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDateOfPosts.Location = new System.Drawing.Point(25, 78);
             this.labelDateOfPosts.Name = "labelDateOfPosts";
-            this.labelDateOfPosts.Size = new System.Drawing.Size(66, 29);
+            this.labelDateOfPosts.Size = new System.Drawing.Size(76, 36);
             this.labelDateOfPosts.TabIndex = 76;
             this.labelDateOfPosts.Text = "Date";
+            // 
+            // albumFilteredPhotos
+            // 
+            this.albumFilteredPhotos.Location = new System.Drawing.Point(275, 142);
+            this.albumFilteredPhotos.Margin = new System.Windows.Forms.Padding(4);
+            this.albumFilteredPhotos.Name = "albumFilteredPhotos";
+            this.albumFilteredPhotos.Size = new System.Drawing.Size(156, 186);
+            this.albumFilteredPhotos.TabIndex = 74;
             // 
             // listBoxFilteredPosts
             // 
             this.listBoxFilteredPosts.FormattingEnabled = true;
-            this.listBoxFilteredPosts.ItemHeight = 22;
+            this.listBoxFilteredPosts.ItemHeight = 26;
             this.listBoxFilteredPosts.Location = new System.Drawing.Point(30, 127);
             this.listBoxFilteredPosts.Name = "listBoxFilteredPosts";
-            this.listBoxFilteredPosts.Size = new System.Drawing.Size(227, 224);
+            this.listBoxFilteredPosts.Size = new System.Drawing.Size(227, 212);
             this.listBoxFilteredPosts.TabIndex = 4;
             // 
             // tabPage1
@@ -760,23 +816,24 @@
             this.tabPage1.Controls.Add(this.panel8);
             this.tabPage1.Controls.Add(this.panel9);
             this.tabPage1.Controls.Add(this.panel10);
-            this.tabPage1.Location = new System.Drawing.Point(4, 31);
+            this.tabPage1.Location = new System.Drawing.Point(4, 35);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1229, 552);
+            this.tabPage1.Size = new System.Drawing.Size(1229, 548);
             this.tabPage1.TabIndex = 3;
             this.tabPage1.Text = "Find New Friends";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // listBoxFilteredUsers
+            // label18
             // 
-            this.listBoxFilteredUsers.FormattingEnabled = true;
-            this.listBoxFilteredUsers.ItemHeight = 22;
-            this.listBoxFilteredUsers.Location = new System.Drawing.Point(19, 57);
-            this.listBoxFilteredUsers.Name = "listBoxFilteredUsers";
-            this.listBoxFilteredUsers.Size = new System.Drawing.Size(238, 158);
-            this.listBoxFilteredUsers.TabIndex = 38;
-            this.listBoxFilteredUsers.SelectedIndexChanged += new System.EventHandler(this.listBoxFilteredUsers_SelectedIndexChanged);
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(169, 72);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(1055, 30);
+            this.label18.TabIndex = 39;
+            this.label18.Text = "Discover mutual friends and explore connections based on shared interests and pre" +
+    "ferences";
             // 
             // label21
             // 
@@ -784,26 +841,9 @@
             this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.Location = new System.Drawing.Point(475, 13);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(290, 48);
+            this.label21.Size = new System.Drawing.Size(349, 58);
             this.label21.TabIndex = 37;
             this.label21.Text = "Friends Finder";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(15, 20);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(71, 24);
-            this.label17.TabIndex = 34;
-            this.label17.Text = "Results";
-            // 
-            // comboBoxGender
-            // 
-            this.comboBoxGender.FormattingEnabled = true;
-            this.comboBoxGender.Location = new System.Drawing.Point(84, 37);
-            this.comboBoxGender.Name = "comboBoxGender";
-            this.comboBoxGender.Size = new System.Drawing.Size(121, 30);
-            this.comboBoxGender.TabIndex = 33;
             // 
             // buttonApplySearch
             // 
@@ -815,6 +855,191 @@
             this.buttonApplySearch.UseVisualStyleBackColor = true;
             this.buttonApplySearch.Click += new System.EventHandler(this.buttonApplySearch_Click);
             // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel5.Controls.Add(this.label19);
+            this.panel5.Controls.Add(this.numericUpDownMinimumAge);
+            this.panel5.Controls.Add(this.numericUpDownMaximumAge);
+            this.panel5.Controls.Add(this.label20);
+            this.panel5.Location = new System.Drawing.Point(129, 128);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(295, 97);
+            this.panel5.TabIndex = 40;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(153, 14);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(150, 26);
+            this.label19.TabIndex = 23;
+            this.label19.Text = "Maximum age";
+            // 
+            // numericUpDownMinimumAge
+            // 
+            this.numericUpDownMinimumAge.Location = new System.Drawing.Point(11, 54);
+            this.numericUpDownMinimumAge.Name = "numericUpDownMinimumAge";
+            this.numericUpDownMinimumAge.Size = new System.Drawing.Size(120, 32);
+            this.numericUpDownMinimumAge.TabIndex = 20;
+            this.numericUpDownMinimumAge.Value = new decimal(new int[] {
+            18,
+            0,
+            0,
+            0});
+            this.numericUpDownMinimumAge.ValueChanged += new System.EventHandler(this.numericUpDownMinimumAge_ValueChanged);
+            // 
+            // numericUpDownMaximumAge
+            // 
+            this.numericUpDownMaximumAge.Location = new System.Drawing.Point(158, 54);
+            this.numericUpDownMaximumAge.Name = "numericUpDownMaximumAge";
+            this.numericUpDownMaximumAge.Size = new System.Drawing.Size(120, 32);
+            this.numericUpDownMaximumAge.TabIndex = 21;
+            this.numericUpDownMaximumAge.Value = new decimal(new int[] {
+            18,
+            0,
+            0,
+            0});
+            this.numericUpDownMaximumAge.ValueChanged += new System.EventHandler(this.numericUpDownMaximumAge_ValueChanged);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(9, 14);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(144, 26);
+            this.label20.TabIndex = 22;
+            this.label20.Text = "Minimum age";
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel6.Controls.Add(this.comboBoxGender);
+            this.panel6.Controls.Add(this.label2);
+            this.panel6.Location = new System.Drawing.Point(129, 261);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(295, 82);
+            this.panel6.TabIndex = 41;
+            // 
+            // comboBoxGender
+            // 
+            this.comboBoxGender.FormattingEnabled = true;
+            this.comboBoxGender.Location = new System.Drawing.Point(84, 37);
+            this.comboBoxGender.Name = "comboBoxGender";
+            this.comboBoxGender.Size = new System.Drawing.Size(121, 34);
+            this.comboBoxGender.TabIndex = 33;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(108, 10);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(84, 26);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "Gender";
+            // 
+            // panel7
+            // 
+            this.panel7.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel7.Controls.Add(this.label16);
+            this.panel7.Controls.Add(this.comboBoxFriendList);
+            this.panel7.Location = new System.Drawing.Point(129, 376);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(295, 82);
+            this.panel7.TabIndex = 42;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(96, 13);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(101, 26);
+            this.label16.TabIndex = 30;
+            this.label16.Text = "friends of";
+            // 
+            // comboBoxFriendList
+            // 
+            this.comboBoxFriendList.FormattingEnabled = true;
+            this.comboBoxFriendList.Location = new System.Drawing.Point(75, 40);
+            this.comboBoxFriendList.Name = "comboBoxFriendList";
+            this.comboBoxFriendList.Size = new System.Drawing.Size(140, 34);
+            this.comboBoxFriendList.TabIndex = 29;
+            // 
+            // panel8
+            // 
+            this.panel8.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel8.Controls.Add(this.checkedListBoxRealitionshipStatus);
+            this.panel8.Controls.Add(this.label14);
+            this.panel8.Location = new System.Drawing.Point(491, 292);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(238, 166);
+            this.panel8.TabIndex = 43;
+            // 
+            // checkedListBoxRealitionshipStatus
+            // 
+            this.checkedListBoxRealitionshipStatus.FormattingEnabled = true;
+            this.checkedListBoxRealitionshipStatus.Location = new System.Drawing.Point(17, 46);
+            this.checkedListBoxRealitionshipStatus.Name = "checkedListBoxRealitionshipStatus";
+            this.checkedListBoxRealitionshipStatus.Size = new System.Drawing.Size(204, 91);
+            this.checkedListBoxRealitionshipStatus.TabIndex = 26;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(13, 6);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(201, 26);
+            this.label14.TabIndex = 25;
+            this.label14.Text = "Realitionship status";
+            // 
+            // panel9
+            // 
+            this.panel9.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel9.Controls.Add(this.checkedListBoxlikedPages);
+            this.panel9.Controls.Add(this.label15);
+            this.panel9.Location = new System.Drawing.Point(491, 128);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(238, 150);
+            this.panel9.TabIndex = 44;
+            // 
+            // checkedListBoxlikedPages
+            // 
+            this.checkedListBoxlikedPages.FormattingEnabled = true;
+            this.checkedListBoxlikedPages.Location = new System.Drawing.Point(22, 46);
+            this.checkedListBoxlikedPages.Name = "checkedListBoxlikedPages";
+            this.checkedListBoxlikedPages.Size = new System.Drawing.Size(204, 91);
+            this.checkedListBoxlikedPages.TabIndex = 27;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(18, 6);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(125, 26);
+            this.label15.TabIndex = 28;
+            this.label15.Text = "liked Pages";
+            // 
+            // panel10
+            // 
+            this.panel10.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel10.Controls.Add(this.listBoxFilteredUsers);
+            this.panel10.Controls.Add(this.pictureBoxFilteredUsers);
+            this.panel10.Controls.Add(this.label17);
+            this.panel10.Location = new System.Drawing.Point(810, 128);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(272, 330);
+            this.panel10.TabIndex = 45;
+            // 
+            // listBoxFilteredUsers
+            // 
+            this.listBoxFilteredUsers.FormattingEnabled = true;
+            this.listBoxFilteredUsers.ItemHeight = 26;
+            this.listBoxFilteredUsers.Location = new System.Drawing.Point(19, 57);
+            this.listBoxFilteredUsers.Name = "listBoxFilteredUsers";
+            this.listBoxFilteredUsers.Size = new System.Drawing.Size(238, 134);
+            this.listBoxFilteredUsers.TabIndex = 38;
+            this.listBoxFilteredUsers.SelectedIndexChanged += new System.EventHandler(this.listBoxFilteredUsers_SelectedIndexChanged);
+            // 
             // pictureBoxFilteredUsers
             // 
             this.pictureBoxFilteredUsers.Location = new System.Drawing.Point(70, 224);
@@ -824,109 +1049,14 @@
             this.pictureBoxFilteredUsers.TabIndex = 31;
             this.pictureBoxFilteredUsers.TabStop = false;
             // 
-            // label16
+            // label17
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(96, 13);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(86, 24);
-            this.label16.TabIndex = 30;
-            this.label16.Text = "friends of";
-            // 
-            // comboBoxFriendList
-            // 
-            this.comboBoxFriendList.FormattingEnabled = true;
-            this.comboBoxFriendList.Location = new System.Drawing.Point(75, 40);
-            this.comboBoxFriendList.Name = "comboBoxFriendList";
-            this.comboBoxFriendList.Size = new System.Drawing.Size(140, 30);
-            this.comboBoxFriendList.TabIndex = 29;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(18, 6);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(107, 24);
-            this.label15.TabIndex = 28;
-            this.label15.Text = "liked Pages";
-            // 
-            // checkedListBoxlikedPages
-            // 
-            this.checkedListBoxlikedPages.FormattingEnabled = true;
-            this.checkedListBoxlikedPages.Location = new System.Drawing.Point(22, 46);
-            this.checkedListBoxlikedPages.Name = "checkedListBoxlikedPages";
-            this.checkedListBoxlikedPages.Size = new System.Drawing.Size(204, 96);
-            this.checkedListBoxlikedPages.TabIndex = 27;
-            // 
-            // checkedListBoxRealitionshipStatus
-            // 
-            this.checkedListBoxRealitionshipStatus.FormattingEnabled = true;
-            this.checkedListBoxRealitionshipStatus.Location = new System.Drawing.Point(17, 46);
-            this.checkedListBoxRealitionshipStatus.Name = "checkedListBoxRealitionshipStatus";
-            this.checkedListBoxRealitionshipStatus.Size = new System.Drawing.Size(204, 96);
-            this.checkedListBoxRealitionshipStatus.TabIndex = 26;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(13, 6);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(169, 24);
-            this.label14.TabIndex = 25;
-            this.label14.Text = "Realitionship status";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(108, 10);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 24);
-            this.label2.TabIndex = 24;
-            this.label2.Text = "Gender";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(153, 14);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(130, 24);
-            this.label19.TabIndex = 23;
-            this.label19.Text = "Maximum age";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(9, 14);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(125, 24);
-            this.label20.TabIndex = 22;
-            this.label20.Text = "Minimum age";
-            // 
-            // numericUpDownMaximumAge
-            // 
-            this.numericUpDownMaximumAge.Location = new System.Drawing.Point(158, 54);
-            this.numericUpDownMaximumAge.Name = "numericUpDownMaximumAge";
-            this.numericUpDownMaximumAge.Size = new System.Drawing.Size(120, 28);
-            this.numericUpDownMaximumAge.TabIndex = 21;
-            this.numericUpDownMaximumAge.Value = new decimal(new int[] {
-            18,
-            0,
-            0,
-            0});
-            this.numericUpDownMaximumAge.ValueChanged += new System.EventHandler(this.numericUpDownMaximumAge_ValueChanged);
-            // 
-            // numericUpDownMinimumAge
-            // 
-            this.numericUpDownMinimumAge.Location = new System.Drawing.Point(11, 54);
-            this.numericUpDownMinimumAge.Name = "numericUpDownMinimumAge";
-            this.numericUpDownMinimumAge.Size = new System.Drawing.Size(120, 28);
-            this.numericUpDownMinimumAge.TabIndex = 20;
-            this.numericUpDownMinimumAge.Value = new decimal(new int[] {
-            18,
-            0,
-            0,
-            0});
-            this.numericUpDownMinimumAge.ValueChanged += new System.EventHandler(this.numericUpDownMinimumAge_ValueChanged);
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(15, 20);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(85, 26);
+            this.label17.TabIndex = 34;
+            this.label17.Text = "Results";
             // 
             // contextMenuStrip1
             // 
@@ -949,138 +1079,9 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1243, 697);
             this.tableLayoutPanel1.TabIndex = 76;
             // 
-            // albumUserAlbums
-            // 
-            this.albumUserAlbums.Location = new System.Drawing.Point(35, 204);
-            this.albumUserAlbums.Margin = new System.Windows.Forms.Padding(4);
-            this.albumUserAlbums.Name = "albumUserAlbums";
-            this.albumUserAlbums.Size = new System.Drawing.Size(188, 210);
-            this.albumUserAlbums.TabIndex = 74;
-            // 
-            // albumFilteredPhotos
-            // 
-            this.albumFilteredPhotos.Location = new System.Drawing.Point(275, 142);
-            this.albumFilteredPhotos.Margin = new System.Windows.Forms.Padding(4);
-            this.albumFilteredPhotos.Name = "albumFilteredPhotos";
-            this.albumFilteredPhotos.Size = new System.Drawing.Size(156, 186);
-            this.albumFilteredPhotos.TabIndex = 74;
-            // 
-            // labelActivityCenterDiscription
-            // 
-            this.labelActivityCenterDiscription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelActivityCenterDiscription.AutoSize = true;
-            this.labelActivityCenterDiscription.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelActivityCenterDiscription.Location = new System.Drawing.Point(380, 60);
-            this.labelActivityCenterDiscription.Name = "labelActivityCenterDiscription";
-            this.labelActivityCenterDiscription.Size = new System.Drawing.Size(514, 26);
-            this.labelActivityCenterDiscription.TabIndex = 83;
-            this.labelActivityCenterDiscription.Text = "discover your most active times for revisit memories";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(169, 72);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(898, 26);
-            this.label18.TabIndex = 39;
-            this.label18.Text = "Discover mutual friends and explore connections based on shared interests and pre" +
-    "ferences";
-            // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.panel5.Controls.Add(this.label19);
-            this.panel5.Controls.Add(this.numericUpDownMinimumAge);
-            this.panel5.Controls.Add(this.numericUpDownMaximumAge);
-            this.panel5.Controls.Add(this.label20);
-            this.panel5.Location = new System.Drawing.Point(129, 128);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(295, 97);
-            this.panel5.TabIndex = 40;
-            // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.panel6.Controls.Add(this.comboBoxGender);
-            this.panel6.Controls.Add(this.label2);
-            this.panel6.Location = new System.Drawing.Point(129, 261);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(295, 82);
-            this.panel6.TabIndex = 41;
-            // 
-            // panel7
-            // 
-            this.panel7.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.panel7.Controls.Add(this.label16);
-            this.panel7.Controls.Add(this.comboBoxFriendList);
-            this.panel7.Location = new System.Drawing.Point(129, 376);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(295, 82);
-            this.panel7.TabIndex = 42;
-            // 
-            // panel8
-            // 
-            this.panel8.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.panel8.Controls.Add(this.checkedListBoxRealitionshipStatus);
-            this.panel8.Controls.Add(this.label14);
-            this.panel8.Location = new System.Drawing.Point(491, 292);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(238, 166);
-            this.panel8.TabIndex = 43;
-            // 
-            // panel9
-            // 
-            this.panel9.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.panel9.Controls.Add(this.checkedListBoxlikedPages);
-            this.panel9.Controls.Add(this.label15);
-            this.panel9.Location = new System.Drawing.Point(491, 128);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(238, 150);
-            this.panel9.TabIndex = 44;
-            // 
-            // panel10
-            // 
-            this.panel10.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.panel10.Controls.Add(this.listBoxFilteredUsers);
-            this.panel10.Controls.Add(this.pictureBoxFilteredUsers);
-            this.panel10.Controls.Add(this.label17);
-            this.panel10.Location = new System.Drawing.Point(810, 128);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(272, 330);
-            this.panel10.TabIndex = 45;
-            // 
-            // panel11
-            // 
-            this.panel11.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.panel11.Controls.Add(this.PictureBoxMyProfile);
-            this.panel11.Controls.Add(this.labelFullNameData);
-            this.panel11.Controls.Add(this.label4);
-            this.panel11.Controls.Add(this.label5);
-            this.panel11.Controls.Add(this.labelEmailData);
-            this.panel11.Controls.Add(this.labelGenderData);
-            this.panel11.Controls.Add(this.label6);
-            this.panel11.Controls.Add(this.label8);
-            this.panel11.Controls.Add(this.labelBirthdayData);
-            this.panel11.Location = new System.Drawing.Point(472, 87);
-            this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(271, 416);
-            this.panel11.TabIndex = 9;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 23F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(516, 22);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(193, 44);
-            this.label22.TabIndex = 10;
-            this.label22.Text = "My Profile";
-            // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1243, 697);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -1092,6 +1093,8 @@
             this.Text = "Facebook App";
             this.tabMyProfile.ResumeLayout(false);
             this.tabMyProfile.PerformLayout();
+            this.panel11.ResumeLayout(false);
+            this.panel11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMyProfile)).EndInit();
             this.tabHomePage.ResumeLayout(false);
             this.panelLikes.ResumeLayout(false);
@@ -1122,12 +1125,10 @@
             this.panel4.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFilteredUsers)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumAge)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumAge)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimumAge)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumAge)).EndInit();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.panel7.ResumeLayout(false);
@@ -1138,8 +1139,8 @@
             this.panel9.PerformLayout();
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
-            this.panel11.ResumeLayout(false);
-            this.panel11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFilteredUsers)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

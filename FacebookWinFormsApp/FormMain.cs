@@ -12,6 +12,7 @@ using System.Windows.Forms.VisualStyles;
 using CefSharp.DevTools.Fetch;
 using static System.Windows.Forms.AxHost;
 using static BasicFacebookFeatures.ActivityCenter;
+using Facebook;
 
 namespace BasicFacebookFeatures
 {
@@ -751,5 +752,24 @@ namespace BasicFacebookFeatures
             pictureBoxFilteredUsers.Image = (listBoxFilteredUsers.SelectedItem as User).ImageNormal;
         }
 
+        private void buttonSetStatusPost_Click(object sender, EventArgs e)
+        {
+            string postData = textBoxStatusPost.Text;
+            try
+            {
+                 r_AppManager.LoggedInUser.PostStatus(postData);
+                 MessageBox.Show("New status was Posted!", "New Status Posted");
+           
+            }
+            catch (FacebookOAuthException)
+            {
+                MessageBox.Show("cannot upload status.", "Facebook server error");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
+    
 }
