@@ -71,27 +71,25 @@ namespace BasicFacebookFeatures
         private void processTimeData(DateTime? i_CreatedTime)
         {
             if(i_CreatedTime.HasValue)
-                if(i_CreatedTime.HasValue)
+            {
+                DateTime createdTime = i_CreatedTime.Value;
+
+                if(r_YearCounts.ContainsKey(createdTime.Year))
                 {
-                    DateTime createdTime = i_CreatedTime.Value;
-
-                    if(r_YearCounts.ContainsKey(createdTime.Year))
-                    {
-                        r_YearCounts[createdTime.Year]++;
-                    }
-
-                    if(r_MonthCounts.ContainsKey(createdTime.Month))
-                    {
-                        r_MonthCounts[createdTime.Month]++;
-                    }
-
-                    if(r_HourCounts.ContainsKey(createdTime.Hour))
-                    {
-                        r_HourCounts[createdTime.Hour]++;
-                    }
+                    r_YearCounts[createdTime.Year]++;
                 }
-        }
 
+                if(r_MonthCounts.ContainsKey(createdTime.Month))
+                {
+                    r_MonthCounts[createdTime.Month]++;
+                }
+
+                if(r_HourCounts.ContainsKey(createdTime.Hour))
+                {
+                    r_HourCounts[createdTime.Hour]++;
+                }
+            }
+        }
         public List<KeyValuePair<int, int>> GetYearCounts(string i_SortBy = "CountDescending")
         {
             return sortCountsList(r_YearCounts, i_SortBy);

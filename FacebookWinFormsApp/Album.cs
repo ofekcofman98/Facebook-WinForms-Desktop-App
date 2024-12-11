@@ -38,6 +38,10 @@ namespace BasicFacebookFeatures
 
             updateButtons();
         }
+        public void ClearPictureBoxInAlbum()
+        {
+            pictureBoxInAlbum.Image = null;
+        }
 
         private void updateButtons()
         {

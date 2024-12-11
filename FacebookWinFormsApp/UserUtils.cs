@@ -9,25 +9,21 @@ namespace BasicFacebookFeatures
 {
     public static class UserUtils
     {
-        private static readonly String facebookDateFormat = "MM/dd/yyyy";
-        public static readonly string[] r_Months =
+        private static readonly String sr_facebookDateFormat = "MM/dd/yyyy";
+        public static readonly string[] sr_Months =
             {
                 "January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"
             };
 
-        public static int getUserAge(User user)
+        public static int GetUserAge(User i_User)
         {
-            String birthDateString = user.Birthday;
+            String birthDateString = i_User.Birthday;
 
-            if (DateTime.TryParseExact(birthDateString, facebookDateFormat, null, System.Globalization.DateTimeStyles.None, out DateTime birthDate))
+            if (DateTime.TryParseExact(birthDateString, sr_facebookDateFormat, null, System.Globalization.DateTimeStyles.None, out DateTime birthDate))
             {
                 DateTime today = DateTime.Today;
-
-                // Calculate age
                 int age = today.Year - birthDate.Year;
-
-                // Adjust for cases where the birthday hasn't occurred yet this year
                 if (today < birthDate.AddYears(age))
                 {
                     age--;

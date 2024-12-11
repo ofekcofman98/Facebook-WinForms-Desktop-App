@@ -19,13 +19,13 @@ namespace BasicFacebookFeatures
     public partial class FormMain : Form
     {
         private readonly AppManager r_AppManager;
-        private Action OnLogin;
-        private Action OnLogout;
+        private Action onLogin;
+        private Action onLogout;
         private FindFriends m_FindFriends;
         private ActivityCenter m_ActivityCenter;
 
-        private readonly List<Panel> m_HomePanels;
-        private readonly List<TabPage> m_AddedTabs;
+        private readonly List<Panel> r_HomePanels;
+        private readonly List<TabPage> r_AddedTabs;
 
         public FormMain()
         {
@@ -33,8 +33,8 @@ namespace BasicFacebookFeatures
             r_AppManager = new AppManager();
 
             m_FindFriends = new FindFriends();
-            //FacebookWrapper.FacebookService.s_CollectionLimit = 25;
-            m_HomePanels = new List<Panel>
+            FacebookWrapper.FacebookService.s_CollectionLimit = 25;
+            r_HomePanels = new List<Panel>
                            {
                                panelAlbums,
                                panelStatusPost,
@@ -43,48 +43,30 @@ namespace BasicFacebookFeatures
                                panelLikes,
                                panelGroups
                            };
-            m_AddedTabs = new List<TabPage> { tabMyProfile, tabActivityCenter, tabPage1 };
+            r_AddedTabs = new List<TabPage> { tabMyProfile, tabActivityCenter, tabPage1 };
 
             updateTabs(false);
 
-            OnLogin += updateLoginButton;
-            OnLogin += updateHomePanelsVisible;
-            OnLogin += fetchProfileInfo;
-            OnLogin += fetchLikedPages;
-            OnLogin += fetchAlbums;
-            OnLogin += fetchFriendList;
-            OnLogin += fetchMyProfile;
-            OnLogin += fetchActivityCenter;
-            OnLogin += fetchFriendsLookupPage;
-            OnLogin += fetchGroups;
-            OnLogin += fetchFavoriteTeams;
-            OnLogin += fetchStatusPost;
+            onLogin += updateLoginButton;
+            onLogin += updateHomePanelsVisible;
+            onLogin += fetchProfileInfo;
+            onLogin += fetchLikedPages;
+            onLogin += fetchAlbums;
+            onLogin += fetchFriendList;
+            onLogin += fetchMyProfile;
+            onLogin += fetchActivityCenter;
+            onLogin += fetchFriendsLookupPage;
+            onLogin += fetchGroups;
+            onLogin += fetchFavoriteTeams;
+            onLogin += fetchStatusPost;
 
-            OnLogout += updateHomePanelsVisible;
-            OnLogout += unLaunchFacebook;
-            OnLogout += updateLoginButton;
-        }
-
-        internal ActivityCenter ActivityCenter
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-        internal AppManager AppManager
-        {
-            get => default;
-            set
-            {
-            }
+            onLogout += updateHomePanelsVisible;
+            onLogout += unLaunchFacebook;
+            onLogout += updateLoginButton;
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            //Clipboard.SetText("design.patterns");
-
             if (r_AppManager.LoginResult == null)
             {
                 performLogin();
@@ -97,7 +79,7 @@ namespace BasicFacebookFeatures
             {
                 r_AppManager.Login();
                 updateTabs(r_AppManager.IsLoggedIn);
-                OnLogin?.Invoke();
+                onLogin?.Invoke();
             }
             catch (Exception e)
             {
@@ -116,7 +98,7 @@ namespace BasicFacebookFeatures
             {
                 r_AppManager.Logout();
                 updateTabs(r_AppManager.IsLoggedIn);
-                OnLogout?.Invoke();
+                onLogout?.Invoke();
             }
             catch (Exception e)
             {
@@ -128,19 +110,12 @@ namespace BasicFacebookFeatures
 
         private void updateHomePanelsVisible()
         {
-            bool i_IsVisibile;
-            if(r_AppManager.IsLoggedIn)
-            {
-                i_IsVisibile = true;
-            }
-            else
-            {
-                i_IsVisibile = false;
-            }
+            bool isVisibile;
+            isVisibile = r_AppManager.IsLoggedIn;
 
-            foreach(Panel panel in m_HomePanels)
+            foreach(Panel panel in r_HomePanels)
             {
-                panel.Visible = i_IsVisibile;
+                panel.Visible = isVisibile;
             }
         }
 
@@ -149,14 +124,14 @@ namespace BasicFacebookFeatures
             tabsController.SelectedIndex = 0;
             if (i_IsVisible)
             {
-                foreach (TabPage tab in m_AddedTabs)
+                foreach (TabPage tab in r_AddedTabs)
                 {
                     tabsController.TabPages.Add(tab);
                 }
             }
             else
             {
-                foreach (TabPage tab in m_AddedTabs)
+                foreach (TabPage tab in r_AddedTabs)
                 {
                     tabsController.TabPages.Remove(tab);
                 }
@@ -195,26 +170,21 @@ namespace BasicFacebookFeatures
             fetchFriendsComboBox();
             populateRealitionshipStatusList();
             populateLikedPagesList();
-            PopulateGenderComboBox();
+            populateGenderComboBox();
 
         }
 
-        private void PopulateGenderComboBox()
+        private void populateGenderComboBox()
         {
             comboBoxGender.Items.Clear();
             comboBoxGender.SelectedItem = null;
             comboBoxGender.SelectedIndex = -1;
             comboBoxGender.Text = "";
-            // Add "No Preference" as the first option
-
-            // Add all enum values to the ComboBox
             foreach (User.eGender gender in Enum.GetValues(typeof(User.eGender)))
             {
                 comboBoxGender.Items.Add(gender);
             }
             comboBoxGender.Items.Add("No Preference");
-
-            // Set the default selected item to "No Preference"
             comboBoxGender.SelectedIndex = 0;
         }
 
@@ -237,13 +207,11 @@ namespace BasicFacebookFeatures
             foreach (Page page in r_AppManager.LoggedInUser.LikedPages)
             {
                 checkedListBoxlikedPages.Items.Add(page);
-                //album.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
             if (checkedListBoxlikedPages.Items.Count == 0)
             {
                 checkedListBoxlikedPages.Items.Add("No liked pages to retrieve");
-                //MessageBox.Show("No liked pages to retrieve :(");
             }
         }
 
@@ -255,7 +223,6 @@ namespace BasicFacebookFeatures
             comboBoxFriendList.SelectedIndex = -1;
             comboBoxFriendList.Text = "";
             comboBoxFriendList.DisplayMember = "Name";
-
 
             foreach (User user in r_AppManager.LoggedInUser.Friends)
             {
@@ -270,19 +237,19 @@ namespace BasicFacebookFeatures
         {
             panelFriends.Visible = true;
             listBoxUserFriends.Items.Clear();
+            pictureBoxUserFriend.Image = null;
             listBoxUserFriends.DisplayMember = "Name";
-            foreach (User User in r_AppManager.LoggedInUser.Friends)
+            foreach (User user in r_AppManager.LoggedInUser.Friends)
             {
-                listBoxUserFriends.Items.Add(User);
+                listBoxUserFriends.Items.Add(user);
             }
 
             if (listBoxUserFriends.Items.Count == 0)
             {
                 listBoxUserFriends.Items.Add("No friends to retrieve");
-                //MessageBox.Show("No friends to retrieve :(");
             }
-            
         }
+
         private void fetchMyProfile()
         {
             labelEmailData.Text = r_AppManager.LoggedInUser.Email;
@@ -290,8 +257,8 @@ namespace BasicFacebookFeatures
             labelGenderData.Text = r_AppManager.LoggedInUser.Gender.ToString();
             labelFullNameData.Text = r_AppManager.LoggedInUser.Name;
             PictureBoxMyProfile.Image = r_AppManager.LoggedInUser.ImageLarge;
-
         }
+
         private void fetchActivityCenter()
         {
             m_ActivityCenter = new ActivityCenter(r_AppManager);
@@ -330,7 +297,7 @@ namespace BasicFacebookFeatures
 
             foreach (KeyValuePair<int, int> month in monthCounts)
             {
-                listBoxMonth.Items.Add($"{UserUtils.r_Months[month.Key - 1]}: {month.Value} posts/photos");
+                listBoxMonth.Items.Add($"{UserUtils.sr_Months[month.Key - 1]}: {month.Value} posts/photos");
             }
 
             if(listBoxMonth.Items.Count > 0)
@@ -430,7 +397,7 @@ namespace BasicFacebookFeatures
             {
                 int selectedYear = int.Parse(listBoxYear.SelectedItem.ToString().Split(':')[0]);
                 string selectedMonthName = listBoxMonth.SelectedItem.ToString().Split(':')[0];
-                int selectedMonth = Array.IndexOf(UserUtils.r_Months, selectedMonthName) + 1; ;
+                int selectedMonth = Array.IndexOf(UserUtils.sr_Months, selectedMonthName) + 1; ;
 
                 labelDateOfPosts.Text = $"Your posts from {selectedMonthName} {selectedYear}";
                 filterPostsByTime(i_Year: selectedYear, i_Month: selectedMonth);
@@ -531,6 +498,7 @@ namespace BasicFacebookFeatures
         {
             panelAlbums.Visible = true;
             listBoxUserAlbums.Items.Clear();
+            albumUserAlbums.ClearPictureBoxInAlbum();
             listBoxUserAlbums.DisplayMember = "Name";
             foreach (FacebookWrapper.ObjectModel.Album album in r_AppManager.LoggedInUser.Albums)
             {
@@ -545,6 +513,7 @@ namespace BasicFacebookFeatures
         private void fetchFavoriteTeams()
         {
             panelFavoriteTeams.Visible = true;
+            pictureBoxFavoriteTeam.Image = null;
             listBoxUserFavoriteTeams.Items.Clear();
             listBoxUserFavoriteTeams.DisplayMember = "Name";
             foreach (Page page in r_AppManager.LoggedInUser.FavofriteTeams)
@@ -555,7 +524,6 @@ namespace BasicFacebookFeatures
             if (listBoxUserFavoriteTeams.Items.Count == 0)
             {
                 listBoxUserFavoriteTeams.Items.Add("No Albums to retrieve");
-                //MessageBox.Show("No Albums to retrieve :(");
             }
         }
         private void fetchGroups()
@@ -571,7 +539,6 @@ namespace BasicFacebookFeatures
             if (listBoxUserGroups.Items.Count == 0)
             {
                 listBoxUserGroups.Items.Add("No Groups to retrieve");
-                //MessageBox.Show("No Groups to retrieve :(");
             }
         }
 
@@ -641,11 +608,11 @@ namespace BasicFacebookFeatures
 
         }
 
-        private void updateFilteredFriendsListBox(HashSet<User> i_filterdFriends)
+        private void updateFilteredFriendsListBox(HashSet<User> i_FilterdFriends)
         {
             listBoxFilteredUsers.Items.Clear();
             listBoxUserFavoriteTeams.DisplayMember = "Name";
-            foreach(User user in i_filterdFriends)
+            foreach(User user in i_FilterdFriends)
             {
                 listBoxFilteredUsers.Items.Add(user);
             }
@@ -693,20 +660,13 @@ namespace BasicFacebookFeatures
         {
             List<IFilterable> filterable = new List<IFilterable>();
             if (comboBoxFriendList.SelectedItem == null)
-            {//show alart 
+            {
                 return;
             }
             User selectedFriend = comboBoxFriendList.SelectedItem as User;
             int minAge = (int)numericUpDownMinimumAge.Value;
             int maxAge = (int)numericUpDownMaximumAge.Value;
-            if (minAge > maxAge)
-            {
-                //show alart...
-            }
-            else
-            {
-                filterable.Add(new FilterAge(minAge, maxAge));
-            }
+            filterable.Add(new FilterAge(minAge, maxAge));
             if (comboBoxGender.SelectedItem != null && !comboBoxGender.SelectedItem.Equals("No Preference"))
             {
 
@@ -715,7 +675,7 @@ namespace BasicFacebookFeatures
             filterable.Add(new FilterRelationshipStatus(getUserSelectedRelationshipStatuses()));
             filterable.Add(new FilterLikedPages(getUserSelectedLikedPagesId()));
 
-            HashSet<User> filterdFriends = m_FindFriends.getFriendUserCommmonFriendsPages(filterable, selectedFriend);
+            HashSet<User> filterdFriends = m_FindFriends.GetFriendUserCommonFriendsPages(filterable, selectedFriend);
             updateFilteredFriendsListBox(filterdFriends);
         }
 

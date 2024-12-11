@@ -16,14 +16,14 @@ namespace BasicFacebookFeatures
             m_LikedPagesId = i_LikedPagesId;
         }
 
-        public bool filter(User user)
+        public bool Filter(User i_User)
         {
             bool filter = false;
             if (m_LikedPagesId.Count == 0)
             {
                 filter = true;
             }
-            foreach (Page page in user.LikedPages)
+            foreach (Page page in i_User.LikedPages)
             {
                 if (m_LikedPagesId.Contains(page.Id))
                 {
@@ -32,8 +32,8 @@ namespace BasicFacebookFeatures
                 }
 
             }
-            return filter;
 
+            return filter;
         }
     }
 }

@@ -16,8 +16,7 @@ namespace BasicFacebookFeatures
         private FacebookWrapper.ObjectModel.User m_LoggedInUser;
 
         public bool IsLoggedIn { get; private set; } = false;
-        //public ActivityCenter ActivityCenter { get; set; }
-        private readonly string[] r_Permssions = new string[]
+        private readonly string[] r_Permissions = new string[]
                                                          {
                                                              "email",
                                                              "public_profile",
@@ -38,13 +37,6 @@ namespace BasicFacebookFeatures
         public List<Post> UserPosts { get; set; }
         public List<Photo> UserPhotos { get; set; }
 
-        public string AppId
-        {
-            get
-            {
-                return r_AppId;
-            }
-        }
 
         public FacebookWrapper.LoginResult LoginResult
         {
@@ -69,8 +61,7 @@ namespace BasicFacebookFeatures
                 throw new Exception("Please enter a valid App ID."); 
             }
 
-            m_LoginResult = FacebookService.Login(r_AppId, r_Permssions);
-
+            m_LoginResult = FacebookService.Login(r_AppId, r_Permissions);
             try
             {
                 if(string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
@@ -78,7 +69,6 @@ namespace BasicFacebookFeatures
                     IsLoggedIn = true;
                     m_LoggedInUser = m_LoginResult.LoggedInUser;
                     getUserData();
-                    //ActivityCenter = new ActivityCenter(this);
                 }
                 else
                 {

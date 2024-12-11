@@ -17,9 +17,10 @@ namespace BasicFacebookFeatures
             m_MaxAge = i_MaxAge;
         }
 
-        public bool filter(User user)
+        public bool Filter(User i_User)
         {
-            int age = UserUtils.getUserAge(user);
+            int age = UserUtils.GetUserAge(i_User);
+
             return m_MinAge <= age && age <= m_MaxAge;
         }
 

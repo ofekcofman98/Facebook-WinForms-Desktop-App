@@ -9,6 +9,6 @@ namespace BasicFacebookFeatures
 {
     public interface IFilterable
     {
-        bool filter(User user);
+        bool Filter(User i_User);
     }
 }

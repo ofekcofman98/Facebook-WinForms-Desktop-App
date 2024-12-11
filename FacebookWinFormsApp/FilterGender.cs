@@ -9,14 +9,14 @@ namespace BasicFacebookFeatures
 {
     public class FilterGender : IFilterable
     {
-        User.eGender m_preferanceGender;
-        public FilterGender(User.eGender gender)
+        User.eGender m_PreferanceGender;
+        public FilterGender(User.eGender i_Gender)
         {
-            m_preferanceGender = gender;
+            m_PreferanceGender = i_Gender;
         }
-        public bool filter(User user)
+        public bool Filter(User i_User)
         {
-            return user.Gender == m_preferanceGender;
+            return i_User.Gender == m_PreferanceGender;
         }
     }
 }

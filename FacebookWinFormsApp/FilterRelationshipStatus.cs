@@ -14,14 +14,14 @@ namespace BasicFacebookFeatures
         {
             m_RelationshipStatusesSet = i_RelationshipStatusesSet;
         }
-        public bool filter(User user)
+        public bool Filter(User i_User)
         {
             if (m_RelationshipStatusesSet.Count == 0)
             {
                 return true;
             }
 
-            return m_RelationshipStatusesSet.Contains((User.eRelationshipStatus)user.RelationshipStatus);
+            return m_RelationshipStatusesSet.Contains((User.eRelationshipStatus)i_User.RelationshipStatus);
         }
     }
 }
