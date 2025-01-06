@@ -79,12 +79,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppManager.cs" />
-    <Compile Include="IFilterable.cs" />
-    <Compile Include="FilterAge.cs" />
-    <Compile Include="FilterGender.cs" />
-    <Compile Include="FilterLikedPages.cs" />
-    <Compile Include="FilterRelationshipStatus.cs" />
-    <Compile Include="FindFriends.cs" />
+    <Compile Include="Filters\IFilterable.cs" />
+    <Compile Include="Filters\FilterAge.cs" />
+    <Compile Include="Filters\FilterGender.cs" />
+    <Compile Include="Filters\FilterLikedPages.cs" />
+    <Compile Include="Filters\FilterRelationshipStatus.cs" />
+    <Compile Include="Features\FindFriends.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,7 +93,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ActivityCenter.cs" />
+    <Compile Include="Features\ActivityCenter.cs" />
     <Compile Include="Album.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -141,5 +141,6 @@
   <ItemGroup>
     <None Include="facebook-new.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

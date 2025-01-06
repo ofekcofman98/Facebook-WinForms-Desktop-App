@@ -429,7 +429,7 @@ namespace BasicFacebookFeatures
             addPostsToListbox(posts, listBoxFilteredPosts);
             addPhotosToListbox(photos, listBoxFilteredPosts);
 
-            albumFilteredPhotos.SetPhotos(photos);
+            //albumFilteredPhotos.SetPhotos(photos);
         }
 
 
@@ -498,7 +498,7 @@ namespace BasicFacebookFeatures
         {
             panelAlbums.Visible = true;
             listBoxUserAlbums.Items.Clear();
-            albumUserAlbums.ClearPictureBoxInAlbum();
+            //albumUserAlbums.ClearPictureBoxInAlbum();
             listBoxUserAlbums.DisplayMember = "Name";
             foreach (FacebookWrapper.ObjectModel.Album album in r_AppManager.LoggedInUser.Albums)
             {
@@ -602,7 +602,7 @@ namespace BasicFacebookFeatures
 
                 if (selectedAlbum != null)
                 {
-                    albumUserAlbums.SetPhotos(selectedAlbum.Photos.ToList());
+                    //albumUserAlbums.SetPhotos(selectedAlbum.Photos.ToList());
                 }
             }
 
