@@ -18,19 +18,26 @@ namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
-        private readonly AppManager r_AppManager;
         private Action onLogin;
         private Action onLogout;
         private FindFriends m_FindFriends;
         private ActivityCenter m_ActivityCenter;
 
+        private readonly AppFacade r_Facade;
+
         private readonly List<Panel> r_HomePanels;
         private readonly List<TabPage> r_AddedTabs;
+
+
+        //private FormActivityCenter m_FormActivityCenter;
+
+
+
 
         public FormMain()
         {
             InitializeComponent();
-            r_AppManager = new AppManager();
+            //InitializeTabs();
 
             m_FindFriends = new FindFriends();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
@@ -43,9 +50,14 @@ namespace BasicFacebookFeatures
                                panelLikes,
                                panelGroups
                            };
-            r_AddedTabs = new List<TabPage> { tabMyProfile, tabActivityCenter, tabPage1 };
+            r_AddedTabs = new List<TabPage> { tabMyProfile, tabActivityCenter, tabFindNewFriends };
+
+            r_Facade = new AppFacade();
 
             updateTabs(false);
+           
+            //tabsController.SelectedIndexChanged += tabsController_SelectedIndexChanged;
+            //initializeTabs();
 
             onLogin += updateLoginButton;
             onLogin += updateHomePanelsVisible;
@@ -65,9 +77,49 @@ namespace BasicFacebookFeatures
             onLogout += updateLoginButton;
         }
 
+        //private void initializeTabs()
+        //{
+        //    m_FormActivityCenter = new FormActivityCenter();
+        //    foreach(TabPage tabPage in r_AddedTabs)
+        //    {
+        //        if (tabPage == tabActivityCenter) /////////////////////////////////////////
+        //        {
+        //            embedFormInTab(m_FormActivityCenter, tabPage);
+        //        }
+
+        //    }
+        //}
+
+        //private void embedFormInTab(Form i_Form, TabPage i_TabPage)
+        //{
+        //    i_Form.TopLevel = false;
+        //    i_Form.Dock = DockStyle.Fill;
+        //    i_TabPage.Controls.Add(i_Form);
+        //    i_Form.Show();
+        //}
+
+        //private void tabsController_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    TabPage selectedTab = tabsController.SelectedTab;
+
+        //    if (selectedTab == tabActivityCenter)
+        //    {
+        //        handleActivityCenterTabSelected();
+        //    }
+        //}
+
+        //private void handleActivityCenterTabSelected()
+        //{
+        //    if (m_FormActivityCenter != null)
+        //    {
+        //        m_FormActivityCenter.fetchActivityCenter();
+        //    }
+        //}
+
+
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            if (r_AppManager.LoginResult == null)
+            if (AppManager.Instance.LoginResult == null)
             {
                 performLogin();
             }
@@ -77,8 +129,9 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                r_AppManager.Login();
-                updateTabs(r_AppManager.IsLoggedIn);
+                //r_Facade.Login();
+                AppManager.Instance.Login();
+                updateTabs(AppManager.Instance.IsLoggedIn);
                 onLogin?.Invoke();
             }
             catch (Exception e)
@@ -96,8 +149,9 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                r_AppManager.Logout();
-                updateTabs(r_AppManager.IsLoggedIn);
+                //r_Facade.Logout();
+                AppManager.Instance.Logout();
+                updateTabs(AppManager.Instance.IsLoggedIn);
                 onLogout?.Invoke();
             }
             catch (Exception e)
@@ -106,12 +160,10 @@ namespace BasicFacebookFeatures
             }
         }
 
-
-
         private void updateHomePanelsVisible()
         {
             bool isVisibile;
-            isVisibile = r_AppManager.IsLoggedIn;
+            isVisibile = AppManager.Instance.IsLoggedIn;
 
             foreach(Panel panel in r_HomePanels)
             {
@@ -140,9 +192,9 @@ namespace BasicFacebookFeatures
 
         private void updateLoginButton()
         {
-            if(r_AppManager.IsLoggedIn)
+            if (AppManager.Instance.IsLoggedIn)
             {
-                buttonLogin.Text = $"Logged in as {r_AppManager.LoggedInUser.Name}";
+                buttonLogin.Text = $"Logged in as {AppManager.Instance.LoggedInUser.Name}";
                 buttonLogin.BackColor = Color.LightGreen;
                 buttonLogin.Enabled = false;
                 buttonLogout.Enabled = true;
@@ -160,8 +212,8 @@ namespace BasicFacebookFeatures
         {
             labelUserName.Visible = true;
             pictureBoxProfile.Visible = true;
-            labelUserName.Text = $"Hello, {r_AppManager.LoggedInUser.FirstName}!";
-            pictureBoxProfile.ImageLocation = r_AppManager.LoggedInUser.PictureNormalURL;
+            labelUserName.Text = $"Hello, {AppManager.Instance.LoggedInUser.FirstName}!";
+            pictureBoxProfile.ImageLocation = AppManager.Instance.LoggedInUser.PictureNormalURL;
         }
 
 
@@ -204,7 +256,7 @@ namespace BasicFacebookFeatures
         {
             checkedListBoxlikedPages.Items.Clear();
             checkedListBoxlikedPages.DisplayMember = "Name";
-            foreach (Page page in r_AppManager.LoggedInUser.LikedPages)
+            foreach (Page page in AppManager.Instance.LoggedInUser.LikedPages)
             {
                 checkedListBoxlikedPages.Items.Add(page);
             }
@@ -224,7 +276,7 @@ namespace BasicFacebookFeatures
             comboBoxFriendList.Text = "";
             comboBoxFriendList.DisplayMember = "Name";
 
-            foreach (User user in r_AppManager.LoggedInUser.Friends)
+            foreach (User user in AppManager.Instance.LoggedInUser.Friends)
             {
                 comboBoxFriendList.Items.Add(user);
             }
@@ -239,7 +291,7 @@ namespace BasicFacebookFeatures
             listBoxUserFriends.Items.Clear();
             pictureBoxUserFriend.Image = null;
             listBoxUserFriends.DisplayMember = "Name";
-            foreach (User user in r_AppManager.LoggedInUser.Friends)
+            foreach (User user in AppManager.Instance.LoggedInUser.Friends)
             {
                 listBoxUserFriends.Items.Add(user);
             }
@@ -252,16 +304,16 @@ namespace BasicFacebookFeatures
 
         private void fetchMyProfile()
         {
-            labelEmailData.Text = r_AppManager.LoggedInUser.Email;
-            labelBirthdayData.Text = r_AppManager.LoggedInUser.Birthday;
-            labelGenderData.Text = r_AppManager.LoggedInUser.Gender.ToString();
-            labelFullNameData.Text = r_AppManager.LoggedInUser.Name;
-            PictureBoxMyProfile.Image = r_AppManager.LoggedInUser.ImageLarge;
+            labelEmailData.Text = AppManager.Instance.LoggedInUser.Email;
+            labelBirthdayData.Text = AppManager.Instance.LoggedInUser.Birthday;
+            labelGenderData.Text = AppManager.Instance.LoggedInUser.Gender.ToString();
+            labelFullNameData.Text = AppManager.Instance.LoggedInUser.Name;
+            PictureBoxMyProfile.Image = AppManager.Instance.LoggedInUser.ImageLarge;
         }
 
         private void fetchActivityCenter()
         {
-            m_ActivityCenter = new ActivityCenter(r_AppManager);
+            m_ActivityCenter = new ActivityCenter(AppManager.Instance);
 
             listBoxFilteredPosts.Visible = true;
             listBoxFilteredPosts.Items.Clear();
@@ -283,7 +335,7 @@ namespace BasicFacebookFeatures
                 listBoxYear.Items.Add($"{year.Key}: {year.Value} posts/photos");
             }
 
-            if(listBoxYear.Items.Count > 0)
+            if (listBoxYear.Items.Count > 0)
             {
                 populateSortComboBox(comboBoxYearSort, "Year");
             }
@@ -300,7 +352,7 @@ namespace BasicFacebookFeatures
                 listBoxMonth.Items.Add($"{UserUtils.sr_Months[month.Key - 1]}: {month.Value} posts/photos");
             }
 
-            if(listBoxMonth.Items.Count > 0)
+            if (listBoxMonth.Items.Count > 0)
             {
                 populateSortComboBox(comboBoxMonthSort, "Month");
             }
@@ -315,7 +367,7 @@ namespace BasicFacebookFeatures
                 listBoxHour.Items.Add($"{makeHourFormat(hour.Key)}: {hour.Value} posts/photos");
             }
 
-            if(listBoxHour.Items.Count > 0)
+            if (listBoxHour.Items.Count > 0)
             {
                 populateSortComboBox(comboBoxHourSort, "Hour");
             }
@@ -380,14 +432,14 @@ namespace BasicFacebookFeatures
 
         private void listBoxYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-           if(listBoxYear.SelectedItem != null)
-           {
-               int selectedYear = int.Parse(listBoxYear.SelectedItem.ToString().Split(':')[0]);
-               labelDateOfPosts.Text = $"Your posts from {selectedYear}";
-               filterPostsByTime(i_Year: selectedYear);
+            if (listBoxYear.SelectedItem != null)
+            {
+                int selectedYear = int.Parse(listBoxYear.SelectedItem.ToString().Split(':')[0]);
+                labelDateOfPosts.Text = $"Your posts from {selectedYear}";
+                filterPostsByTime(i_Year: selectedYear);
 
-               displayMonthCounts(selectedYear);
-           }
+                displayMonthCounts(selectedYear);
+            }
         }
 
 
@@ -406,7 +458,7 @@ namespace BasicFacebookFeatures
 
         private void listBoxHour_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(listBoxHour.SelectedItem != null)
+            if (listBoxHour.SelectedItem != null)
             {
                 int selectedHour = int.Parse(listBoxHour.SelectedItem.ToString().Split(':')[0]);
                 labelDateOfPosts.Text = $"Your posts from {makeHourFormat(selectedHour)} in total: ";
@@ -468,16 +520,16 @@ namespace BasicFacebookFeatures
             panelStatusPost.Visible = true;
             textBoxStatusPost.Click += textBoxStatus_Click;
             textBoxStatusPost.Leave += textBoxStatus_Leave;
-            if (r_AppManager.LoggedInUser != null)
+            if (AppManager.Instance.LoggedInUser != null)
             {
-                textBoxStatusPost.Text = $"What's on your mind, {r_AppManager.LoggedInUser.FirstName}";
+                textBoxStatusPost.Text = $"What's on your mind, {AppManager.Instance.LoggedInUser.FirstName}";
                 textBoxStatusPost.ForeColor = Color.Gray;
             }
         }
 
         private void textBoxStatus_Click(object sender, EventArgs e)
         {
-            if ( r_AppManager.LoggedInUser != null)
+            if ( AppManager.Instance.LoggedInUser != null)
             {
                 textBoxStatusPost.Text = ""; 
                 textBoxStatusPost.ForeColor = Color.Black;
@@ -488,7 +540,7 @@ namespace BasicFacebookFeatures
         {
             if (string.IsNullOrWhiteSpace(textBoxStatusPost.Text))
             {
-                textBoxStatusPost.Text = $"What's on your mind, {r_AppManager.LoggedInUser.Name}?";
+                textBoxStatusPost.Text = $"What's on your mind, {AppManager.Instance.LoggedInUser.Name}?";
                 textBoxStatusPost.ForeColor = Color.Gray; 
             }
         }
@@ -500,7 +552,7 @@ namespace BasicFacebookFeatures
             listBoxUserAlbums.Items.Clear();
             //albumUserAlbums.ClearPictureBoxInAlbum();
             listBoxUserAlbums.DisplayMember = "Name";
-            foreach (FacebookWrapper.ObjectModel.Album album in r_AppManager.LoggedInUser.Albums)
+            foreach (FacebookWrapper.ObjectModel.Album album in AppManager.Instance.LoggedInUser.Albums)
             {
                 listBoxUserAlbums.Items.Add(album);
             }
@@ -516,7 +568,7 @@ namespace BasicFacebookFeatures
             pictureBoxFavoriteTeam.Image = null;
             listBoxUserFavoriteTeams.Items.Clear();
             listBoxUserFavoriteTeams.DisplayMember = "Name";
-            foreach (Page page in r_AppManager.LoggedInUser.FavofriteTeams)
+            foreach (Page page in AppManager.Instance.LoggedInUser.FavofriteTeams)
             {
                 listBoxUserFavoriteTeams.Items.Add(page);
             }
@@ -531,7 +583,7 @@ namespace BasicFacebookFeatures
             panelGroups.Visible = true;
             listBoxUserGroups.Items.Clear();
             listBoxUserGroups.DisplayMember = "Name";
-            foreach (Group group in r_AppManager.LoggedInUser.Groups)
+            foreach (Group group in AppManager.Instance.LoggedInUser.Groups)
             {
                 listBoxUserGroups.Items.Add(group);
             }
@@ -556,9 +608,9 @@ namespace BasicFacebookFeatures
 
             try
             {
-                if (r_AppManager.LoggedInUser.LikedPages != null && r_AppManager.LoggedInUser.LikedPages.Count > 0)
+                if (AppManager.Instance.LoggedInUser.LikedPages != null && AppManager.Instance.LoggedInUser.LikedPages.Count > 0)
                 {
-                    foreach (Page likedPage in r_AppManager.LoggedInUser.LikedPages)
+                    foreach (Page likedPage in AppManager.Instance.LoggedInUser.LikedPages)
                     {
                         listBoxLikes.Items.Add(likedPage);
                     }
@@ -717,7 +769,7 @@ namespace BasicFacebookFeatures
             string postData = textBoxStatusPost.Text;
             try
             {
-                 r_AppManager.LoggedInUser.PostStatus(postData);
+                 AppManager.Instance.LoggedInUser.PostStatus(postData);
                  MessageBox.Show("New status was Posted!", "New Status Posted");
            
             }
@@ -730,6 +782,36 @@ namespace BasicFacebookFeatures
                 MessageBox.Show(ex.Message);
             }
         }
+
+        //private void listBoxHour_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+
+        //}
+
+        //private void comboBoxHourSort_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+
+        //}
+
+        //private void listBoxMonth_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+
+        //}
+
+        //private void listBoxYear_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+
+        //}
+
+        //private void comboBoxYearSort_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+
+        //}
+
+        //private void comboBoxMonthSort_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+
+        //}
     }
     
 }

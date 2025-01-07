@@ -54,6 +54,10 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Facebook">
       <HintPath>..\FBApi\Facebook.dll</HintPath>
@@ -78,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppFacade.cs" />
     <Compile Include="AppManager.cs" />
     <Compile Include="Filters\IFilterable.cs" />
     <Compile Include="Filters\FilterAge.cs" />
@@ -85,6 +90,13 @@
     <Compile Include="Filters\FilterLikedPages.cs" />
     <Compile Include="Filters\FilterRelationshipStatus.cs" />
     <Compile Include="Features\FindFriends.cs" />
+    <Compile Include="FormActivityCenter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormActivityCenter.Designer.cs">
+      <DependentUpon>FormActivityCenter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Patterns\FormFactory.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,7 +112,11 @@
     <Compile Include="Album.Designer.cs">
       <DependentUpon>Album.cs</DependentUpon>
     </Compile>
+    <Compile Include="Patterns\Singleton.cs" />
     <Compile Include="UserUtils.cs" />
+    <EmbeddedResource Include="FormActivityCenter.resx">
+      <DependentUpon>FormActivityCenter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>

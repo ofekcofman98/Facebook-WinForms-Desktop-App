@@ -9,7 +9,7 @@ using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
-    internal class AppManager
+    public sealed class AppManager
     {
         private readonly string r_AppId = "945333600988492";
         private FacebookWrapper.LoginResult m_LoginResult;
@@ -38,6 +38,17 @@ namespace BasicFacebookFeatures
         public List<Photo> UserPhotos { get; set; }
 
 
+        private AppManager() { }
+
+        public static AppManager Instance
+        {
+            get
+            {
+                return Singleton<AppManager>.Instance;
+            }
+        }
+
+
         public FacebookWrapper.LoginResult LoginResult
         {
             get
@@ -45,6 +56,7 @@ namespace BasicFacebookFeatures
                 return m_LoginResult;
             }
         }
+
         public FacebookWrapper.ObjectModel.User LoggedInUser
         {
             get
