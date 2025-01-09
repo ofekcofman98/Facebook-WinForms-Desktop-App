@@ -10,27 +10,20 @@ namespace BasicFacebookFeatures
 {
     internal class FindFriends
     { 
-        public HashSet<User> GetFriendUserCommonFriendsPages(List<IFilterable> i_Filters, User i_SelectedFriendToGetFriendsFrom)
+        public HashSet<User> GetFriendUserCommonFriendsPages(IFilterable i_filter, User i_SelectedFriendToGetFriendsFrom)
         {
             HashSet<User> filterdFriends = new HashSet<User>(i_SelectedFriendToGetFriendsFrom.Friends);
 
-            List<User> usersToRemove = new List<User>();
+            List<User> filteredUsers = new List<User>();
 
             foreach (User user in filterdFriends)
             {
-                foreach (IFilterable filterable in i_Filters)
+                if (i_filter.Filter(user))
                 {
-                    if (!filterable.Filter(user))
-                    {
-                        usersToRemove.Add(user); 
-                        break; 
-                    }
+                    filterdFriends.Add(user); 
+                 
                 }
-            }
-
-            foreach (User user in usersToRemove)
-            {
-                filterdFriends.Remove(user);
+              
             }
 
             return filterdFriends;

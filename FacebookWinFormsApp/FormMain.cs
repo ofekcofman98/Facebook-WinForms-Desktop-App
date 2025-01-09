@@ -13,6 +13,7 @@ using CefSharp.DevTools.Fetch;
 using static System.Windows.Forms.AxHost;
 using static BasicFacebookFeatures.ActivityCenter;
 using Facebook;
+using BasicFacebookFeatures.Filters;
 
 namespace BasicFacebookFeatures
 {
@@ -710,7 +711,7 @@ namespace BasicFacebookFeatures
 
         private void buttonApplySearch_Click(object sender, EventArgs e)
         {
-            List<IFilterable> filterable = new List<IFilterable>();
+            CompositeFilter filters = new CompositeFilter();
             if (comboBoxFriendList.SelectedItem == null)
             {
                 return;
@@ -718,16 +719,16 @@ namespace BasicFacebookFeatures
             User selectedFriend = comboBoxFriendList.SelectedItem as User;
             int minAge = (int)numericUpDownMinimumAge.Value;
             int maxAge = (int)numericUpDownMaximumAge.Value;
-            filterable.Add(new FilterAge(minAge, maxAge));
+            filters.AddFilter(new FilterAge(minAge, maxAge));
             if (comboBoxGender.SelectedItem != null && !comboBoxGender.SelectedItem.Equals("No Preference"))
             {
 
-                filterable.Add(new FilterGender((User.eGender)comboBoxGender.SelectedItem));
+             filters.AddFilter(new FilterGender((User.eGender)comboBoxGender.SelectedItem));
             }
-            filterable.Add(new FilterRelationshipStatus(getUserSelectedRelationshipStatuses()));
-            filterable.Add(new FilterLikedPages(getUserSelectedLikedPagesId()));
+            filters.AddFilter(new FilterRelationshipStatus(getUserSelectedRelationshipStatuses()));
+            filters.AddFilter(new FilterLikedPages(getUserSelectedLikedPagesId()));
 
-            HashSet<User> filterdFriends = m_FindFriends.GetFriendUserCommonFriendsPages(filterable, selectedFriend);
+            HashSet<User> filterdFriends = m_FindFriends.GetFriendUserCommonFriendsPages(filters, selectedFriend);
             updateFilteredFriendsListBox(filterdFriends);
         }
 

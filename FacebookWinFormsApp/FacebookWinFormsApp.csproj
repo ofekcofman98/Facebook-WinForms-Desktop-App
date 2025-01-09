@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="AppFacade.cs" />
     <Compile Include="AppManager.cs" />
+    <Compile Include="Filters\CompositeFilter.cs" />
     <Compile Include="Filters\IFilterable.cs" />
     <Compile Include="Filters\FilterAge.cs" />
     <Compile Include="Filters\FilterGender.cs" />
