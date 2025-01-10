@@ -51,6 +51,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.listBoxUserGroups = new System.Windows.Forms.ListBox();
             this.panelAlbums = new System.Windows.Forms.Panel();
+            this.albumControlUserAlbum = new BasicFacebookFeatures.AlbumControl();
             this.label1 = new System.Windows.Forms.Label();
             this.listBoxUserAlbums = new System.Windows.Forms.ListBox();
             this.panelStatusPost = new System.Windows.Forms.Panel();
@@ -116,7 +117,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.albumControlUserAlbum = new BasicFacebookFeatures.AlbumControl();
+            this.albumControlFilteredPhotos = new BasicFacebookFeatures.AlbumControl();
             this.tabMyProfile.SuspendLayout();
             this.panel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMyProfile)).BeginInit();
@@ -391,6 +392,14 @@
             this.panelAlbums.Size = new System.Drawing.Size(266, 463);
             this.panelAlbums.TabIndex = 77;
             this.panelAlbums.Visible = false;
+            // 
+            // albumControlUserAlbum
+            // 
+            this.albumControlUserAlbum.Location = new System.Drawing.Point(34, 165);
+            this.albumControlUserAlbum.Margin = new System.Windows.Forms.Padding(4);
+            this.albumControlUserAlbum.Name = "albumControlUserAlbum";
+            this.albumControlUserAlbum.Size = new System.Drawing.Size(198, 258);
+            this.albumControlUserAlbum.TabIndex = 60;
             // 
             // label1
             // 
@@ -763,11 +772,12 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel4.Controls.Add(this.albumControlFilteredPhotos);
             this.panel4.Controls.Add(this.labelDateOfPosts);
             this.panel4.Controls.Add(this.listBoxFilteredPosts);
             this.panel4.Location = new System.Drawing.Point(739, 98);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(444, 425);
+            this.panel4.Size = new System.Drawing.Size(460, 425);
             this.panel4.TabIndex = 82;
             // 
             // labelDateOfPosts
@@ -784,7 +794,7 @@
             // 
             this.listBoxFilteredPosts.FormattingEnabled = true;
             this.listBoxFilteredPosts.ItemHeight = 22;
-            this.listBoxFilteredPosts.Location = new System.Drawing.Point(30, 127);
+            this.listBoxFilteredPosts.Location = new System.Drawing.Point(16, 127);
             this.listBoxFilteredPosts.Name = "listBoxFilteredPosts";
             this.listBoxFilteredPosts.Size = new System.Drawing.Size(227, 202);
             this.listBoxFilteredPosts.TabIndex = 4;
@@ -1063,13 +1073,13 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1243, 697);
             this.tableLayoutPanel1.TabIndex = 76;
             // 
-            // albumControlUserAlbum
+            // albumControlFilteredPhotos
             // 
-            this.albumControlUserAlbum.Location = new System.Drawing.Point(34, 165);
-            this.albumControlUserAlbum.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.albumControlUserAlbum.Name = "albumControlUserAlbum";
-            this.albumControlUserAlbum.Size = new System.Drawing.Size(198, 258);
-            this.albumControlUserAlbum.TabIndex = 60;
+            this.albumControlFilteredPhotos.Location = new System.Drawing.Point(250, 127);
+            this.albumControlFilteredPhotos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.albumControlFilteredPhotos.Name = "albumControlFilteredPhotos";
+            this.albumControlFilteredPhotos.Size = new System.Drawing.Size(190, 212);
+            this.albumControlFilteredPhotos.TabIndex = 77;
             // 
             // FormMain
             // 
@@ -1227,6 +1237,7 @@
         private System.Windows.Forms.Label labelDateOfPosts;
         private System.Windows.Forms.ListBox listBoxFilteredPosts;
         private AlbumControl albumControlUserAlbum;
+        private AlbumControl albumControlFilteredPhotos;
     }
 }
 
