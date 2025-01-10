@@ -47,6 +47,10 @@ namespace BasicFacebookFeatures
                                 Type.EmptyTypes,
                                 null);
 
+
+
+
+
                             if (constructor != null)
                             {
                                 s_Instance = (T)constructor.Invoke(null);

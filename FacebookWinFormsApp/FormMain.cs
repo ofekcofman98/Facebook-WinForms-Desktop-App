@@ -20,18 +20,11 @@ namespace BasicFacebookFeatures
     {
         private Action onLogin;
         private Action onLogout;
-        private FindFriends m_FindFriends;
-        private ActivityCenter m_ActivityCenter;
-
+        
         private readonly AppFacade r_Facade;
 
         private readonly List<Panel> r_HomePanels;
         private readonly List<TabPage> r_AddedTabs;
-
-
-        //private FormActivityCenter m_FormActivityCenter;
-
-
 
 
         public FormMain()
@@ -39,7 +32,6 @@ namespace BasicFacebookFeatures
             InitializeComponent();
             //InitializeTabs();
 
-            m_FindFriends = new FindFriends();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
             r_HomePanels = new List<Panel>
                            {
@@ -313,8 +305,6 @@ namespace BasicFacebookFeatures
 
         private void fetchActivityCenter()
         {
-            m_ActivityCenter = new ActivityCenter(AppManager.Instance);
-
             listBoxFilteredPosts.Visible = true;
             listBoxFilteredPosts.Items.Clear();
 
@@ -329,7 +319,7 @@ namespace BasicFacebookFeatures
         private void displayYearCounts(string i_SortBy = "CountDescending")
         {
             listBoxYear.Items.Clear();
-            List<KeyValuePair<int, int>> yearCounts = m_ActivityCenter.GetYearCounts(i_SortBy);
+            List<KeyValuePair<int, int>> yearCounts = AppManager.Instance.ActivityCenter.GetYearCounts(i_SortBy);
             foreach (KeyValuePair<int, int> year in yearCounts)
             {
                 listBoxYear.Items.Add($"{year.Key}: {year.Value} posts/photos");
@@ -344,7 +334,7 @@ namespace BasicFacebookFeatures
         private void displayMonthCounts(int i_SelectedYear, string i_SortBy = "CountDescending")
         {
             listBoxMonth.Items.Clear();
-            List<KeyValuePair<int, int>> monthCounts = m_ActivityCenter.GetMonthCounts(i_SelectedYear, i_SortBy);
+            List<KeyValuePair<int, int>> monthCounts = AppManager.Instance.ActivityCenter.GetMonthCounts(i_SelectedYear, i_SortBy);
             listBoxMonth.Items.Clear();
 
             foreach (KeyValuePair<int, int> month in monthCounts)
@@ -361,7 +351,7 @@ namespace BasicFacebookFeatures
         private void displayHoursCounts(string i_SortBy = "CountDescending")
         {
             listBoxHour.Items.Clear();
-            List<KeyValuePair<int, int>> hoursCounts = m_ActivityCenter.GetHourCounts(i_SortBy);
+            List<KeyValuePair<int, int>> hoursCounts = AppManager.Instance.ActivityCenter.GetHourCounts(i_SortBy);
             foreach (KeyValuePair<int, int> hour in hoursCounts)
             {
                 listBoxHour.Items.Add($"{makeHourFormat(hour.Key)}: {hour.Value} posts/photos");
@@ -474,8 +464,8 @@ namespace BasicFacebookFeatures
 
         private void filterPostsByTime(int? i_Year = null, int? i_Month = null, int? i_Hour = null)
         {
-            List<Post> posts = m_ActivityCenter.GetPostsByTime(i_Year, i_Month, i_Hour);
-            List<Photo> photos = m_ActivityCenter.GetPhotosByTime(i_Year, i_Month, i_Hour);
+            List<Post> posts = AppManager.Instance.ActivityCenter.GetPostsByTime(i_Year, i_Month, i_Hour);
+            List<Photo> photos = AppManager.Instance.ActivityCenter.GetPhotosByTime(i_Year, i_Month, i_Hour);
 
             listBoxFilteredPosts.Items.Clear();
             addPostsToListbox(posts, listBoxFilteredPosts);
@@ -551,6 +541,7 @@ namespace BasicFacebookFeatures
             panelAlbums.Visible = true;
             listBoxUserAlbums.Items.Clear();
             //albumUserAlbums.ClearPictureBoxInAlbum();
+            albumControlUserAlbum.ClearPictureBoxInAlbum();
             listBoxUserAlbums.DisplayMember = "Name";
             foreach (FacebookWrapper.ObjectModel.Album album in AppManager.Instance.LoggedInUser.Albums)
             {
@@ -655,6 +646,8 @@ namespace BasicFacebookFeatures
                 if (selectedAlbum != null)
                 {
                     //albumUserAlbums.SetPhotos(selectedAlbum.Photos.ToList());
+                    albumControlUserAlbum.SetPhotos(selectedAlbum.Photos.ToList());
+
                 }
             }
 
@@ -727,7 +720,7 @@ namespace BasicFacebookFeatures
             filterable.Add(new FilterRelationshipStatus(getUserSelectedRelationshipStatuses()));
             filterable.Add(new FilterLikedPages(getUserSelectedLikedPagesId()));
 
-            HashSet<User> filterdFriends = m_FindFriends.GetFriendUserCommonFriendsPages(filterable, selectedFriend);
+            HashSet<User> filterdFriends = AppManager.Instance.FindFriends.GetFriendUserCommonFriendsPages(filterable, selectedFriend);
             updateFilteredFriendsListBox(filterdFriends);
         }
 
@@ -782,36 +775,5 @@ namespace BasicFacebookFeatures
                 MessageBox.Show(ex.Message);
             }
         }
-
-        //private void listBoxHour_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-
-        //}
-
-        //private void comboBoxHourSort_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-
-        //}
-
-        //private void listBoxMonth_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-
-        //}
-
-        //private void listBoxYear_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-
-        //}
-
-        //private void comboBoxYearSort_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-
-        //}
-
-        //private void comboBoxMonthSort_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-
-        //}
     }
-    
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures
 {
-    internal class FindFriends
+    public class FindFriends
     { 
         public HashSet<User> GetFriendUserCommonFriendsPages(List<IFilterable> i_Filters, User i_SelectedFriendToGetFriendsFrom)
         {

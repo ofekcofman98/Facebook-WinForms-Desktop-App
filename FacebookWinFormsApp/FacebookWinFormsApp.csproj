@@ -82,6 +82,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlbumControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AlbumControl.Designer.cs">
+      <DependentUpon>AlbumControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="AppFacade.cs" />
     <Compile Include="AppManager.cs" />
     <Compile Include="Filters\IFilterable.cs" />
@@ -114,6 +120,9 @@
     </Compile>
     <Compile Include="Patterns\Singleton.cs" />
     <Compile Include="UserUtils.cs" />
+    <EmbeddedResource Include="AlbumControl.resx">
+      <DependentUpon>AlbumControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormActivityCenter.resx">
       <DependentUpon>FormActivityCenter.cs</DependentUpon>
     </EmbeddedResource>

@@ -15,6 +15,10 @@ namespace BasicFacebookFeatures
         private FacebookWrapper.LoginResult m_LoginResult;
         private FacebookWrapper.ObjectModel.User m_LoggedInUser;
 
+        public ActivityCenter ActivityCenter { get; private set; }
+        public FindFriends FindFriends { get; private set; }
+
+
         public bool IsLoggedIn { get; private set; } = false;
         private readonly string[] r_Permissions = new string[]
                                                          {
@@ -38,7 +42,11 @@ namespace BasicFacebookFeatures
         public List<Photo> UserPhotos { get; set; }
 
 
-        private AppManager() { }
+        private AppManager()
+        {
+            ActivityCenter = new ActivityCenter();
+            FindFriends = new FindFriends();
+        }
 
         public static AppManager Instance
         {
@@ -98,6 +106,7 @@ namespace BasicFacebookFeatures
         {
             UserPosts = m_LoggedInUser.Posts.ToList();
             UserPhotos = GetPhotos();
+            ActivityCenter.InitializeUserData(UserPosts, UserPhotos);
         }
 
         public List<Photo> GetPhotos()

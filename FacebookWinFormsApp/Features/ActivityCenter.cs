@@ -8,11 +8,11 @@ using FacebookWrapper.ObjectModel;
 namespace BasicFacebookFeatures
 {
 
-    internal class ActivityCenter
+    public class ActivityCenter
     {
 
-        private readonly List<Post> r_UserPosts;
-        private readonly List<Photo> r_UserPhotos;
+        private List<Post> m_UserPosts;
+        private List<Photo> m_UserPhotos;
 
         private readonly Dictionary<int, int> r_YearCounts = new Dictionary<int, int>();
         private readonly Dictionary<int, int> r_MonthCounts = new Dictionary<int, int>();
@@ -22,17 +22,20 @@ namespace BasicFacebookFeatures
         public List<Photo> FilteredPhotos { get; private set; }
 
 
-        public ActivityCenter(AppManager i_AppManager)
+        public ActivityCenter()
         {
-            r_UserPhotos = i_AppManager.UserPhotos;
-            r_UserPosts = i_AppManager.UserPosts;
-
             initializeCounts(r_YearCounts, 2010, DateTime.Now.Year);
             initializeCounts(r_MonthCounts, 1, 12);
             initializeCounts(r_HourCounts, 0, 23);
 
             FilteredPosts = new List<Post>();
             FilteredPhotos = new List<Photo>();
+        }
+
+        public void InitializeUserData(List<Post> i_UserPosts, List<Photo> i_UserPhotos)
+        {
+            m_UserPosts = i_UserPosts;
+            m_UserPhotos = i_UserPhotos;
 
             processPosts();
             processPhotos();
@@ -48,7 +51,7 @@ namespace BasicFacebookFeatures
 
         private void processPosts()
         {
-            foreach(Post post in r_UserPosts)
+            foreach(Post post in m_UserPosts)
             {
                 if(post.CreatedTime.HasValue)
                 {
@@ -59,7 +62,7 @@ namespace BasicFacebookFeatures
 
         private void processPhotos()
         {
-            foreach(Photo photo in r_UserPhotos)
+            foreach(Photo photo in m_UserPhotos)
             {
                 if(photo.CreatedTime.HasValue)
                 {
@@ -98,7 +101,7 @@ namespace BasicFacebookFeatures
         public List<KeyValuePair<int, int>> GetMonthCounts(int i_Year, string i_SortBy = "CountDescending")
         {
             Dictionary<int, int> monthCounts = new Dictionary<int, int>();
-            foreach(Post post in r_UserPosts)
+            foreach(Post post in m_UserPosts)
             {
                 if(post.CreatedTime.HasValue && post.CreatedTime.Value.Year == i_Year)
                 {
@@ -113,7 +116,7 @@ namespace BasicFacebookFeatures
                 }
             }
 
-            foreach(Photo photo in r_UserPhotos)
+            foreach(Photo photo in m_UserPhotos)
             {
                 if(photo.CreatedTime.HasValue && photo.CreatedTime.Value.Year == i_Year)
                 {
@@ -136,7 +139,7 @@ namespace BasicFacebookFeatures
         {
             Dictionary<int, int> hourCounts = new Dictionary<int, int>();
 
-            foreach(Post post in r_UserPosts)
+            foreach(Post post in m_UserPosts)
             {
                 if(post.CreatedTime.HasValue)
                 {
@@ -150,7 +153,7 @@ namespace BasicFacebookFeatures
                 }
             }
 
-            foreach (Photo photo in r_UserPhotos)
+            foreach (Photo photo in m_UserPhotos)
             {
                 if (photo.CreatedTime.HasValue)
                 {
@@ -195,7 +198,7 @@ namespace BasicFacebookFeatures
         {
             List<Post> filteredPosts = new List<Post>();
 
-            foreach(Post post in r_UserPosts)
+            foreach(Post post in m_UserPosts)
             {
                 if(post.CreatedTime.HasValue)
                 {
@@ -218,7 +221,7 @@ namespace BasicFacebookFeatures
         {
             List<Photo> filteredPhotos = new List<Photo>();
 
-            foreach(Photo photo in r_UserPhotos)
+            foreach(Photo photo in m_UserPhotos)
             {
                 if(photo.CreatedTime.HasValue)
                 {

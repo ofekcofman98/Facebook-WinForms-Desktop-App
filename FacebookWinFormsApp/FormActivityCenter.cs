@@ -23,7 +23,7 @@ namespace BasicFacebookFeatures
 
         public void fetchActivityCenter()
         {
-            m_ActivityCenter = new ActivityCenter(AppManager.Instance);
+            m_ActivityCenter = new ActivityCenter();
 
             listBoxFilteredPosts.Visible = true;
             listBoxFilteredPosts.Items.Clear();
