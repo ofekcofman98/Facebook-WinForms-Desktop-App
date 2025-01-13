@@ -27,6 +27,8 @@ namespace BasicFacebookFeatures
         private readonly List<TabPage> r_AddedTabs;
 
 
+        private ProfileControl m_ProfileControl;
+
         public FormMain()
         {
             InitializeComponent();
@@ -48,8 +50,7 @@ namespace BasicFacebookFeatures
 
             updateTabs(false);
            
-            //tabsController.SelectedIndexChanged += tabsController_SelectedIndexChanged;
-            //initializeTabs();
+            loadProfileTab();
 
             onLogin += updateLoginButton;
             onLogin += updateHomePanelsVisible;
@@ -69,45 +70,16 @@ namespace BasicFacebookFeatures
             onLogout += updateLoginButton;
         }
 
-        //private void initializeTabs()
-        //{
-        //    m_FormActivityCenter = new FormActivityCenter();
-        //    foreach(TabPage tabPage in r_AddedTabs)
-        //    {
-        //        if (tabPage == tabActivityCenter) /////////////////////////////////////////
-        //        {
-        //            embedFormInTab(m_FormActivityCenter, tabPage);
-        //        }
 
-        //    }
-        //}
+        private void loadProfileTab()
+        {
+            m_ProfileControl = new ProfileControl
+                                   {
+                                       Dock = DockStyle.Fill
+                                   };
 
-        //private void embedFormInTab(Form i_Form, TabPage i_TabPage)
-        //{
-        //    i_Form.TopLevel = false;
-        //    i_Form.Dock = DockStyle.Fill;
-        //    i_TabPage.Controls.Add(i_Form);
-        //    i_Form.Show();
-        //}
-
-        //private void tabsController_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    TabPage selectedTab = tabsController.SelectedTab;
-
-        //    if (selectedTab == tabActivityCenter)
-        //    {
-        //        handleActivityCenterTabSelected();
-        //    }
-        //}
-
-        //private void handleActivityCenterTabSelected()
-        //{
-        //    if (m_FormActivityCenter != null)
-        //    {
-        //        m_FormActivityCenter.fetchActivityCenter();
-        //    }
-        //}
-
+            tabMyProfile.Controls.Add(m_ProfileControl);
+        }
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
@@ -296,11 +268,17 @@ namespace BasicFacebookFeatures
 
         private void fetchMyProfile()
         {
-            labelEmailData.Text = AppManager.Instance.LoggedInUser.Email;
-            labelBirthdayData.Text = AppManager.Instance.LoggedInUser.Birthday;
-            labelGenderData.Text = AppManager.Instance.LoggedInUser.Gender.ToString();
-            labelFullNameData.Text = AppManager.Instance.LoggedInUser.Name;
-            PictureBoxMyProfile.Image = AppManager.Instance.LoggedInUser.ImageLarge;
+
+            if (AppManager.Instance.LoggedInUser != null)
+            {
+                m_ProfileControl.LoadProfileData();
+            }
+
+            //labelEmailData.Text = AppManager.Instance.LoggedInUser.Email;
+            //labelBirthdayData.Text = AppManager.Instance.LoggedInUser.Birthday;
+            //labelGenderData.Text = AppManager.Instance.LoggedInUser.Gender.ToString();
+            //labelFullNameData.Text = AppManager.Instance.LoggedInUser.Name;
+            //PictureBoxMyProfile.Image = AppManager.Instance.LoggedInUser.ImageLarge;
         }
 
         private void fetchActivityCenter()

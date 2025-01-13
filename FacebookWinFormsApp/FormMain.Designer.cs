@@ -51,7 +51,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.listBoxUserGroups = new System.Windows.Forms.ListBox();
             this.panelAlbums = new System.Windows.Forms.Panel();
-            this.albumControlUserAlbum = new BasicFacebookFeatures.AlbumControl();
             this.label1 = new System.Windows.Forms.Label();
             this.listBoxUserAlbums = new System.Windows.Forms.ListBox();
             this.panelStatusPost = new System.Windows.Forms.Panel();
@@ -117,6 +116,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.albumControlUserAlbum = new BasicFacebookFeatures.AlbumControl();
             this.albumControlFilteredPhotos = new BasicFacebookFeatures.AlbumControl();
             this.tabMyProfile.SuspendLayout();
             this.panel11.SuspendLayout();
@@ -173,6 +173,7 @@
             this.label22.Size = new System.Drawing.Size(193, 44);
             this.label22.TabIndex = 10;
             this.label22.Text = "My Profile";
+            this.label22.Visible = false;
             // 
             // panel11
             // 
@@ -190,6 +191,7 @@
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(346, 416);
             this.panel11.TabIndex = 9;
+            this.panel11.Visible = false;
             // 
             // PictureBoxMyProfile
             // 
@@ -392,14 +394,6 @@
             this.panelAlbums.Size = new System.Drawing.Size(266, 463);
             this.panelAlbums.TabIndex = 77;
             this.panelAlbums.Visible = false;
-            // 
-            // albumControlUserAlbum
-            // 
-            this.albumControlUserAlbum.Location = new System.Drawing.Point(34, 165);
-            this.albumControlUserAlbum.Margin = new System.Windows.Forms.Padding(4);
-            this.albumControlUserAlbum.Name = "albumControlUserAlbum";
-            this.albumControlUserAlbum.Size = new System.Drawing.Size(198, 258);
-            this.albumControlUserAlbum.TabIndex = 60;
             // 
             // label1
             // 
@@ -1073,10 +1067,18 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1243, 697);
             this.tableLayoutPanel1.TabIndex = 76;
             // 
+            // albumControlUserAlbum
+            // 
+            this.albumControlUserAlbum.Location = new System.Drawing.Point(34, 165);
+            this.albumControlUserAlbum.Margin = new System.Windows.Forms.Padding(4);
+            this.albumControlUserAlbum.Name = "albumControlUserAlbum";
+            this.albumControlUserAlbum.Size = new System.Drawing.Size(198, 258);
+            this.albumControlUserAlbum.TabIndex = 60;
+            // 
             // albumControlFilteredPhotos
             // 
             this.albumControlFilteredPhotos.Location = new System.Drawing.Point(250, 127);
-            this.albumControlFilteredPhotos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.albumControlFilteredPhotos.Margin = new System.Windows.Forms.Padding(4);
             this.albumControlFilteredPhotos.Name = "albumControlFilteredPhotos";
             this.albumControlFilteredPhotos.Size = new System.Drawing.Size(190, 212);
             this.albumControlFilteredPhotos.TabIndex = 77;
