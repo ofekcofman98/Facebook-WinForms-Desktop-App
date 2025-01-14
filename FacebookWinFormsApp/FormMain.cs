@@ -20,14 +20,13 @@ namespace BasicFacebookFeatures
     {
         private Action onLogin;
         private Action onLogout;
-        
-        private readonly AppFacade r_Facade;
+
+        private readonly ActivityCenterFacade r_ActivityCenterFacade;
 
         private readonly List<Panel> r_HomePanels;
         private readonly List<TabPage> r_AddedTabs;
 
 
-        private ProfileControl m_ProfileControl;
 
         public FormMain()
         {
@@ -46,11 +45,10 @@ namespace BasicFacebookFeatures
                            };
             r_AddedTabs = new List<TabPage> { tabMyProfile, tabActivityCenter, tabFindNewFriends };
 
-            r_Facade = new AppFacade();
+            r_ActivityCenterFacade = new ActivityCenterFacade();
 
             updateTabs(false);
            
-            loadProfileTab();
 
             onLogin += updateLoginButton;
             onLogin += updateHomePanelsVisible;
@@ -70,16 +68,6 @@ namespace BasicFacebookFeatures
             onLogout += updateLoginButton;
         }
 
-
-        private void loadProfileTab()
-        {
-            m_ProfileControl = new ProfileControl
-                                   {
-                                       Dock = DockStyle.Fill
-                                   };
-
-            tabMyProfile.Controls.Add(m_ProfileControl);
-        }
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
@@ -269,16 +257,16 @@ namespace BasicFacebookFeatures
         private void fetchMyProfile()
         {
 
-            if (AppManager.Instance.LoggedInUser != null)
-            {
-                m_ProfileControl.LoadProfileData();
-            }
+            //if (AppManager.Instance.LoggedInUser != null)
+            //{
+            //    m_ProfileControl.LoadProfileData();
+            //}
 
-            //labelEmailData.Text = AppManager.Instance.LoggedInUser.Email;
-            //labelBirthdayData.Text = AppManager.Instance.LoggedInUser.Birthday;
-            //labelGenderData.Text = AppManager.Instance.LoggedInUser.Gender.ToString();
-            //labelFullNameData.Text = AppManager.Instance.LoggedInUser.Name;
-            //PictureBoxMyProfile.Image = AppManager.Instance.LoggedInUser.ImageLarge;
+            labelEmailData.Text = AppManager.Instance.LoggedInUser.Email;
+            labelBirthdayData.Text = AppManager.Instance.LoggedInUser.Birthday;
+            labelGenderData.Text = AppManager.Instance.LoggedInUser.Gender.ToString();
+            labelFullNameData.Text = AppManager.Instance.LoggedInUser.Name;
+            PictureBoxMyProfile.Image = AppManager.Instance.LoggedInUser.ImageLarge;
         }
 
         private void fetchActivityCenter()
@@ -297,7 +285,7 @@ namespace BasicFacebookFeatures
             displayHoursCounts();
         }
 
-        private void displayYearCounts(string i_SortBy = "CountDescending")
+        private void displayYearCounts(eSortingType i_SortBy = eSortingType.CountDescending) // default?
         {
             listBoxYear.Items.Clear();
             List<KeyValuePair<int, int>> yearCounts = AppManager.Instance.ActivityCenter.GetYearCounts(i_SortBy);
@@ -312,7 +300,7 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void displayMonthCounts(int i_SelectedYear, string i_SortBy = "CountDescending")
+        private void displayMonthCounts(int i_SelectedYear, eSortingType i_SortBy = eSortingType.CountDescending)
         {
             listBoxMonth.Items.Clear();
             List<KeyValuePair<int, int>> monthCounts = AppManager.Instance.ActivityCenter.GetMonthCounts(i_SelectedYear, i_SortBy);
@@ -329,7 +317,7 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void displayHoursCounts(string i_SortBy = "CountDescending")
+        private void displayHoursCounts(eSortingType i_SortBy = eSortingType.CountDescending)
         {
             listBoxHour.Items.Clear();
             List<KeyValuePair<int, int>> hoursCounts = AppManager.Instance.ActivityCenter.GetHourCounts(i_SortBy);
@@ -347,31 +335,38 @@ namespace BasicFacebookFeatures
         private void populateSortComboBox(ComboBox i_ComboBox, string i_TimeType)
         {
             i_ComboBox.Items.Clear();
-            i_ComboBox.Items.Add($"Sort by {i_TimeType} Ascending");
-            i_ComboBox.Items.Add($"Sort by {i_TimeType} Descending");
-            i_ComboBox.Items.Add("Sort by Count Ascending");
-            i_ComboBox.Items.Add("Sort by Count Descending");
+
+            foreach(KeyValuePair<eSortingType, string> sortingOption in r_ActivityCenterFacade.r_SortingDictionary)
+            {
+                i_ComboBox.Items.Add(sortingOption.Value);
+            }
+
+
+            //i_ComboBox.Items.Add($"Sort by {i_TimeType} Ascending");
+            //i_ComboBox.Items.Add($"Sort by {i_TimeType} Descending");
+            //i_ComboBox.Items.Add("Sort by Count Ascending");
+            //i_ComboBox.Items.Add("Sort by Count Descending");
         }
 
-        private string getSorting(int i_ComboBoxIndex)
+        private eSortingType getSorting(int i_ComboBoxIndex)
         {
-            string sorting;
+            eSortingType sorting;
             switch (i_ComboBoxIndex)
             {
                 case 0:
-                    sorting = "TimeAscending";
+                    sorting = eSortingType.TimeAscending;
                     break;
                 case 1:
-                    sorting = "TimeDescending";
+                    sorting = eSortingType.TimeDescending;
                     break;
                 case 2:
-                    sorting = "CountAscending";
+                    sorting = eSortingType.CountAscending;
                     break;
                 case 3:
-                    sorting = "CountDescending";
+                    sorting = eSortingType.CountDescending;
                     break;
                 default:
-                    sorting = "CountDescending";
+                    sorting = eSortingType.CountDescending;
                     break;
             }
 
@@ -383,20 +378,21 @@ namespace BasicFacebookFeatures
         {
             listBoxMonth.Items.Clear();
             comboBoxMonthSort.Items.Clear();
-            string sorting = getSorting(comboBoxYearSort.SelectedIndex);
+            eSortingType sorting = getSorting(comboBoxYearSort.SelectedIndex);
+
             displayYearCounts(sorting);
         }
 
         private void comboBoxMonthSort_SelectedIndexChanged(object sender, EventArgs e)
         {
             int selectedYear = int.Parse(listBoxYear.SelectedItem.ToString().Split(':')[0]);
-            string sorting = getSorting(comboBoxMonthSort.SelectedIndex);
+            eSortingType sorting = getSorting(comboBoxMonthSort.SelectedIndex);
             displayMonthCounts(selectedYear, sorting);
         }
 
         private void comboBoxHourSort_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string sorting = getSorting(comboBoxHourSort.SelectedIndex);
+            eSortingType sorting = getSorting(comboBoxHourSort.SelectedIndex);
             displayHoursCounts(sorting);
         }
 
@@ -445,14 +441,32 @@ namespace BasicFacebookFeatures
 
         private void filterPostsByTime(int? i_Year = null, int? i_Month = null, int? i_Hour = null)
         {
-            List<Post> posts = AppManager.Instance.ActivityCenter.GetPostsByTime(i_Year, i_Month, i_Hour);
-            List<Photo> photos = AppManager.Instance.ActivityCenter.GetPhotosByTime(i_Year, i_Month, i_Hour);
+            List<IActivityItem> items = AppManager.Instance.ActivityCenter.GetItemsByTime(i_Year, i_Month, i_Hour);
+
+            //List<Post> posts = AppManager.Instance.ActivityCenter.GetPostsByTime(i_Year, i_Month, i_Hour);
+            //List<Photo> photos = AppManager.Instance.ActivityCenter.GetPhotosByTime(i_Year, i_Month, i_Hour);
 
             listBoxFilteredPosts.Items.Clear();
-            addPostsToListbox(posts, listBoxFilteredPosts);
-            addPhotosToListbox(photos, listBoxFilteredPosts);
+            addItemsToListbox(items, listBoxFilteredPosts);
 
-            albumControlFilteredPhotos.SetPhotos(photos);
+
+            //addPostsToListbox(posts, listBoxFilteredPosts);
+            //addPhotosToListbox(photos, listBoxFilteredPosts);
+
+            List<Photo> filteredPhotos = items
+                .OfType<PhotoAdapter>()
+                .Select(adapter => adapter.Photo)
+                .ToList();
+
+            albumControlFilteredPhotos.SetPhotos(filteredPhotos);
+        }
+
+        private void addItemsToListbox(List<IActivityItem> i_Items, ListBox i_ListBox)
+        {
+            foreach(IActivityItem activityItem in i_Items)
+            {
+                i_ListBox.Items.Add(activityItem.Description);
+            }
         }
 
 

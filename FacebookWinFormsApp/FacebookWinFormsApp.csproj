@@ -82,13 +82,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityCenterFacade.cs" />
     <Compile Include="AlbumControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="AlbumControl.Designer.cs">
       <DependentUpon>AlbumControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="AppFacade.cs" />
     <Compile Include="AppManager.cs" />
     <Compile Include="Filters\IFilterable.cs" />
     <Compile Include="Filters\FilterAge.cs" />
@@ -96,19 +96,15 @@
     <Compile Include="Filters\FilterLikedPages.cs" />
     <Compile Include="Filters\FilterRelationshipStatus.cs" />
     <Compile Include="Features\FindFriends.cs" />
-    <Compile Include="Patterns\FormFactory.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProfileControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ProfileControl.Designer.cs">
-      <DependentUpon>ProfileControl.cs</DependentUpon>
-    </Compile>
+    <Compile Include="IActivityItem.cs" />
+    <Compile Include="PhotoAdapter.cs" />
+    <Compile Include="PostAdapter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Features\ActivityCenter.cs" />
@@ -119,9 +115,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ProfileControl.resx">
-      <DependentUpon>ProfileControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
