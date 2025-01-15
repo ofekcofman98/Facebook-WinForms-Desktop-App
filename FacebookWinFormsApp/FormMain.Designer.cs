@@ -87,7 +87,7 @@
             this.listBoxHour = new System.Windows.Forms.ListBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.labelDateOfPosts = new System.Windows.Forms.Label();
-            this.listBoxFilteredPosts = new System.Windows.Forms.ListBox();
+            this.listBoxFilteredItemsDescriptions = new System.Windows.Forms.ListBox();
             this.tabFindNewFriends = new System.Windows.Forms.TabPage();
             this.label18 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
@@ -659,7 +659,7 @@
             this.panel2.Controls.Add(this.listBoxYear);
             this.panel2.Controls.Add(this.listBoxMonth);
             this.panel2.Controls.Add(this.label13);
-            this.panel2.Location = new System.Drawing.Point(55, 98);
+            this.panel2.Location = new System.Drawing.Point(25, 98);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(289, 425);
             this.panel2.TabIndex = 80;
@@ -698,9 +698,9 @@
             // 
             this.listBoxYear.FormattingEnabled = true;
             this.listBoxYear.ItemHeight = 22;
-            this.listBoxYear.Location = new System.Drawing.Point(38, 78);
+            this.listBoxYear.Location = new System.Drawing.Point(19, 78);
             this.listBoxYear.Name = "listBoxYear";
-            this.listBoxYear.Size = new System.Drawing.Size(236, 70);
+            this.listBoxYear.Size = new System.Drawing.Size(255, 136);
             this.listBoxYear.TabIndex = 1;
             this.listBoxYear.SelectedIndexChanged += new System.EventHandler(this.listBoxYear_SelectedIndexChanged);
             // 
@@ -708,9 +708,9 @@
             // 
             this.listBoxMonth.FormattingEnabled = true;
             this.listBoxMonth.ItemHeight = 22;
-            this.listBoxMonth.Location = new System.Drawing.Point(37, 284);
+            this.listBoxMonth.Location = new System.Drawing.Point(19, 284);
             this.listBoxMonth.Name = "listBoxMonth";
-            this.listBoxMonth.Size = new System.Drawing.Size(237, 70);
+            this.listBoxMonth.Size = new System.Drawing.Size(255, 114);
             this.listBoxMonth.TabIndex = 2;
             this.listBoxMonth.SelectedIndexChanged += new System.EventHandler(this.listBoxMonth_SelectedIndexChanged);
             // 
@@ -729,7 +729,7 @@
             this.panel3.Controls.Add(this.comboBoxHourSort);
             this.panel3.Controls.Add(this.label10);
             this.panel3.Controls.Add(this.listBoxHour);
-            this.panel3.Location = new System.Drawing.Point(371, 98);
+            this.panel3.Location = new System.Drawing.Point(336, 98);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(344, 425);
             this.panel3.TabIndex = 81;
@@ -757,9 +757,9 @@
             // 
             this.listBoxHour.FormattingEnabled = true;
             this.listBoxHour.ItemHeight = 22;
-            this.listBoxHour.Location = new System.Drawing.Point(55, 78);
+            this.listBoxHour.Location = new System.Drawing.Point(28, 78);
             this.listBoxHour.Name = "listBoxHour";
-            this.listBoxHour.Size = new System.Drawing.Size(224, 268);
+            this.listBoxHour.Size = new System.Drawing.Size(289, 312);
             this.listBoxHour.TabIndex = 3;
             this.listBoxHour.SelectedIndexChanged += new System.EventHandler(this.listBoxHour_SelectedIndexChanged);
             // 
@@ -768,10 +768,10 @@
             this.panel4.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panel4.Controls.Add(this.albumControlFilteredPhotos);
             this.panel4.Controls.Add(this.labelDateOfPosts);
-            this.panel4.Controls.Add(this.listBoxFilteredPosts);
-            this.panel4.Location = new System.Drawing.Point(739, 98);
+            this.panel4.Controls.Add(this.listBoxFilteredItemsDescriptions);
+            this.panel4.Location = new System.Drawing.Point(700, 98);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(460, 425);
+            this.panel4.Size = new System.Drawing.Size(509, 425);
             this.panel4.TabIndex = 82;
             // 
             // labelDateOfPosts
@@ -784,14 +784,14 @@
             this.labelDateOfPosts.TabIndex = 76;
             this.labelDateOfPosts.Text = "Date";
             // 
-            // listBoxFilteredPosts
+            // listBoxFilteredItemsDescriptions
             // 
-            this.listBoxFilteredPosts.FormattingEnabled = true;
-            this.listBoxFilteredPosts.ItemHeight = 22;
-            this.listBoxFilteredPosts.Location = new System.Drawing.Point(16, 127);
-            this.listBoxFilteredPosts.Name = "listBoxFilteredPosts";
-            this.listBoxFilteredPosts.Size = new System.Drawing.Size(227, 202);
-            this.listBoxFilteredPosts.TabIndex = 4;
+            this.listBoxFilteredItemsDescriptions.FormattingEnabled = true;
+            this.listBoxFilteredItemsDescriptions.ItemHeight = 22;
+            this.listBoxFilteredItemsDescriptions.Location = new System.Drawing.Point(16, 127);
+            this.listBoxFilteredItemsDescriptions.Name = "listBoxFilteredItemsDescriptions";
+            this.listBoxFilteredItemsDescriptions.Size = new System.Drawing.Size(275, 202);
+            this.listBoxFilteredItemsDescriptions.TabIndex = 4;
             // 
             // tabFindNewFriends
             // 
@@ -1077,7 +1077,7 @@
             // 
             // albumControlFilteredPhotos
             // 
-            this.albumControlFilteredPhotos.Location = new System.Drawing.Point(250, 127);
+            this.albumControlFilteredPhotos.Location = new System.Drawing.Point(298, 127);
             this.albumControlFilteredPhotos.Margin = new System.Windows.Forms.Padding(4);
             this.albumControlFilteredPhotos.Name = "albumControlFilteredPhotos";
             this.albumControlFilteredPhotos.Size = new System.Drawing.Size(190, 212);
@@ -1237,7 +1237,7 @@
         private System.Windows.Forms.ListBox listBoxHour;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label labelDateOfPosts;
-        private System.Windows.Forms.ListBox listBoxFilteredPosts;
+        private System.Windows.Forms.ListBox listBoxFilteredItemsDescriptions;
         private AlbumControl albumControlUserAlbum;
         private AlbumControl albumControlFilteredPhotos;
     }

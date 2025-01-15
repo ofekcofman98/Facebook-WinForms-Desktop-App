@@ -44,25 +44,26 @@ namespace BasicFacebookFeatures
             FilteredActivityItems = new List<IActivityItem>();
         }
 
-        public void InitializeUserData(List<Post> i_UserPosts, List<Photo> i_UserPhotos)
+        public void InitializeUserData(/*List<Post> i_UserPosts, List<Photo> i_UserPhotos*/ List<IActivityItem> i_ActivityItems)
         {
             //m_UserPosts = i_UserPosts;
             //m_UserPhotos = i_UserPhotos;
 
-            m_ActivityItems = new List<IActivityItem>();
-            foreach(Photo photo in i_UserPhotos)
-            {
-                m_ActivityItems.Add(new PhotoAdapter(photo));
-            }
+            //m_ActivityItems = new List<IActivityItem>();
+            //foreach(Photo photo in i_UserPhotos)
+            //{
+            //    m_ActivityItems.Add(new PhotoAdapter(photo));
+            //}
 
-            foreach(Post post in i_UserPosts)
-            {
-                m_ActivityItems.Add(new PostAdapter(post));    
-            }
+            //foreach(Post post in i_UserPosts)
+            //{
+            //    m_ActivityItems.Add(new PostAdapter(post));    
+            //}
 
             //processPosts();
             //processPhotos();
 
+            m_ActivityItems = i_ActivityItems;
             processActivityItems();
         }
 

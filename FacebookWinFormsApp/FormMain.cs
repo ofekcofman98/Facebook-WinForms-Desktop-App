@@ -271,8 +271,8 @@ namespace BasicFacebookFeatures
 
         private void fetchActivityCenter()
         {
-            listBoxFilteredPosts.Visible = true;
-            listBoxFilteredPosts.Items.Clear();
+            listBoxFilteredItemsDescriptions.Visible = true;
+            listBoxFilteredItemsDescriptions.Items.Clear();
 
             albumControlFilteredPhotos.Visible = true;
             albumControlFilteredPhotos.ClearPictureBoxInAlbum();
@@ -443,20 +443,18 @@ namespace BasicFacebookFeatures
         {
             List<IActivityItem> items = AppManager.Instance.ActivityCenter.GetItemsByTime(i_Year, i_Month, i_Hour);
 
-            //List<Post> posts = AppManager.Instance.ActivityCenter.GetPostsByTime(i_Year, i_Month, i_Hour);
-            //List<Photo> photos = AppManager.Instance.ActivityCenter.GetPhotosByTime(i_Year, i_Month, i_Hour);
+            listBoxFilteredItemsDescriptions.Items.Clear();
+            addItemsToListbox(items, listBoxFilteredItemsDescriptions);
 
-            listBoxFilteredPosts.Items.Clear();
-            addItemsToListbox(items, listBoxFilteredPosts);
+            List<Photo> filteredPhotos = new List<Photo>();
 
-
-            //addPostsToListbox(posts, listBoxFilteredPosts);
-            //addPhotosToListbox(photos, listBoxFilteredPosts);
-
-            List<Photo> filteredPhotos = items
-                .OfType<PhotoAdapter>()
-                .Select(adapter => adapter.Photo)
-                .ToList();
+            foreach(IActivityItem item in items)
+            {
+                if(item is PhotoAdapter adapter)
+                {
+                    filteredPhotos.Add(adapter.Photo);
+                }
+            }
 
             albumControlFilteredPhotos.SetPhotos(filteredPhotos);
         }

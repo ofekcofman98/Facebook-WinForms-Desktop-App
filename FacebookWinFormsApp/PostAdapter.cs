@@ -23,7 +23,7 @@ namespace BasicFacebookFeatures
 
         public string Description
         {
-            get { return string.IsNullOrEmpty(Post.Description) ? "[No message]" : Post.Description; }
+            get { return string.IsNullOrEmpty(Post.Description) ? "[No message for post]" : Post.Description; }
         }
 
         public void ProcessTimeData(Action<DateTime> i_TimeProcessor)

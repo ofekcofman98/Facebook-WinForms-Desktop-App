@@ -106,7 +106,20 @@ namespace BasicFacebookFeatures
         {
             UserPosts = m_LoggedInUser.Posts.ToList();
             UserPhotos = GetPhotos();
-            ActivityCenter.InitializeUserData(UserPosts, UserPhotos);
+
+            List<IActivityItem> activityItems = new List<IActivityItem>();
+
+            foreach (Photo photo in UserPhotos)
+            {
+                activityItems.Add(new PhotoAdapter(photo));
+            }
+
+            foreach(Post post in UserPosts)
+            {
+                activityItems.Add(new PostAdapter(post));
+            }
+
+            ActivityCenter.InitializeUserData(activityItems);
         }
 
         public List<Photo> GetPhotos()
@@ -138,8 +151,6 @@ namespace BasicFacebookFeatures
             UserPosts = null;
             IsLoggedIn = false; 
         }
-
-
 
     }
 }

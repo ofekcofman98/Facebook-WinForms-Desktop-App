@@ -23,7 +23,7 @@ namespace BasicFacebookFeatures
 
         public string Description
         {
-            get { return string.IsNullOrEmpty(Photo.Name) ? "[No title]" : Photo.Name; }
+            get { return string.IsNullOrEmpty(Photo.Name) ? "[No title for photo]" : Photo.Name; }
         }
 
         public void ProcessTimeData(Action<DateTime> i_TimeProcessor)
