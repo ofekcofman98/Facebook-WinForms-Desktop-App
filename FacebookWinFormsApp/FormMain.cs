@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Threading;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ using static System.Windows.Forms.AxHost;
 using static BasicFacebookFeatures.ActivityCenter;
 using Facebook;
 using BasicFacebookFeatures.Filters;
+using CefSharp;
 
 namespace BasicFacebookFeatures
 {
@@ -21,6 +23,7 @@ namespace BasicFacebookFeatures
     {
         private Action onLogin;
         private Action onLogout;
+        
 
         private readonly ActivityCenterFacade r_ActivityCenterFacade;
 
@@ -33,7 +36,7 @@ namespace BasicFacebookFeatures
         {
             InitializeComponent();
             //InitializeTabs();
-
+            
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
             r_HomePanels = new List<Panel>
                            {
@@ -49,24 +52,36 @@ namespace BasicFacebookFeatures
             r_ActivityCenterFacade = new ActivityCenterFacade();
 
             updateTabs(false);
-           
 
-            onLogin += updateLoginButton;
-            onLogin += updateHomePanelsVisible;
-            onLogin += fetchProfileInfo;
-            onLogin += fetchLikedPages;
-            onLogin += fetchAlbums;
-            onLogin += fetchFriendList;
-            onLogin += fetchMyProfile;
-            onLogin += fetchActivityCenter;
-            onLogin += fetchFriendsLookupPage;
-            onLogin += fetchGroups;
-            onLogin += fetchFavoriteTeams;
-            onLogin += fetchStatusPost;
+            addLoginMethods();
+            addLogoutMethods();
+        }
 
+        void AddToOnLoginWithThread(Action action)
+        {
+            onLogin += () => new Thread(() => action()).Start();
+        }
+        public void addLogoutMethods()
+        {
             onLogout += updateHomePanelsVisible;
             onLogout += unLaunchFacebook;
             onLogout += updateLoginButton;
+        }
+
+        public void addLoginMethods()
+        {
+            AddToOnLoginWithThread(() => updateLoginButton());
+            AddToOnLoginWithThread(() => updateHomePanelsVisible());
+            AddToOnLoginWithThread(() => fetchProfileInfo());
+            AddToOnLoginWithThread(() => fetchLikedPages());
+            AddToOnLoginWithThread(() => fetchAlbums());
+            AddToOnLoginWithThread(() => fetchFriendList());
+            AddToOnLoginWithThread(() => fetchMyProfile());
+            AddToOnLoginWithThread(() => fetchActivityCenter());
+            AddToOnLoginWithThread(() => fetchFriendsLookupPage());
+            AddToOnLoginWithThread(() => fetchGroups());
+            AddToOnLoginWithThread(() => fetchFavoriteTeams());
+            onLogin += fetchStatusPost;//no need for server request
         }
 
 
@@ -74,24 +89,28 @@ namespace BasicFacebookFeatures
         {
             if (AppManager.Instance.LoginResult == null)
             {
-                performLogin();
+               performLogin();
             }
         }
-         
+
         private void performLogin()
         {
-            try
+            // Start the login process on a background thread
+            Thread loginWithServer = new Thread(() =>
             {
-                //r_Facade.Login();
                 AppManager.Instance.Login();
-                updateTabs(AppManager.Instance.IsLoggedIn);
-                onLogin?.Invoke();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
+                // After the login process, update the UI on the main thread
+                Invoke(new Action(() =>
+                {
+                    updateTabs(AppManager.Instance.IsLoggedIn);
+                    onLogin?.Invoke();
+                }));
+            });
+
+            loginWithServer.Start();
         }
+
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
@@ -115,14 +134,14 @@ namespace BasicFacebookFeatures
 
         private void updateHomePanelsVisible()
         {
-            bool isVisibile;
-            isVisibile = AppManager.Instance.IsLoggedIn;
+            bool isVisible = AppManager.Instance.IsLoggedIn;
 
-            foreach(Panel panel in r_HomePanels)
+            foreach (Panel panel in r_HomePanels)
             {
-                panel.Visible = isVisibile;
+                panel.Invoke(new Action(() => panel.Visible = isVisible));
             }
         }
+
 
         private void updateTabs(bool i_IsVisible = true)
         {
@@ -147,26 +166,44 @@ namespace BasicFacebookFeatures
         {
             if (AppManager.Instance.IsLoggedIn)
             {
-                buttonLogin.Text = $"Logged in as {AppManager.Instance.LoggedInUser.Name}";
-                buttonLogin.BackColor = Color.LightGreen;
-                buttonLogin.Enabled = false;
-                buttonLogout.Enabled = true;
+                string loggedInText = $"Logged in as {AppManager.Instance.LoggedInUser.Name}";
+                buttonLogin.Invoke(new Action(() =>
+                {
+                    buttonLogin.Text = loggedInText;
+                    buttonLogin.BackColor = Color.LightGreen;
+                    buttonLogin.Enabled = false;
+                    buttonLogout.Enabled = true;
+                }));
             }
             else
             {
-                buttonLogin.BackColor = buttonLogout.BackColor;
-                buttonLogin.Enabled = true;
-                buttonLogout.Enabled = false;
-                buttonLogin.Text = "Login";
+                buttonLogin.Invoke(new Action(() =>
+                {
+                    buttonLogin.BackColor = buttonLogout.BackColor;
+                    buttonLogin.Enabled = true;
+                    buttonLogin.Text = "Login";
+                    buttonLogout.Enabled = false;
+                }));
             }
         }
 
+
         private void fetchProfileInfo()
         {
-            labelUserName.Visible = true;
-            pictureBoxProfile.Visible = true;
-            labelUserName.Text = $"Hello, {AppManager.Instance.LoggedInUser.FirstName}!";
-            pictureBoxProfile.ImageLocation = AppManager.Instance.LoggedInUser.PictureNormalURL;
+            string userName = AppManager.Instance.LoggedInUser.FirstName;
+            string profilePictureUrl = AppManager.Instance.LoggedInUser.PictureNormalURL;
+
+            labelUserName.Invoke(new Action(() =>
+            {
+                labelUserName.Visible = true;
+                labelUserName.Text = $"Hello, {userName}!";
+            }));
+
+            pictureBoxProfile.Invoke(new Action(() =>
+            {
+                pictureBoxProfile.Visible = true;
+                pictureBoxProfile.ImageLocation = AppManager.Instance.LoggedInUser.PictureNormalURL;
+            }));
         }
 
 
@@ -178,109 +215,125 @@ namespace BasicFacebookFeatures
             populateGenderComboBox();
 
         }
+        private void clearChoiceItemFromComobox(ComboBox comboBox)
+        {
+            comboBox.Items.Clear();
+            comboBox.SelectedItem = null;
+            comboBox.SelectedIndex = -1;
+            comboBox.Text = "";
+        }
 
         private void populateGenderComboBox()
         {
-            comboBoxGender.Items.Clear();
-            comboBoxGender.SelectedItem = null;
-            comboBoxGender.SelectedIndex = -1;
-            comboBoxGender.Text = "";
+            comboBoxGender.Invoke(new Action(()=>clearChoiceItemFromComobox(comboBoxGender)));
             foreach (User.eGender gender in Enum.GetValues(typeof(User.eGender)))
             {
-                comboBoxGender.Items.Add(gender);
+                comboBoxGender.Invoke(new Action(() => comboBoxGender.Items.Add(gender)));
             }
-            comboBoxGender.Items.Add("No Preference");
-            comboBoxGender.SelectedIndex = 0;
+            comboBoxGender.Invoke(new Action(() => comboBoxGender.Items.Add("No Preference")));
+            comboBoxGender.Invoke(new Action(()=> comboBoxGender.SelectedIndex = 0));
         }
 
         private void populateRealitionshipStatusList()
         {
-            checkedListBoxRealitionshipStatus.Visible = true;
-            checkedListBoxRealitionshipStatus.Items.Clear();
-
+            checkedListBoxRealitionshipStatus.Invoke(new Action(() =>
+            {
+                checkedListBoxRealitionshipStatus.Visible = true;
+                checkedListBoxRealitionshipStatus.Items.Clear();
+            }));
             foreach (User.eRelationshipStatus relationshipStatus in Enum.GetValues(typeof(User.eRelationshipStatus)))
             {
-                checkedListBoxRealitionshipStatus.Items.Add(relationshipStatus);
+                checkedListBoxRealitionshipStatus.Invoke(new Action(() =>
+                checkedListBoxRealitionshipStatus.Items.Add(relationshipStatus)));
+
             }
 
         }
 
         private void populateLikedPagesList()
         {
-            checkedListBoxlikedPages.Items.Clear();
-            checkedListBoxlikedPages.DisplayMember = "Name";
+            checkedListBoxlikedPages.Invoke(new Action(() => resetListBox(checkedListBoxlikedPages)));
+    
             foreach (Page page in AppManager.Instance.LoggedInUser.LikedPages)
             {
-                checkedListBoxlikedPages.Items.Add(page);
+                checkedListBoxlikedPages.Invoke(new Action(()=> checkedListBoxlikedPages.Items.Add(page)));
             }
 
-            if (checkedListBoxlikedPages.Items.Count == 0)
-            {
-                checkedListBoxlikedPages.Items.Add("No liked pages to retrieve");
-            }
+            //if (checkedListBoxlikedPages.Items.Count == 0)
+            //{
+            //    checkedListBoxlikedPages.Items.Add("No liked pages to retrieve");
+            //}
         }
 
 
         private void fetchFriendsComboBox()
         {
-            comboBoxFriendList.Items.Clear();
-            comboBoxFriendList.SelectedItem = null;
-            comboBoxFriendList.SelectedIndex = -1;
-            comboBoxFriendList.Text = "";
-            comboBoxFriendList.DisplayMember = "Name";
-
+            comboBoxFriendList.Invoke(new Action(() => clearChoiceItemFromComobox(comboBoxFriendList)));
+     
             foreach (User user in AppManager.Instance.LoggedInUser.Friends)
             {
-                comboBoxFriendList.Items.Add(user);
+                comboBoxFriendList.Invoke(new Action(() => comboBoxFriendList.Items.Add(user)));
             }
+            comboBoxFriendList.Invoke(new Action(() => comboBoxFriendList.SelectedIndex = 0));
 
-            comboBoxFriendList.SelectedIndex = 0;
         }
 
 
         private void fetchFriendList()
         {
-            panelFriends.Visible = true;
-            listBoxUserFriends.Items.Clear();
-            pictureBoxUserFriend.Image = null;
-            listBoxUserFriends.DisplayMember = "Name";
+            panelFriends.Invoke(new Action(() => panelFriends.Visible = true));
+            listBoxUserFriends.Invoke(new Action(() => resetListBox(listBoxUserFriends)));
+            //pictureBoxUserFriend.Image = null;
             foreach (User user in AppManager.Instance.LoggedInUser.Friends)
             {
-                listBoxUserFriends.Items.Add(user);
+                listBoxUserFriends.Invoke(new Action(()=> listBoxUserFriends.Items.Add(user)));
             }
 
-            if (listBoxUserFriends.Items.Count == 0)
-            {
-                listBoxUserFriends.Items.Add("No friends to retrieve");
-            }
+            //if (listBoxUserFriends.Items.Count == 0)
+            //{
+            //    listBoxUserFriends.Items.Add("No friends to retrieve");
+            //}
         }
 
         private void fetchMyProfile()
         {
+            if (AppManager.Instance.LoggedInUser != null)
+            {
+                labelEmailData.Invoke(new Action(() =>
+                    labelEmailData.Text = AppManager.Instance.LoggedInUser.Email));
 
-            //if (AppManager.Instance.LoggedInUser != null)
-            //{
-            //    m_ProfileControl.LoadProfileData();
-            //}
+                labelBirthdayData.Invoke(new Action(() =>
+                    labelBirthdayData.Text = AppManager.Instance.LoggedInUser.Birthday));
 
-            labelEmailData.Text = AppManager.Instance.LoggedInUser.Email;
-            labelBirthdayData.Text = AppManager.Instance.LoggedInUser.Birthday;
-            labelGenderData.Text = AppManager.Instance.LoggedInUser.Gender.ToString();
-            labelFullNameData.Text = AppManager.Instance.LoggedInUser.Name;
-            PictureBoxMyProfile.Image = AppManager.Instance.LoggedInUser.ImageLarge;
+                labelGenderData.Invoke(new Action(() =>
+                    labelGenderData.Text = AppManager.Instance.LoggedInUser.Gender.ToString()));
+
+                labelFullNameData.Invoke(new Action(() =>
+                    labelFullNameData.Text = AppManager.Instance.LoggedInUser.Name));
+
+                PictureBoxMyProfile.Invoke(new Action(() =>
+                    PictureBoxMyProfile.Image = AppManager.Instance.LoggedInUser.ImageLarge));
+            }
         }
+
 
         private void fetchActivityCenter()
         {
-            listBoxFilteredItemsDescriptions.Visible = true;
-            listBoxFilteredItemsDescriptions.Items.Clear();
+            listBoxFilteredItemsDescriptions.Invoke(new Action(() => {
+                listBoxFilteredItemsDescriptions.Visible = true;
+                listBoxFilteredItemsDescriptions.Items.Clear();
+            }));
 
-            albumControlFilteredPhotos.Visible = true;
-            albumControlFilteredPhotos.ClearPictureBoxInAlbum();
+            albumControlFilteredPhotos.Invoke(new Action(() =>
+            {
+                albumControlFilteredPhotos.Visible = true;
+                albumControlFilteredPhotos.ClearPictureBoxInAlbum();
+            }));
 
-            listBoxYear.Visible = true;
-            listBoxMonth.Visible = true;
-            listBoxHour.Visible = true;
+            listBoxYear.Invoke(new Action(() => listBoxYear.Visible = true));
+            listBoxMonth.Invoke(new Action(() => listBoxMonth.Visible = true));
+            listBoxHour.Invoke(new Action(() => listBoxHour.Visible = true));
+   
 
             displayYearCounts();
             displayHoursCounts();
@@ -288,11 +341,11 @@ namespace BasicFacebookFeatures
 
         private void displayYearCounts(eSortingType i_SortBy = eSortingType.CountDescending) // default?
         {
-            listBoxYear.Items.Clear();
+            listBoxYear.Invoke(new Action(()=> listBoxYear.Items.Clear()));
             List<KeyValuePair<int, int>> yearCounts = AppManager.Instance.ActivityCenter.GetYearCounts(i_SortBy);
             foreach (KeyValuePair<int, int> year in yearCounts)
             {
-                listBoxYear.Items.Add($"{year.Key}: {year.Value} posts/photos");
+                listBoxYear.Invoke(new Action(() => listBoxYear.Items.Add($"{year.Key}: {year.Value} posts/photos")));
             }
 
             if (listBoxYear.Items.Count > 0)
@@ -303,18 +356,17 @@ namespace BasicFacebookFeatures
 
         private void displayMonthCounts(int i_SelectedYear, eSortingType i_SortBy = eSortingType.CountDescending)
         {
-            listBoxMonth.Items.Clear();
+            listBoxMonth.Invoke(new Action(() => listBoxMonth.Items.Clear()));
             List<KeyValuePair<int, int>> monthCounts = AppManager.Instance.ActivityCenter.GetMonthCounts(i_SelectedYear, i_SortBy);
-            listBoxMonth.Items.Clear();
 
             foreach (KeyValuePair<int, int> month in monthCounts)
             {
-                listBoxMonth.Items.Add($"{UserUtils.sr_Months[month.Key - 1]}: {month.Value} posts/photos");
+                listBoxMonth.Invoke(new Action(() => listBoxMonth.Items.Add($"{UserUtils.sr_Months[month.Key - 1]}: {month.Value} posts/photos")));
             }
 
             if (listBoxMonth.Items.Count > 0)
             {
-                populateSortComboBox(comboBoxMonthSort, "Month");
+                comboBoxMonthSort.Invoke(new Action(() => populateSortComboBox(comboBoxMonthSort, "Month")));
             }
         }
 
@@ -329,7 +381,7 @@ namespace BasicFacebookFeatures
 
             if (listBoxHour.Items.Count > 0)
             {
-                populateSortComboBox(comboBoxHourSort, "Hour");
+                comboBoxHourSort.Invoke(new Action(() => populateSortComboBox(comboBoxHourSort, "Hour")));
             }
         }
 
@@ -532,50 +584,56 @@ namespace BasicFacebookFeatures
 
         private void fetchAlbums()
         {
-            panelAlbums.Visible = true;
-            listBoxUserAlbums.Items.Clear();
-            albumControlUserAlbum.ClearPictureBoxInAlbum();
-            listBoxUserAlbums.DisplayMember = "Name";
-            foreach (FacebookWrapper.ObjectModel.Album album in AppManager.Instance.LoggedInUser.Albums)
+            panelAlbums.Invoke(new Action(() => panelAlbums.Visible = true));
+            listBoxUserAlbums.Invoke(new Action(() => resetListBox(listBoxUserAlbums)));
+            albumControlUserAlbum.Invoke(new Action(() => albumControlUserAlbum.ClearPictureBoxInAlbum()));
+            foreach (Album album in AppManager.Instance.LoggedInUser.Albums)
             {
-                listBoxUserAlbums.Items.Add(album);
+                listBoxUserAlbums.Invoke(new Action(() => listBoxUserAlbums.Items.Add(album)));
             }
 
-            if (listBoxUserAlbums.Items.Count == 0)
-            {
-                listBoxUserAlbums.Items.Add("No Albums to retrieve");
-            }
+            //if (listBoxUserAlbums.Items.Count == 0)
+            //{
+            //    listBoxUserAlbums.Items.Add("No Albums to retrieve");
+            //}
         }
         private void fetchFavoriteTeams()
         {
-            panelFavoriteTeams.Visible = true;
-            pictureBoxFavoriteTeam.Image = null;
-            listBoxUserFavoriteTeams.Items.Clear();
-            listBoxUserFavoriteTeams.DisplayMember = "Name";
+            panelFavoriteTeams.Invoke(new Action(() => panelFavoriteTeams.Visible = true));
+            //pictureBoxFavoriteTeam.Image = null;
+            listBoxUserFavoriteTeams.Invoke(new Action(() => resetListBox(listBoxUserFavoriteTeams)));
             foreach (Page page in AppManager.Instance.LoggedInUser.FavofriteTeams)
             {
-                listBoxUserFavoriteTeams.Items.Add(page);
+                listBoxUserFavoriteTeams.Invoke(new Action(() => listBoxUserFavoriteTeams.Items.Add(page)));
             }
 
-            if (listBoxUserFavoriteTeams.Items.Count == 0)
-            {
-                listBoxUserFavoriteTeams.Items.Add("No Albums to retrieve");
-            }
+            //if (listBoxUserFavoriteTeams.Items.Count == 0)
+            //{
+            //    listBoxUserFavoriteTeams.Items.Add("No Albums to retrieve");
+            //}
         }
+
+        private void resetListBox(ListBox listBox)
+        {
+            pictureBoxFavoriteTeam.Image = null;
+            listBox.Items.Clear();
+            listBox.DisplayMember = "Name";
+        }
+
         private void fetchGroups()
         {
-            panelGroups.Visible = true;
-            listBoxUserGroups.Items.Clear();
-            listBoxUserGroups.DisplayMember = "Name";
+            panelGroups.Invoke(new Action(() => panelGroups.Visible = true));
+            listBoxUserGroups.Invoke(new Action(() => resetListBox(listBoxUserGroups)));
             foreach (Group group in AppManager.Instance.LoggedInUser.Groups)
             {
-                listBoxUserGroups.Items.Add(group);
+
+                listBoxUserGroups.Invoke(new Action(()=> listBoxUserGroups.Items.Add(group)));
             }
 
-            if (listBoxUserGroups.Items.Count == 0)
-            {
-                listBoxUserGroups.Items.Add("No Groups to retrieve");
-            }
+            //if (listBoxUserGroups.Items.Count == 0)
+            //{
+            //    listBoxUserGroups.Items.Add("No Groups to retrieve");
+            //}
         }
 
         private void unLaunchFacebook()
@@ -586,9 +644,9 @@ namespace BasicFacebookFeatures
 
         private void fetchLikedPages()
         {
-            panelLikes.Visible = true;
-            listBoxLikes.Items.Clear();
-            listBoxLikes.DisplayMember = "Name";
+            panelLikes.Invoke(new Action(() => panelLikes.Visible = true));
+
+            listBoxLikes.Invoke(new Action(() => resetListBox(listBoxLikes)));
 
             try
             {
@@ -596,17 +654,17 @@ namespace BasicFacebookFeatures
                 {
                     foreach (Page likedPage in AppManager.Instance.LoggedInUser.LikedPages)
                     {
-                        listBoxLikes.Items.Add(likedPage);
+                        listBoxLikes.Invoke(new Action(()=> listBoxLikes.Items.Add(likedPage)));
                     }
                 }
                 else
                 {
-                    listBoxLikes.Items.Add("No liked pages to display.");
+                    listBoxLikes.Invoke(new Action(() => listBoxLikes.Items.Add("No liked pages to display.")));
                 }
             }
             catch (Exception ex)
             {
-                listBoxLikes.Items.Add("Couldn't fetch liked pages.");
+                listBoxLikes.Invoke(new Action(() => listBoxLikes.Items.Add("Couldn't fetch liked pages.")));
                 MessageBox.Show($"Error: {ex.Message}");
             }
         }
@@ -766,5 +824,7 @@ namespace BasicFacebookFeatures
                 MessageBox.Show(ex.Message);
             }
         }
+      
+
     }
 }
