@@ -134,6 +134,7 @@
     <EmbeddedResource Include="Album.resx">
       <DependentUpon>Album.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\FacebookWrapper.ObjectModel.Page.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
