@@ -87,8 +87,11 @@ namespace BasicFacebookFeatures
                 if(string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
                 {
                     IsLoggedIn = true;
-                    m_LoggedInUser = m_LoginResult.LoggedInUser;
-
+                    if (m_LoggedInUser == null)
+                    {
+                        m_LoggedInUser = m_LoginResult.LoggedInUser;
+                        getUserData();
+                    }
                 }
                 else
                 {
@@ -149,6 +152,7 @@ namespace BasicFacebookFeatures
             m_LoggedInUser = null;
             UserPhotos = null;
             UserPosts = null;
+            ActivityCenter.ResetCounts();
             IsLoggedIn = false; 
         }
 

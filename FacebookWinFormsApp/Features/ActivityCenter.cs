@@ -62,7 +62,6 @@ namespace BasicFacebookFeatures
 
             //processPosts();
             //processPhotos();
-
             m_ActivityItems = i_ActivityItems;
             processActivityItems();
         }
@@ -290,52 +289,21 @@ namespace BasicFacebookFeatures
             return filteredItems;
         }
 
-        //public List<Post> GetPostsByTime(int? i_Year = null, int? i_Month = null, int? i_Hour = null)
-        //{
-        //    List<Post> filteredPosts = new List<Post>();
+        public void ResetCounts()
+        {
+            resetCountDictionary(r_YearCounts);
+            resetCountDictionary(r_HourCounts);
+            resetCountDictionary(r_MonthCounts);
+        }
 
-        //    foreach(Post post in m_UserPosts)
-        //    {
-        //        if(post.CreatedTime.HasValue)
-        //        {
-        //            DateTime createdTime = post.CreatedTime.Value;
-
-        //            if((!i_Year.HasValue || createdTime.Year == i_Year)
-        //               && (!i_Month.HasValue || createdTime.Month == i_Month)
-        //               && (!i_Hour.HasValue || createdTime.Hour == i_Hour))
-        //            {
-        //                filteredPosts.Add(post);
-        //            }
-
-        //        }
-        //    }
-
-        //    return filteredPosts;
-        //}
-
-        //public List<Photo> GetPhotosByTime(int? i_Year = null, int? i_Month = null, int? i_Hour = null)
-        //{
-        //    List<Photo> filteredPhotos = new List<Photo>();
-
-        //    foreach(Photo photo in m_UserPhotos)
-        //    {
-        //        if(photo.CreatedTime.HasValue)
-        //        {
-        //            DateTime createdTime = photo.CreatedTime.Value;
-
-        //            if((!i_Year.HasValue || createdTime.Year == i_Year)
-        //               && (!i_Month.HasValue || createdTime.Month == i_Month)
-        //               && (!i_Hour.HasValue || createdTime.Hour == i_Hour))
-        //            {
-        //                filteredPhotos.Add(photo);
-        //            }
-
-        //        }
-        //    }
-
-        //    return filteredPhotos;
-        //}
-
+        private void resetCountDictionary(Dictionary<int, int> i_CountDict)
+        {
+            List<int> keys = i_CountDict.Keys.ToList();
+            foreach (int key in keys)
+            {
+                i_CountDict[key] = 0;
+            }
+        }
 
     }
 

@@ -309,7 +309,7 @@ namespace BasicFacebookFeatures
 
         private void fetchActivityCenter()
         {
-            AppManager.Instance.getUserData();
+            //AppManager.Instance.getUserData();
             listBoxFilteredItemsDescriptions.Invoke(new Action(() => {
                 listBoxFilteredItemsDescriptions.Visible = true;
                 listBoxFilteredItemsDescriptions.Items.Clear();
