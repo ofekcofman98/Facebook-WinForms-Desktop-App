@@ -706,6 +706,7 @@ namespace BasicFacebookFeatures
             {
                 listBoxFilteredUsers.Items.Add("No Users to retrieve");
             }
+            listBoxUserFavoriteTeams.SelectedIndex = 0;
         }
 
 
@@ -794,7 +795,7 @@ namespace BasicFacebookFeatures
 
         private void listBoxFilteredUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pictureBoxFilteredUsers.Image = (listBoxFilteredUsers.SelectedItem as User).ImageNormal;
+            pictureBoxFilteredUsers.Image = (listBoxFilteredUsers.SelectedItem as User)?.ImageNormal;
         }
 
         private void buttonSetStatusPost_Click(object sender, EventArgs e)

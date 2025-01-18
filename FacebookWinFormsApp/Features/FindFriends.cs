@@ -12,19 +12,18 @@ namespace BasicFacebookFeatures
     {
         public HashSet<User> GetFriendUserCommonFriendsPages(IFilterable i_filter, User i_SelectedFriendToGetFriendsFrom)
         {
-            HashSet<User> filterdFriends = new HashSet<User>(i_SelectedFriendToGetFriendsFrom.Friends);
 
-            List<User> filteredUsers = new List<User>();
+            HashSet<User> filteredUsers = new HashSet<User>();
 
-            foreach (User user in filterdFriends)
+            foreach (User user in i_SelectedFriendToGetFriendsFrom.Friends)
             {
                 if (i_filter.Filter(user))
                 {
-                    filterdFriends.Add(user);
+                    filteredUsers.Add(user);
                 }
             }
 
-            return filterdFriends;
+            return filteredUsers;
         }
     }
 }
