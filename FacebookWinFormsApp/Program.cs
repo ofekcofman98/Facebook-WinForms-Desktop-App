@@ -14,11 +14,15 @@ namespace BasicFacebookFeatures
         [STAThread]
         static void Main()
         {
-            Clipboard.SetText("design.patterns20cc");
-            FacebookService.s_UseForamttedToStrings = true;
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMain());
+          
+
+                Clipboard.SetText("design.patterns20cc");
+                FacebookService.s_UseForamttedToStrings = true;
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new FormMain());
+            
+
         }
 
 

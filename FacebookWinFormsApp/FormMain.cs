@@ -95,22 +95,12 @@ namespace BasicFacebookFeatures
 
         private void performLogin()
         {
-            // Start the login process on a background thread
-            Thread loginWithServer = new Thread(() =>
-            {
+    
                 AppManager.Instance.Login();
-
-                // After the login process, update the UI on the main thread
-                Invoke(new Action(() =>
-                {
-                    updateTabs(AppManager.Instance.IsLoggedIn);
-                    onLogin?.Invoke();
-                }));
-            });
-
-            loginWithServer.Start();
+                updateTabs(AppManager.Instance.IsLoggedIn);
+                onLogin?.Invoke();
+       
         }
-
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
@@ -319,6 +309,7 @@ namespace BasicFacebookFeatures
 
         private void fetchActivityCenter()
         {
+            AppManager.Instance.getUserData();
             listBoxFilteredItemsDescriptions.Invoke(new Action(() => {
                 listBoxFilteredItemsDescriptions.Visible = true;
                 listBoxFilteredItemsDescriptions.Items.Clear();
@@ -350,7 +341,7 @@ namespace BasicFacebookFeatures
 
             if (listBoxYear.Items.Count > 0)
             {
-                populateSortComboBox(comboBoxYearSort, "Year");
+                comboBoxYearSort.Invoke(new Action(() => populateSortComboBox(comboBoxYearSort, "Year")));
             }
         }
 
@@ -372,11 +363,11 @@ namespace BasicFacebookFeatures
 
         private void displayHoursCounts(eSortingType i_SortBy = eSortingType.CountDescending)
         {
-            listBoxHour.Items.Clear();
+           listBoxHour.Invoke(new Action(()=> listBoxHour.Items.Clear()));
             List<KeyValuePair<int, int>> hoursCounts = AppManager.Instance.ActivityCenter.GetHourCounts(i_SortBy);
             foreach (KeyValuePair<int, int> hour in hoursCounts)
             {
-                listBoxHour.Items.Add($"{makeHourFormat(hour.Key)}: {hour.Value} posts/photos");
+                listBoxHour.Invoke(new Action(() => listBoxHour.Items.Add($"{makeHourFormat(hour.Key)}: {hour.Value} posts/photos")));
             }
 
             if (listBoxHour.Items.Count > 0)

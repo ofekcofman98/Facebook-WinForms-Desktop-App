@@ -88,7 +88,7 @@ namespace BasicFacebookFeatures
                 {
                     IsLoggedIn = true;
                     m_LoggedInUser = m_LoginResult.LoggedInUser;
-                    getUserData();
+
                 }
                 else
                 {
@@ -102,7 +102,7 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void getUserData()
+        public void getUserData()
         {
             UserPosts = m_LoggedInUser.Posts.ToList();
             UserPhotos = GetPhotos();
