@@ -40,7 +40,7 @@ namespace BasicFacebookFeatures
 
         public List<Post> UserPosts { get; set; }
         public List<Photo> UserPhotos { get; set; }
-
+        
 
         private AppManager()
         {

@@ -17,20 +17,21 @@ namespace BasicFacebookFeatures
 
     public class ActivityCenter
     {
-
-        //private List<Post> m_UserPosts;
-        //private List<Photo> m_UserPhotos;
-
         private List<IActivityItem> m_ActivityItems;
 
         private readonly Dictionary<int, int> r_YearCounts = new Dictionary<int, int>();
         private readonly Dictionary<int, int> r_MonthCounts = new Dictionary<int, int>();
         private readonly Dictionary<int, int> r_HourCounts = new Dictionary<int, int>();
 
-        //public List<Post> FilteredPosts { get; private set; }
-        //public List<Photo> FilteredPhotos { get; private set; }
-
         public List<IActivityItem> FilteredActivityItems { get; private set; }
+
+        public readonly Dictionary<eSortingType, string> r_SortingDictionary = new Dictionary<eSortingType, string>()
+                                                                                   {
+                                                                                       { eSortingType.TimeAscending, "Sort by Time Ascending" },
+                                                                                       { eSortingType.TimeDescending, "Sort by Time Descending" },
+                                                                                       { eSortingType.CountAscending, "Sort by Count Ascending" },
+                                                                                       { eSortingType.CountDescending, "Sort by Count Descending" }
+                                                                                   };
 
         public ActivityCenter()
         {
@@ -38,30 +39,11 @@ namespace BasicFacebookFeatures
             initializeCounts(r_MonthCounts, 1, 12);
             initializeCounts(r_HourCounts, 0, 23);
 
-            //FilteredPosts = new List<Post>();
-            //FilteredPhotos = new List<Photo>();
-
             FilteredActivityItems = new List<IActivityItem>();
         }
 
-        public void InitializeUserData(/*List<Post> i_UserPosts, List<Photo> i_UserPhotos*/ List<IActivityItem> i_ActivityItems)
+        public void InitializeUserData(List<IActivityItem> i_ActivityItems)
         {
-            //m_UserPosts = i_UserPosts;
-            //m_UserPhotos = i_UserPhotos;
-
-            //m_ActivityItems = new List<IActivityItem>();
-            //foreach(Photo photo in i_UserPhotos)
-            //{
-            //    m_ActivityItems.Add(new PhotoAdapter(photo));
-            //}
-
-            //foreach(Post post in i_UserPosts)
-            //{
-            //    m_ActivityItems.Add(new PostAdapter(post));    
-            //}
-
-            //processPosts();
-            //processPhotos();
             m_ActivityItems = i_ActivityItems;
             processActivityItems();
         }
@@ -99,51 +81,6 @@ namespace BasicFacebookFeatures
                 i_CountDict[i] = 0;
             }
         }
-
-        //private void processPosts()
-        //{
-        //    foreach(Post post in m_UserPosts)
-        //    {
-        //        if(post.CreatedTime.HasValue)
-        //        {
-        //            processTimeData(post.CreatedTime.Value);
-        //        }
-        //    }
-        //}
-
-        //private void processPhotos()
-        //{
-        //    foreach(Photo photo in m_UserPhotos)
-        //    {
-        //        if(photo.CreatedTime.HasValue)
-        //        {
-        //            processTimeData(photo.CreatedTime.Value);
-        //        }
-        //    }
-        //}
-
-        //private void processTimeData(DateTime? i_CreatedTime)
-        //{
-        //    if(i_CreatedTime.HasValue)
-        //    {
-        //        DateTime createdTime = i_CreatedTime.Value;
-
-        //        if(r_YearCounts.ContainsKey(createdTime.Year))
-        //        {
-        //            r_YearCounts[createdTime.Year]++;
-        //        }
-
-        //        if(r_MonthCounts.ContainsKey(createdTime.Month))
-        //        {
-        //            r_MonthCounts[createdTime.Month]++;
-        //        }
-
-        //        if(r_HourCounts.ContainsKey(createdTime.Hour))
-        //        {
-        //            r_HourCounts[createdTime.Hour]++;
-        //        }
-        //    }
-        //}
         public List<KeyValuePair<int, int>> GetYearCounts(eSortingType i_SortBy)
         {
             return sortCountsList(r_YearCounts, i_SortBy);
@@ -168,36 +105,6 @@ namespace BasicFacebookFeatures
                 }
             }
 
-            //foreach(Post post in m_UserPosts)
-            //{
-            //    if(post.CreatedTime.HasValue && post.CreatedTime.Value.Year == i_Year)
-            //    {
-            //        int month = post.CreatedTime.Value.Month;
-
-            //        if(!monthCounts.ContainsKey(month))
-            //        {
-            //            monthCounts[month] = 0;
-            //        }
-
-            //        monthCounts[month]++;
-            //    }
-            //}
-
-            //foreach(Photo photo in m_UserPhotos)
-            //{
-            //    if(photo.CreatedTime.HasValue && photo.CreatedTime.Value.Year == i_Year)
-            //    {
-            //        int month = photo.CreatedTime.Value.Month;
-
-            //        if(!monthCounts.ContainsKey(month))
-            //        {
-            //            monthCounts[month] = 0;
-            //        }
-
-            //        monthCounts[month]++;
-            //    }
-            //}
-
             return sortCountsList(monthCounts, i_SortBy);
         }
 
@@ -219,34 +126,6 @@ namespace BasicFacebookFeatures
                     hourCounts[hour]++;
                 }
             }
-
-            //foreach (Post post in m_UserPosts)
-            //{
-            //    if(post.CreatedTime.HasValue)
-            //    {
-            //        int hour = post.CreatedTime.Value.Hour;
-            //        if(!hourCounts.ContainsKey(hour))
-            //        {
-            //            hourCounts[hour] = 0;
-            //        }
-
-            //        hourCounts[hour]++;
-            //    }
-            //}
-
-            //foreach (Photo photo in m_UserPhotos)
-            //{
-            //    if (photo.CreatedTime.HasValue)
-            //    {
-            //        int hour = photo.CreatedTime.Value.Hour;
-            //        if (!hourCounts.ContainsKey(hour))
-            //        {
-            //            hourCounts[hour] = 0;
-            //        }
-
-            //        hourCounts[hour]++;
-            //    }
-            //}
 
             return sortCountsList(hourCounts, i_SortBy);
         }

@@ -82,7 +82,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActivityCenterFacade.cs" />
     <Compile Include="AlbumControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -127,6 +126,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Properties\DataSources\FacebookWrapper.ObjectModel.Album.datasource" />
     <None Include="Properties\DataSources\FacebookWrapper.ObjectModel.FriendList.datasource" />
     <None Include="Properties\DataSources\FacebookWrapper.ObjectModel.Group.datasource" />
     <None Include="Properties\DataSources\FacebookWrapper.ObjectModel.Page.datasource" />

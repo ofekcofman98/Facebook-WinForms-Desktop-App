@@ -16,6 +16,7 @@ using static BasicFacebookFeatures.ActivityCenter;
 using Facebook;
 using BasicFacebookFeatures.Filters;
 using CefSharp;
+using Action = System.Action;
 
 namespace BasicFacebookFeatures
 {
@@ -24,7 +25,6 @@ namespace BasicFacebookFeatures
         private Action onLogin;
         private Action onLogout;
         
-        private readonly ActivityCenterFacade r_ActivityCenterFacade;
 
         private readonly List<Panel> r_HomePanels;
         private readonly List<TabPage> r_AddedTabs;
@@ -47,7 +47,6 @@ namespace BasicFacebookFeatures
                            };
             r_AddedTabs = new List<TabPage> { tabMyProfile, tabActivityCenter, tabFindNewFriends };
 
-            r_ActivityCenterFacade = new ActivityCenterFacade();
 
             updateTabs(false);
 
@@ -120,7 +119,6 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                //r_Facade.Logout();
                 AppManager.Instance.Logout();
                 updateTabs(AppManager.Instance.IsLoggedIn);
                 onLogout?.Invoke();
@@ -214,7 +212,7 @@ namespace BasicFacebookFeatures
             populateGenderComboBox();
 
         }
-        private void clearChoiceItemFromComobox(ComboBox comboBox)
+        private void clearChoiceItemFromCombobox(ComboBox comboBox)
         {
             comboBox.Items.Clear();
             comboBox.SelectedItem = null;
@@ -224,7 +222,7 @@ namespace BasicFacebookFeatures
 
         private void populateGenderComboBox()
         {
-            comboBoxGender.Invoke(new Action(()=>clearChoiceItemFromComobox(comboBoxGender)));
+            comboBoxGender.Invoke(new Action(()=>clearChoiceItemFromCombobox(comboBoxGender)));
             foreach (User.eGender gender in Enum.GetValues(typeof(User.eGender)))
             {
                 comboBoxGender.Invoke(new Action(() => comboBoxGender.Items.Add(gender)));
@@ -257,17 +255,12 @@ namespace BasicFacebookFeatures
             {
                 checkedListBoxlikedPages.Invoke(new Action(()=> checkedListBoxlikedPages.Items.Add(page)));
             }
-
-            //if (checkedListBoxlikedPages.Items.Count == 0)    
-            //{
-            //    checkedListBoxlikedPages.Items.Add("No liked pages to retrieve");
-            //}
         }
 
 
         private void fetchFriendsComboBox()
         {
-            comboBoxFriendList.Invoke(new Action(() => clearChoiceItemFromComobox(comboBoxFriendList)));
+            comboBoxFriendList.Invoke(new Action(() => clearChoiceItemFromCombobox(comboBoxFriendList)));
      
             foreach (User user in m_LoggedInUser.Friends)
             {
@@ -280,41 +273,42 @@ namespace BasicFacebookFeatures
 
         private void fetchFriendList()
         {
-            var allFriends = m_LoggedInUser.Friends;
+            panelFriends.Invoke(new Action(() => panelFriends.Visible = true));
 
-            //if(allFriends.Count == 0)
-            //{
-            //    List<string> emptyList = new List<string> { "No friends to display" };
-
-            //    if(!listBoxUserFriends.InvokeRequired)
-            //    {
-            //        userBindingSource.DataSource = emptyList;
-            //        listBoxUserFriends.DisplayMember = null;
-            //    }
-            //    else
-            //    {
-            //        listBoxUserFriends.Invoke(new Action(() =>
-            //            {
-            //                userBindingSource.DataSource = new List<string> { "No friends to display" };
-            //                listBoxUserFriends.DisplayMember = null;
-            //            }));
-
-            //    }
-            //}
-
-            if (!listBoxUserFriends.InvokeRequired)
+            var friends = m_LoggedInUser.Friends;
+            
+            if(!handleEmptyDataSourceForListbox(friends, listBoxUserFriends, nameof(friends)))
             {
-                friendListBindingSource.DataSource = allFriends;
+                bindDataSourceToListbox(friends, friendListBindingSource, listBoxUserFriends);
+            }
+        }
+
+        private bool handleEmptyDataSourceForListbox<T>(IEnumerable<T> i_Items, ListBox i_ListBox, string i_ItemString)
+        {
+            bool isEmpty = false;
+
+            if(i_Items == null || !i_Items.Any())
+            {
+                i_ListBox.DataSource = null;
+                i_ListBox.Items.Clear();
+                i_ListBox.Items.Add($"No {i_ItemString} to retrieve.");
+
+                isEmpty = true;
+            }
+
+            return isEmpty;
+        }
+
+        private void bindDataSourceToListbox<T>(IEnumerable<T> i_Items, BindingSource i_BindingSource, ListBox i_ListBox)
+        {
+            if(!i_ListBox.InvokeRequired)
+            {
+                i_BindingSource.DataSource = i_Items;
             }
             else
             {
-                listBoxUserFriends.Invoke(new Action(() => friendListBindingSource.DataSource = allFriends));
+                i_ListBox.Invoke(new Action(() => i_BindingSource.DataSource = i_Items));
             }
-            //if (allFriends.Count == 0)
-            //{
-            //    userBindingSource.DataSource = new List<string> { "No friends to display" };
-            //}
-
         }
 
         private void fetchMyProfile()
@@ -326,34 +320,17 @@ namespace BasicFacebookFeatures
                     Invoke(new Action(() => userBindingSource.DataSource = m_LoggedInUser));
                     labelGenderData.Invoke(new Action(() =>
                         labelGenderData.Text = m_LoggedInUser.Gender.ToString()));
-
                 }
                 else
                 {
                     userBindingSource.DataSource = m_LoggedInUser;
                 }
             }
-            //    labelEmailData.Invoke(new Action(() =>
-            //        labelEmailData.Text = m_LoggedInUser.Email));
-
-            //    labelBirthdayData.Invoke(new Action(() =>
-            //        labelBirthdayData.Text = m_LoggedInUser.Birthday));
-
-            //    labelGenderData.Invoke(new Action(() =>
-            //        labelGenderData.Text = m_LoggedInUser.Gender.ToString()));
-
-            //    labelFullNameData.Invoke(new Action(() =>
-            //        labelFullNameData.Text = m_LoggedInUser.Name));
-
-            //    PictureBoxMyProfile.Invoke(new Action(() =>
-            //        PictureBoxMyProfile.Image = m_LoggedInUser.ImageLarge));
-            //}
         }
 
 
         private void fetchActivityCenter()
         {
-            //AppManager.Instance.getUserData();
             listBoxFilteredItemsDescriptions.Invoke(new Action(() => {
                 listBoxFilteredItemsDescriptions.Visible = true;
                 listBoxFilteredItemsDescriptions.Items.Clear();
@@ -423,17 +400,13 @@ namespace BasicFacebookFeatures
         private void populateSortComboBox(ComboBox i_ComboBox, string i_TimeType)
         {
             i_ComboBox.Items.Clear();
-
-            foreach(KeyValuePair<eSortingType, string> sortingOption in r_ActivityCenterFacade.r_SortingDictionary)
+            
+            var sortingOptionDictionary = AppManager.Instance.ActivityCenter.r_SortingDictionary;
+            
+            foreach (KeyValuePair<eSortingType, string> sortingOption in sortingOptionDictionary)
             {
                 i_ComboBox.Items.Add(sortingOption.Value);
             }
-
-
-            //i_ComboBox.Items.Add($"Sort by {i_TimeType} Ascending");
-            //i_ComboBox.Items.Add($"Sort by {i_TimeType} Descending");
-            //i_ComboBox.Items.Add("Sort by Count Ascending");
-            //i_ComboBox.Items.Add("Sort by Count Descending");
         }
 
         private eSortingType getSorting(int i_ComboBoxIndex)
@@ -554,38 +527,6 @@ namespace BasicFacebookFeatures
                 i_ListBox.Items.Add(activityItem.Description);
             }
         }
-
-
-        //private void addPostsToListbox(List<Post> i_Posts, ListBox i_ListBox)
-        //{
-        //    foreach (Post post in i_Posts)
-        //    {
-        //        if (post.Message == null)
-        //        {
-        //            i_ListBox.Items.Add("[No message]");
-        //        }
-        //        else
-        //        {
-        //            i_ListBox.Items.Add(post.Message);
-        //        }
-        //    }
-        //}
-
-        //private void addPhotosToListbox(List<Photo> i_Photos, ListBox i_ListBox)
-        //{
-        //    foreach (Photo photo in i_Photos)
-        //    {
-        //        if (photo.Name == null)
-        //        {
-        //            i_ListBox.Items.Add("[No title]");
-        //        }
-        //        else
-        //        {
-        //            i_ListBox.Items.Add(photo.Message);
-        //        }
-        //    }
-        //}
-
         private void fetchStatusPost()
         {
             panelStatusPost.Visible = true;
@@ -620,31 +561,24 @@ namespace BasicFacebookFeatures
         private void fetchAlbums()
         {
             panelAlbums.Invoke(new Action(() => panelAlbums.Visible = true));
-            listBoxUserAlbums.Invoke(new Action(() => resetListBox(listBoxUserAlbums)));
-            albumControlUserAlbum.Invoke(new Action(() => albumControlUserAlbum.ClearPictureBoxInAlbum()));
-            foreach (Album album in m_LoggedInUser.Albums)
-            {
-                listBoxUserAlbums.Invoke(new Action(() => listBoxUserAlbums.Items.Add(album)));
-            }
 
-            //if (listBoxUserAlbums.Items.Count == 0)
-            //{
-            //    listBoxUserAlbums.Items.Add("No Albums to retrieve");
-            //}
+            var albums = m_LoggedInUser.Albums;
+
+            if(!handleEmptyDataSourceForListbox(albums, listBoxUserAlbums, nameof(albums)))
+            {
+                bindDataSourceToListbox(albums, albumBindingSource, listBoxUserAlbums);
+            }
         }
         private void fetchFavoriteTeams()
         {
-            var allFavoriteTeams = m_LoggedInUser.FavofriteTeams;
+            var teams = m_LoggedInUser.FavofriteTeams;
 
-            if(!listBoxUserFavoriteTeams.InvokeRequired)
+            if(!handleEmptyDataSourceForListbox(teams, listBoxUserFavoriteTeams, nameof(teams)))
             {
-                pageBindingSource.DataSource = allFavoriteTeams;
+                bindDataSourceToListbox(teams, pageBindingSource, listBoxUserFavoriteTeams);
+                pictureBoxFavoriteTeam.Image = null;
+
             }
-            else
-            {
-                listBoxUserFavoriteTeams.Invoke(new Action(() => pageBindingSource.DataSource = allFavoriteTeams));
-            }
-            pictureBoxFavoriteTeam.Image = null;
         }
 
         private void resetListBox(ListBox listBox)
@@ -666,33 +600,11 @@ namespace BasicFacebookFeatures
         {
             panelGroups.Invoke(new Action(() => panelGroups.Visible = true));
 
-            //var allGroups = m_LoggedInUser.Groups;
+            var groups = m_LoggedInUser.Groups;
 
-            //if (allGroups == null || allGroups.Count == 0)
-            //{
-            //    MessageBox.Show("No groups found or failed to load groups.");
-            //    return;
-            //}
-
-            //if (!listBoxUserGroups.InvokeRequired)
-            //{
-            //    groupBindingSource.DataSource = allGroups;
-            //}
-            //else
-            //{
-            //    listBoxUserGroups.Invoke(new Action(() => groupBindingSource.DataSource = allGroups));
-            //}
-
-            listBoxUserGroups.Invoke(new Action(() => resetListBox(listBoxUserGroups)));
-            foreach (Group group in m_LoggedInUser.Groups)
+            if(!handleEmptyDataSourceForListbox(groups, listBoxUserGroups, nameof(groups)))
             {
-
-                listBoxUserGroups.Invoke(new Action(() => listBoxUserGroups.Items.Add(group)));
-            }
-
-            if (listBoxUserGroups.Items.Count == 0)
-            {
-                listBoxUserGroups.Items.Add("No Groups to retrieve");
+                bindDataSourceToListbox(groups, groupBindingSource, listBoxUserGroups);
             }
         }
 

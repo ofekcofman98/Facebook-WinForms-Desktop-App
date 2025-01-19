@@ -34,7 +34,7 @@
             System.Windows.Forms.Label nameLabel;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.tabMyProfile = new System.Windows.Forms.TabPage();
-            this.label22 = new System.Windows.Forms.Label();
+            this.labelMyProfile = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
             this.panel12 = new System.Windows.Forms.Panel();
             this.labelGenderData = new System.Windows.Forms.Label();
@@ -52,11 +52,11 @@
             this.panelGroups = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.listBoxUserGroups = new System.Windows.Forms.ListBox();
-            this.groupBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panelAlbums = new System.Windows.Forms.Panel();
             this.albumControlUserAlbum = new BasicFacebookFeatures.AlbumControl();
             this.label1 = new System.Windows.Forms.Label();
             this.listBoxUserAlbums = new System.Windows.Forms.ListBox();
+            this.albumBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panelStatusPost = new System.Windows.Forms.Panel();
             this.textBoxStatusPost = new System.Windows.Forms.TextBox();
             this.buttonSetStatusPost = new System.Windows.Forms.Button();
@@ -70,6 +70,7 @@
             this.listBoxUserFavoriteTeams = new System.Windows.Forms.ListBox();
             this.pageBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pictureBoxFavoriteTeam = new System.Windows.Forms.PictureBox();
+            this.groupBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.labelUserName = new System.Windows.Forms.Label();
             this.buttonLogout = new System.Windows.Forms.Button();
             this.buttonLogin = new System.Windows.Forms.Button();
@@ -135,8 +136,8 @@
             this.tabHomePage.SuspendLayout();
             this.panelLikes.SuspendLayout();
             this.panelGroups.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupBindingSource)).BeginInit();
             this.panelAlbums.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.albumBindingSource)).BeginInit();
             this.panelStatusPost.SuspendLayout();
             this.panelFavoriteTeams.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUserFriend)).BeginInit();
@@ -144,6 +145,7 @@
             this.panelFriends.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pageBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFavoriteTeam)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupBindingSource)).BeginInit();
             this.panelGlobal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
@@ -196,7 +198,7 @@
             // 
             // tabMyProfile
             // 
-            this.tabMyProfile.Controls.Add(this.label22);
+            this.tabMyProfile.Controls.Add(this.labelMyProfile);
             this.tabMyProfile.Controls.Add(this.panel11);
             this.tabMyProfile.Location = new System.Drawing.Point(4, 31);
             this.tabMyProfile.Name = "tabMyProfile";
@@ -206,16 +208,15 @@
             this.tabMyProfile.Text = "My Profile";
             this.tabMyProfile.UseVisualStyleBackColor = true;
             // 
-            // label22
+            // labelMyProfile
             // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 23F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(516, 22);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(193, 44);
-            this.label22.TabIndex = 10;
-            this.label22.Text = "My Profile";
-            this.label22.Visible = false;
+            this.labelMyProfile.AutoSize = true;
+            this.labelMyProfile.Font = new System.Drawing.Font("Microsoft Sans Serif", 23F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMyProfile.Location = new System.Drawing.Point(516, 22);
+            this.labelMyProfile.Name = "labelMyProfile";
+            this.labelMyProfile.Size = new System.Drawing.Size(193, 44);
+            this.labelMyProfile.TabIndex = 10;
+            this.labelMyProfile.Text = "My Profile";
             // 
             // panel11
             // 
@@ -396,10 +397,6 @@
             this.listBoxUserGroups.Size = new System.Drawing.Size(208, 114);
             this.listBoxUserGroups.TabIndex = 64;
             // 
-            // groupBindingSource
-            // 
-            this.groupBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Group);
-            // 
             // panelAlbums
             // 
             this.panelAlbums.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -408,7 +405,7 @@
             this.panelAlbums.Controls.Add(this.listBoxUserAlbums);
             this.panelAlbums.Location = new System.Drawing.Point(705, 82);
             this.panelAlbums.Name = "panelAlbums";
-            this.panelAlbums.Size = new System.Drawing.Size(266, 463);
+            this.panelAlbums.Size = new System.Drawing.Size(288, 463);
             this.panelAlbums.TabIndex = 77;
             this.panelAlbums.Visible = false;
             // 
@@ -431,6 +428,8 @@
             // 
             // listBoxUserAlbums
             // 
+            this.listBoxUserAlbums.DataSource = this.albumBindingSource;
+            this.listBoxUserAlbums.DisplayMember = "Name";
             this.listBoxUserAlbums.FormattingEnabled = true;
             this.listBoxUserAlbums.ItemHeight = 22;
             this.listBoxUserAlbums.Location = new System.Drawing.Point(34, 69);
@@ -438,6 +437,10 @@
             this.listBoxUserAlbums.Size = new System.Drawing.Size(206, 92);
             this.listBoxUserAlbums.TabIndex = 58;
             this.listBoxUserAlbums.SelectedIndexChanged += new System.EventHandler(this.userAlbumsListBox_SelectedIndexChanged);
+            // 
+            // albumBindingSource
+            // 
+            this.albumBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Album);
             // 
             // panelStatusPost
             // 
@@ -564,6 +567,10 @@
             this.pictureBoxFavoriteTeam.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBoxFavoriteTeam.TabIndex = 67;
             this.pictureBoxFavoriteTeam.TabStop = false;
+            // 
+            // groupBindingSource
+            // 
+            this.groupBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Group);
             // 
             // labelUserName
             // 
@@ -1138,9 +1145,9 @@
             this.panelLikes.PerformLayout();
             this.panelGroups.ResumeLayout(false);
             this.panelGroups.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupBindingSource)).EndInit();
             this.panelAlbums.ResumeLayout(false);
             this.panelAlbums.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.albumBindingSource)).EndInit();
             this.panelStatusPost.ResumeLayout(false);
             this.panelStatusPost.PerformLayout();
             this.panelFavoriteTeams.ResumeLayout(false);
@@ -1151,6 +1158,7 @@
             this.panelFriends.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pageBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFavoriteTeam)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupBindingSource)).EndInit();
             this.panelGlobal.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
@@ -1250,7 +1258,7 @@
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label labelMyProfile;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.Label labelActivityCenterDiscription;
@@ -1280,6 +1288,7 @@
         private System.Windows.Forms.BindingSource friendListBindingSource;
         private System.Windows.Forms.BindingSource pageBindingSource;
         private System.Windows.Forms.BindingSource groupBindingSource;
+        private System.Windows.Forms.BindingSource albumBindingSource;
     }
 }
 
