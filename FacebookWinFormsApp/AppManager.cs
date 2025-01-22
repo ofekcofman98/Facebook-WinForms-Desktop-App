@@ -90,7 +90,7 @@ namespace BasicFacebookFeatures
                     if (m_LoggedInUser == null)
                     {
                         m_LoggedInUser = m_LoginResult.LoggedInUser;
-                        getUserData();
+                        //GetUserData();
                     }
                 }
                 else
@@ -105,7 +105,7 @@ namespace BasicFacebookFeatures
             }
         }
 
-        public void getUserData()
+        public void GetUserData()
         {
             UserPosts = m_LoggedInUser.Posts.ToList();
             UserPhotos = GetPhotos();

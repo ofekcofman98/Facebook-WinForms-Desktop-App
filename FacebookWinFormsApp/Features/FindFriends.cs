@@ -10,10 +10,10 @@ namespace BasicFacebookFeatures
 {
     public class FindFriends
     {
-        public HashSet<User> GetFriendUserCommonFriendsPages(IFilterable i_filter, User i_SelectedFriendToGetFriendsFrom)
+        public List<User> GetFriendsFromUserByFilter(IFilterable i_filter, User i_SelectedFriendToGetFriendsFrom)
         {
 
-            HashSet<User> filteredUsers = new HashSet<User>();
+            List<User> filteredUsers = new List<User>();
 
             foreach (User user in i_SelectedFriendToGetFriendsFrom.Friends)
             {

@@ -289,9 +289,12 @@ namespace BasicFacebookFeatures
 
             if(i_Items == null || !i_Items.Any())
             {
-                i_ListBox.DataSource = null;
-                i_ListBox.Items.Clear();
-                i_ListBox.Items.Add($"No {i_ItemString} to retrieve.");
+                i_ListBox.Invoke(new Action(() => {
+                    i_ListBox.DataSource = null;
+                    i_ListBox.Items.Clear();
+                    i_ListBox.Items.Add($"No {i_ItemString} to retrieve.");
+
+                }));
 
                 isEmpty = true;
             }
@@ -331,6 +334,7 @@ namespace BasicFacebookFeatures
 
         private void fetchActivityCenter()
         {
+            AppManager.Instance.GetUserData();
             listBoxFilteredItemsDescriptions.Invoke(new Action(() => {
                 listBoxFilteredItemsDescriptions.Visible = true;
                 listBoxFilteredItemsDescriptions.Items.Clear();
@@ -673,7 +677,7 @@ namespace BasicFacebookFeatures
 
         }
 
-        private void updateFilteredFriendsListBox(HashSet<User> i_FilterdFriends)
+        private void updateFilteredFriendsListBox(List<User> i_FilterdFriends)
         {
             listBoxFilteredUsers.Items.Clear();
             listBoxUserFavoriteTeams.DisplayMember = "Name";
@@ -740,8 +744,8 @@ namespace BasicFacebookFeatures
             }
             filters.AddFilter(new FilterRelationshipStatus(getUserSelectedRelationshipStatuses()));
             filters.AddFilter(new FilterLikedPages(getUserSelectedLikedPagesId()));
-
-            HashSet<User> filterdFriends = AppManager.Instance.FindFriends.GetFriendUserCommonFriendsPages(filters, selectedFriend);
+            List<User> usersFriendList = selectedFriend.Friends.ToList();
+            List<User> filterdFriends = usersFriendList.FindAll(filters.Filter);
             updateFilteredFriendsListBox(filterdFriends);
         }
 
