@@ -12,8 +12,8 @@ namespace BasicFacebookFeatures
     public sealed class AppManager
     {
         private readonly string r_AppId = "945333600988492";
-        private FacebookWrapper.LoginResult m_LoginResult;
-        private FacebookWrapper.ObjectModel.User m_LoggedInUser;
+        private LoginResult m_LoginResult;
+        private User m_LoggedInUser;
 
         public ActivityCenter ActivityCenter { get; private set; }
         public FindFriends FindFriends { get; private set; }
@@ -57,7 +57,7 @@ namespace BasicFacebookFeatures
         }
 
 
-        public FacebookWrapper.LoginResult LoginResult
+        public LoginResult LoginResult
         {
             get
             {  
@@ -65,7 +65,7 @@ namespace BasicFacebookFeatures
             }
         }
 
-        public FacebookWrapper.ObjectModel.User LoggedInUser
+        public User LoggedInUser
         {
             get
             {
@@ -130,7 +130,7 @@ namespace BasicFacebookFeatures
             List<Photo> photos = new List<Photo>();
             if(m_LoggedInUser.Albums != null)
             {
-                foreach(FacebookWrapper.ObjectModel.Album album in m_LoggedInUser.Albums)
+                foreach(Album album in m_LoggedInUser.Albums)
                 {
                     if(album.Photos != null)
                     {

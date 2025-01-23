@@ -9,7 +9,7 @@ namespace BasicFacebookFeatures
 {
     public class FilterGender : IFilterable
     {
-        User.eGender m_PreferanceGender;
+        private User.eGender m_PreferanceGender;
         public FilterGender(User.eGender i_Gender)
         {
             m_PreferanceGender = i_Gender;

@@ -22,8 +22,8 @@ namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
-        private Action onLogin;
-        private Action onLogout;
+        private Action m_OnLogin;
+        private Action m_OnLogout;
         
 
         private readonly List<Panel> r_HomePanels;
@@ -50,23 +50,23 @@ namespace BasicFacebookFeatures
 
             updateTabs(false);
 
-            addLoginMethods();
-            addLogoutMethods();
+            AddLoginMethods();
+            AddLogoutMethods();
         }
 
         void AddToOnLoginWithThread(Action action)
         {
-            onLogin += () => new Thread(() => action()).Start();
+            m_OnLogin += () => new Thread(() => action()).Start();
         }
 
-        public void addLogoutMethods()
+        public void AddLogoutMethods()
         {
-            onLogout += updateHomePanelsVisible;
-            onLogout += unLaunchFacebook;
-            onLogout += updateLoginButton;
+            m_OnLogout += updateHomePanelsVisible;
+            m_OnLogout += unLaunchFacebook;
+            m_OnLogout += updateLoginButton;
         }
 
-        public void addLoginMethods()
+        public void AddLoginMethods()
         {
             AddToOnLoginWithThread(() => updateLoginButton());
             AddToOnLoginWithThread(() => updateHomePanelsVisible());
@@ -79,7 +79,7 @@ namespace BasicFacebookFeatures
             AddToOnLoginWithThread(() => fetchFriendsLookupPage());
             AddToOnLoginWithThread(() => fetchGroups());
             AddToOnLoginWithThread(() => fetchFavoriteTeams());
-            onLogin += fetchStatusPost;//no need for server request
+            m_OnLogin += fetchStatusPost;//no need for server request
         }
 
 
@@ -101,7 +101,7 @@ namespace BasicFacebookFeatures
                 {
                     m_LoggedInUser = AppManager.Instance.LoggedInUser;
                     updateTabs(AppManager.Instance.IsLoggedIn);
-                    onLogin?.Invoke();
+                    m_OnLogin?.Invoke();
                 }
             }
             catch(Exception e)
@@ -121,7 +121,7 @@ namespace BasicFacebookFeatures
             {
                 AppManager.Instance.Logout();
                 updateTabs(AppManager.Instance.IsLoggedIn);
-                onLogout?.Invoke();
+                m_OnLogout?.Invoke();
             }
             catch (Exception e)
             {
@@ -207,7 +207,7 @@ namespace BasicFacebookFeatures
         private void fetchFriendsLookupPage()
         {
             fetchFriendsComboBox();
-            populateRealitionshipStatusList();
+            populateRelationshipStatusList();
             populateLikedPagesList();
             populateGenderComboBox();
 
@@ -231,7 +231,7 @@ namespace BasicFacebookFeatures
             comboBoxGender.Invoke(new Action(()=> comboBoxGender.SelectedIndex = 0));
         }
 
-        private void populateRealitionshipStatusList()
+        private void populateRelationshipStatusList()
         {
             checkedListBoxRealitionshipStatus.Invoke(new Action(() =>
             {
@@ -366,7 +366,7 @@ namespace BasicFacebookFeatures
 
             if (listBoxYear.Items.Count > 0)
             {
-                comboBoxYearSort.Invoke(new Action(() => populateSortComboBox(comboBoxYearSort, "Year")));
+                comboBoxYearSort.Invoke(new Action(() => populateSortComboBox(comboBoxYearSort)));
             }
         }
 
@@ -382,7 +382,7 @@ namespace BasicFacebookFeatures
 
             if (listBoxMonth.Items.Count > 0)
             {
-                comboBoxMonthSort.Invoke(new Action(() => populateSortComboBox(comboBoxMonthSort, "Month")));
+                comboBoxMonthSort.Invoke(new Action(() => populateSortComboBox(comboBoxMonthSort)));
             }
         }
 
@@ -397,11 +397,11 @@ namespace BasicFacebookFeatures
 
             if (listBoxHour.Items.Count > 0)
             {
-                comboBoxHourSort.Invoke(new Action(() => populateSortComboBox(comboBoxHourSort, "Hour")));
+                comboBoxHourSort.Invoke(new Action(() => populateSortComboBox(comboBoxHourSort)));
             }
         }
 
-        private void populateSortComboBox(ComboBox i_ComboBox, string i_TimeType)
+        private void populateSortComboBox(ComboBox i_ComboBox)
         {
             i_ComboBox.Items.Clear();
             
@@ -677,11 +677,11 @@ namespace BasicFacebookFeatures
 
         }
 
-        private void updateFilteredFriendsListBox(List<User> i_FilterdFriends)
+        private void updateFilteredFriendsListBox(List<User> i_FilteredFriends)
         {
             listBoxFilteredUsers.Items.Clear();
             listBoxUserFavoriteTeams.DisplayMember = "Name";
-            foreach(User user in i_FilterdFriends)
+            foreach(User user in i_FilteredFriends)
             {
                 listBoxFilteredUsers.Items.Add(user);
             }
@@ -745,8 +745,8 @@ namespace BasicFacebookFeatures
             filters.AddFilter(new FilterRelationshipStatus(getUserSelectedRelationshipStatuses()));
             filters.AddFilter(new FilterLikedPages(getUserSelectedLikedPagesId()));
             List<User> usersFriendList = selectedFriend.Friends.ToList();
-            List<User> filterdFriends = usersFriendList.FindAll(filters.Filter);
-            updateFilteredFriendsListBox(filterdFriends);
+            List<User> filteredFriends = usersFriendList.FindAll(filters.Filter);
+            updateFilteredFriendsListBox(filteredFriends);
         }
 
         private void numericUpDownMaximumAge_ValueChanged(object sender, EventArgs e)

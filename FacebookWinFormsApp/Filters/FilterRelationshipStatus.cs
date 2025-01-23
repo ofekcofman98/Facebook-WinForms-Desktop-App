@@ -9,19 +9,20 @@ namespace BasicFacebookFeatures
 {
     public class FilterRelationshipStatus : IFilterable
     {
-        private HashSet<User.eRelationshipStatus> m_RelationshipStatusesSet = new HashSet<User.eRelationshipStatus>();
+        private readonly HashSet<User.eRelationshipStatus> r_RelationshipStatusSet ;
         public FilterRelationshipStatus(HashSet<User.eRelationshipStatus> i_RelationshipStatusesSet)
         {
-            m_RelationshipStatusesSet = i_RelationshipStatusesSet;
+            r_RelationshipStatusSet = i_RelationshipStatusesSet;
         }
         public bool Filter(User i_User)
         {
-            if (m_RelationshipStatusesSet.Count == 0)
+            if (r_RelationshipStatusSet.Count == 0)
             {
                 return true;
             }
+            
 
-            return m_RelationshipStatusesSet.Contains((User.eRelationshipStatus)i_User.RelationshipStatus);
+            return r_RelationshipStatusSet.Contains((User.eRelationshipStatus)i_User.RelationshipStatus);
         }
     }
 }
