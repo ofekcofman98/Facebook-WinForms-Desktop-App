@@ -1022,7 +1022,7 @@
             this.checkedListBoxRealitionshipStatus.FormattingEnabled = true;
             this.checkedListBoxRealitionshipStatus.Location = new System.Drawing.Point(17, 46);
             this.checkedListBoxRealitionshipStatus.Name = "checkedListBoxRealitionshipStatus";
-            this.checkedListBoxRealitionshipStatus.Size = new System.Drawing.Size(204, 27);
+            this.checkedListBoxRealitionshipStatus.Size = new System.Drawing.Size(204, 96);
             this.checkedListBoxRealitionshipStatus.TabIndex = 26;
             // 
             // label14
@@ -1049,7 +1049,7 @@
             this.checkedListBoxlikedPages.FormattingEnabled = true;
             this.checkedListBoxlikedPages.Location = new System.Drawing.Point(22, 46);
             this.checkedListBoxlikedPages.Name = "checkedListBoxlikedPages";
-            this.checkedListBoxlikedPages.Size = new System.Drawing.Size(204, 27);
+            this.checkedListBoxlikedPages.Size = new System.Drawing.Size(204, 96);
             this.checkedListBoxlikedPages.TabIndex = 27;
             // 
             // label15
