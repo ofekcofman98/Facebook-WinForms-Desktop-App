@@ -23,6 +23,12 @@ namespace BasicFacebookFeatures
         private readonly Dictionary<int, int> r_MonthCounts = new Dictionary<int, int>();
         private readonly Dictionary<int, int> r_HourCounts = new Dictionary<int, int>();
 
+        private const int k_StartYear = 2010;
+        private const int k_StartMonth = 1;
+        private const int k_EndMonth = 12;
+        private const int k_StartHour = 0;
+        private const int k_EndHour = 23;
+
         public List<IActivityItem> FilteredActivityItems { get; private set; }
 
         public readonly Dictionary<eSortingType, string> r_SortingDictionary = new Dictionary<eSortingType, string>()
@@ -35,9 +41,9 @@ namespace BasicFacebookFeatures
 
         public ActivityCenter()
         {
-            initializeCounts(r_YearCounts, 2010, DateTime.Now.Year);
-            initializeCounts(r_MonthCounts, 1, 12);
-            initializeCounts(r_HourCounts, 0, 23);
+            initializeCounts(r_YearCounts, k_StartYear, DateTime.Now.Year);
+            initializeCounts(r_MonthCounts, k_StartMonth, k_EndMonth);
+            initializeCounts(r_HourCounts, k_StartHour, k_EndHour);
 
             FilteredActivityItems = new List<IActivityItem>();
         }

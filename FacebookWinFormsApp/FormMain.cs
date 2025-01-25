@@ -481,7 +481,7 @@ namespace BasicFacebookFeatures
             {
                 int selectedYear = int.Parse(listBoxYear.SelectedItem.ToString().Split(':')[0]);
                 string selectedMonthName = listBoxMonth.SelectedItem.ToString().Split(':')[0];
-                int selectedMonth = Array.IndexOf(UserUtils.sr_Months, selectedMonthName) + 1; ;
+                int selectedMonth = Array.IndexOf(UserUtils.sr_Months, selectedMonthName) + 1;
 
                 labelDateOfPosts.Text = $"Your posts from {selectedMonthName} {selectedYear}";
                 filterPostsByTime(i_Year: selectedYear, i_Month: selectedMonth);
