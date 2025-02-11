@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BasicFacebookFeatures.Filters
+namespace BasicFacebookFeatures
 {
     public class CompositeFilter : IFilterable
     {

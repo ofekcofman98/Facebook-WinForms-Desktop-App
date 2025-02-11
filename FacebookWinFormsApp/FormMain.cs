@@ -14,7 +14,7 @@ using CefSharp.DevTools.Fetch;
 using static System.Windows.Forms.AxHost;
 using static BasicFacebookFeatures.ActivityCenter;
 using Facebook;
-using BasicFacebookFeatures.Filters;
+using BasicFacebookFeatures;
 using CefSharp;
 using Action = System.Action;
 
