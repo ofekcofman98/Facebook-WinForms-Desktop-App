@@ -17,14 +17,17 @@ using Facebook;
 using BasicFacebookFeatures;
 using CefSharp;
 using Action = System.Action;
+using BasicFacebookFeatures.Patterns.Strategy;
 
 namespace BasicFacebookFeatures
 {
+
+    //public delegate void LoginDelegate();
+    //public delegate void LogoutDelegate();
     public partial class FormMain : Form
     {
         private Action m_OnLogin;
         private Action m_OnLogout;
-        
 
         private readonly List<Panel> r_HomePanels;
         private readonly List<TabPage> r_AddedTabs;
@@ -46,7 +49,6 @@ namespace BasicFacebookFeatures
                                panelGroups
                            };
             r_AddedTabs = new List<TabPage> { tabMyProfile, tabActivityCenter, tabFindNewFriends };
-
 
             updateTabs(false);
 
@@ -184,6 +186,89 @@ namespace BasicFacebookFeatures
             }
         }
 
+        private void fetchAndUpdateListBox<T>(IFetchStrategy<T> i_Fetcher, ListBox i_ListBox)
+        {
+            List<T> dataList = i_Fetcher.Fetch(m_LoggedInUser);
+            i_ListBox.DataSource = dataList;
+            i_ListBox.DisplayMember = "Name";
+
+            if (!handleEmptyDataSourceForListbox(dataList, i_ListBox, typeof(T).Name))
+            {
+                bindDataSourceToListbox(dataList, friendListBindingSource, i_ListBox);
+            }
+        }
+
+        private void fetchFriendList()
+        {
+            //FetchData(user => user.Friends?.ToList() ?? new List<User>(), listBoxUserFriends, friendListBindingSource, "friends");
+
+
+            IFetchStrategy<User> friendsFetcher = new FetchFriends();
+            fetchAndUpdateListBox(friendsFetcher, listBoxUserFriends);
+
+
+            //panelFriends.Invoke(new Action(() => panelFriends.Visible = true));
+
+            //var friends = m_LoggedInUser.Friends;
+
+            //if (!handleEmptyDataSourceForListbox(friends, listBoxUserFriends, nameof(friends)))
+            //{
+            //    bindDataSourceToListbox(friends, friendListBindingSource, listBoxUserFriends);
+            //}
+        }
+
+        private void fetchAlbums()
+        {
+            //FetchData(user => user.Albums?.ToList() ?? new List<Album>(), listBoxUserAlbums, albumBindingSource, "albums");
+
+            IFetchStrategy<Album> albumsFetcher = new FetchAlbums();
+            fetchAndUpdateListBox(albumsFetcher, listBoxUserAlbums);
+
+
+            //panelAlbums.Invoke(new Action(() => panelAlbums.Visible = true));
+
+            //var albums = m_LoggedInUser.Albums;
+
+            //if(!handleEmptyDataSourceForListbox(albums, listBoxUserAlbums, nameof(albums)))
+            //{
+            //    bindDataSourceToListbox(albums, albumBindingSource, listBoxUserAlbums);
+            //}
+        }
+        private void fetchFavoriteTeams()
+        {
+            //FetchData(user => user.FavofriteTeams?.ToList() ?? new List<Page>(), listBoxUserFavoriteTeams, pageBindingSource, "favoriteTeams");
+
+            IFetchStrategy<Page> favofriteTeamsFetcher = new FetchFavoriteTeams();
+            fetchAndUpdateListBox(favofriteTeamsFetcher, listBoxUserFavoriteTeams);
+
+
+            //var teams = m_LoggedInUser.FavofriteTeams;
+
+            //if(!handleEmptyDataSourceForListbox(teams, listBoxUserFavoriteTeams, nameof(teams)))
+            //{
+            //    bindDataSourceToListbox(teams, pageBindingSource, listBoxUserFavoriteTeams);
+            //    pictureBoxFavoriteTeam.Image = null;
+
+            //}
+        }
+
+        private void fetchGroups()
+        {
+            //FetchData(user => user.Groups?.ToList() ?? new List<Group>(), listBoxUserGroups, groupBindingSource, "groups");
+
+            IFetchStrategy<Group> groupsFetcher = new FetchGroups();
+            fetchAndUpdateListBox(groupsFetcher, listBoxUserGroups);
+
+            //panelGroups.Invoke(new Action(() => panelGroups.Visible = true));
+
+            //var groups = m_LoggedInUser.Groups;
+
+            //if (!handleEmptyDataSourceForListbox(groups, listBoxUserGroups, nameof(groups)))
+            //{
+            //    bindDataSourceToListbox(groups, groupBindingSource, listBoxUserGroups);
+            //}
+        }
+
 
         private void fetchProfileInfo()
         {
@@ -268,19 +353,6 @@ namespace BasicFacebookFeatures
             }
             comboBoxFriendList.Invoke(new Action(() => comboBoxFriendList.SelectedIndex = 0));
 
-        }
-
-
-        private void fetchFriendList()
-        {
-            panelFriends.Invoke(new Action(() => panelFriends.Visible = true));
-
-            var friends = m_LoggedInUser.Friends;
-            
-            if(!handleEmptyDataSourceForListbox(friends, listBoxUserFriends, nameof(friends)))
-            {
-                bindDataSourceToListbox(friends, friendListBindingSource, listBoxUserFriends);
-            }
         }
 
         private bool handleEmptyDataSourceForListbox<T>(IEnumerable<T> i_Items, ListBox i_ListBox, string i_ItemString)
@@ -562,28 +634,6 @@ namespace BasicFacebookFeatures
         }
 
 
-        private void fetchAlbums()
-        {
-            panelAlbums.Invoke(new Action(() => panelAlbums.Visible = true));
-
-            var albums = m_LoggedInUser.Albums;
-
-            if(!handleEmptyDataSourceForListbox(albums, listBoxUserAlbums, nameof(albums)))
-            {
-                bindDataSourceToListbox(albums, albumBindingSource, listBoxUserAlbums);
-            }
-        }
-        private void fetchFavoriteTeams()
-        {
-            var teams = m_LoggedInUser.FavofriteTeams;
-
-            if(!handleEmptyDataSourceForListbox(teams, listBoxUserFavoriteTeams, nameof(teams)))
-            {
-                bindDataSourceToListbox(teams, pageBindingSource, listBoxUserFavoriteTeams);
-                pictureBoxFavoriteTeam.Image = null;
-
-            }
-        }
 
         private void resetListBox(ListBox listBox)
         {
@@ -600,17 +650,18 @@ namespace BasicFacebookFeatures
             listBox.DisplayMember = "Name"; 
         }
 
-        private void fetchGroups()
-        {
-            panelGroups.Invoke(new Action(() => panelGroups.Visible = true));
+        //public void FetchData<T>(Func<User, List<T>> i_FetchFunction, ListBox i_ListBox, BindingSource i_BindingSource, string i_ItemType)
+        //{
+        //    FetchContext<T> fetchContext = new FetchContext<T>(new GenericFetchStrategy<T>(i_FetchFunction));
 
-            var groups = m_LoggedInUser.Groups;
+        //    List<T> dataList = fetchContext.ExecuteFetch(AppManager.Instance.LoggedInUser);
 
-            if(!handleEmptyDataSourceForListbox(groups, listBoxUserGroups, nameof(groups)))
-            {
-                bindDataSourceToListbox(groups, groupBindingSource, listBoxUserGroups);
-            }
-        }
+        //    if (!handleEmptyDataSourceForListbox(dataList, i_ListBox, i_ItemType))
+        //    {
+        //        bindDataSourceToListbox(dataList, i_BindingSource, i_ListBox);
+        //    }
+        //}
+
 
         private void unLaunchFacebook()
         {

@@ -88,7 +88,14 @@
     <Compile Include="AlbumControl.Designer.cs">
       <DependentUpon>AlbumControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="IFetchStrategy.cs" />
+    <Compile Include="Patterns\Strategy\FetchAlbums.cs" />
+    <Compile Include="Patterns\Strategy\FetchContext.cs" />
+    <Compile Include="Patterns\Strategy\Fetcher.cs" />
+    <Compile Include="Patterns\Strategy\FetchFavoriteTeams.cs" />
+    <Compile Include="Patterns\Strategy\FetchFriends.cs" />
+    <Compile Include="Patterns\Strategy\FetchGroups.cs" />
+    <Compile Include="Patterns\Strategy\GenericFetchStrategy.cs" />
+    <Compile Include="Patterns\Strategy\IFetchStrategy.cs" />
     <Compile Include="Patterns\Singleton\AppManager.cs" />
     <Compile Include="Patterns\Composite\CompositeFilter.cs" />
     <Compile Include="Patterns\Composite\IFilterable.cs" />
@@ -156,8 +163,6 @@
   <ItemGroup>
     <None Include="facebook-new.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Patterns\Strategy\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

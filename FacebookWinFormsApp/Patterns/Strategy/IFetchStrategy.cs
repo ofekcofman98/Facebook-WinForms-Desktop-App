@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures
 {
-    public interface IFetchStrategy
+    public interface IFetchStrategy<T>
     {
-        void Fetch(User loggedInUser, FormMain form);
+        List<T> Fetch(User i_LoggedInUser);
     }
 }
