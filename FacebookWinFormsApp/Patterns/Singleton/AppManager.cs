@@ -40,6 +40,7 @@ namespace BasicFacebookFeatures
 
         public List<Post> UserPosts { get; set; }
         public List<Photo> UserPhotos { get; set; }
+        public List<Album> UserAlbums { get; private set; }
         
 
         private AppManager()
@@ -130,7 +131,9 @@ namespace BasicFacebookFeatures
             List<Photo> photos = new List<Photo>();
             if(m_LoggedInUser.Albums != null)
             {
-                foreach(Album album in m_LoggedInUser.Albums)
+                UserAlbums = m_LoggedInUser.Albums?.ToList() ?? new List<Album>();
+
+                foreach (Album album in m_LoggedInUser.Albums)
                 {
                     if(album.Photos != null)
                     {

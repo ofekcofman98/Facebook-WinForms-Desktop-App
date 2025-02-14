@@ -17,7 +17,7 @@ using Facebook;
 using BasicFacebookFeatures;
 using CefSharp;
 using Action = System.Action;
-using BasicFacebookFeatures.Patterns.Strategy;
+using BasicFacebookFeatures.Strategy;
 
 namespace BasicFacebookFeatures
 {
@@ -31,7 +31,6 @@ namespace BasicFacebookFeatures
 
         private readonly List<Panel> r_HomePanels;
         private readonly List<TabPage> r_AddedTabs;
-
         private User m_LoggedInUser;
 
         public FormMain()
@@ -70,20 +69,18 @@ namespace BasicFacebookFeatures
 
         public void AddLoginMethods()
         {
+
             AddToOnLoginWithThread(() => updateLoginButton());
             AddToOnLoginWithThread(() => updateHomePanelsVisible());
             AddToOnLoginWithThread(() => fetchProfileInfo());
-            AddToOnLoginWithThread(() => fetchLikedPages());
-            AddToOnLoginWithThread(() => fetchAlbums());
-            AddToOnLoginWithThread(() => fetchFriendList());
             AddToOnLoginWithThread(() => fetchMyProfile());
             AddToOnLoginWithThread(() => fetchActivityCenter());
             AddToOnLoginWithThread(() => fetchFriendsLookupPage());
-            AddToOnLoginWithThread(() => fetchGroups());
-            AddToOnLoginWithThread(() => fetchFavoriteTeams());
-            m_OnLogin += fetchStatusPost;//no need for server request
-        }
 
+            AddToOnLoginWithThread(() => FetchUserDataIntoListBox());
+
+            m_OnLogin += fetchStatusPost; //no need for server request
+        }
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
@@ -102,6 +99,7 @@ namespace BasicFacebookFeatures
                 if(AppManager.Instance.IsLoggedIn)
                 {
                     m_LoggedInUser = AppManager.Instance.LoggedInUser;
+                    AppManager.Instance.GetUserData();
                     updateTabs(AppManager.Instance.IsLoggedIn);
                     m_OnLogin?.Invoke();
                 }
@@ -186,88 +184,32 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void fetchAndUpdateListBox<T>(IFetchStrategy<T> i_Fetcher, ListBox i_ListBox)
+        private void FetchUserDataIntoListBox()
         {
-            List<T> dataList = i_Fetcher.Fetch(m_LoggedInUser);
+            if (AppManager.Instance.IsLoggedIn)
+            {
+                fetchData(new FetchFriends(), listBoxUserFriends, friendListBindingSource);
+                fetchData(new FetchAlbums(), listBoxUserAlbums, albumBindingSource);
+                fetchData(new FetchGroups(), listBoxUserGroups, groupBindingSource);
+                fetchData(new FetchLikedPages(), listBoxLikes, pageBindingSource);
+                fetchData(new FetchFavoriteTeams(), listBoxUserFavoriteTeams, pageBindingSource);
+            }
+        }
+
+        private void fetchData<T>(IFetchStrategy<T> i_FetchStrategy, ListBox i_ListBox, BindingSource i_BindingSource)
+        {
+            Fetcher<T> fetcher = new Fetcher<T>(i_FetchStrategy);
+            List<T> dataList = fetcher.FetchData(m_LoggedInUser);
+
             i_ListBox.DataSource = dataList;
             i_ListBox.DisplayMember = "Name";
 
             if (!handleEmptyDataSourceForListbox(dataList, i_ListBox, typeof(T).Name))
             {
-                bindDataSourceToListbox(dataList, friendListBindingSource, i_ListBox);
+                bindDataSourceToListbox(dataList, i_BindingSource, i_ListBox);
             }
         }
 
-        private void fetchFriendList()
-        {
-            //FetchData(user => user.Friends?.ToList() ?? new List<User>(), listBoxUserFriends, friendListBindingSource, "friends");
-
-
-            IFetchStrategy<User> friendsFetcher = new FetchFriends();
-            fetchAndUpdateListBox(friendsFetcher, listBoxUserFriends);
-
-
-            //panelFriends.Invoke(new Action(() => panelFriends.Visible = true));
-
-            //var friends = m_LoggedInUser.Friends;
-
-            //if (!handleEmptyDataSourceForListbox(friends, listBoxUserFriends, nameof(friends)))
-            //{
-            //    bindDataSourceToListbox(friends, friendListBindingSource, listBoxUserFriends);
-            //}
-        }
-
-        private void fetchAlbums()
-        {
-            //FetchData(user => user.Albums?.ToList() ?? new List<Album>(), listBoxUserAlbums, albumBindingSource, "albums");
-
-            IFetchStrategy<Album> albumsFetcher = new FetchAlbums();
-            fetchAndUpdateListBox(albumsFetcher, listBoxUserAlbums);
-
-
-            //panelAlbums.Invoke(new Action(() => panelAlbums.Visible = true));
-
-            //var albums = m_LoggedInUser.Albums;
-
-            //if(!handleEmptyDataSourceForListbox(albums, listBoxUserAlbums, nameof(albums)))
-            //{
-            //    bindDataSourceToListbox(albums, albumBindingSource, listBoxUserAlbums);
-            //}
-        }
-        private void fetchFavoriteTeams()
-        {
-            //FetchData(user => user.FavofriteTeams?.ToList() ?? new List<Page>(), listBoxUserFavoriteTeams, pageBindingSource, "favoriteTeams");
-
-            IFetchStrategy<Page> favofriteTeamsFetcher = new FetchFavoriteTeams();
-            fetchAndUpdateListBox(favofriteTeamsFetcher, listBoxUserFavoriteTeams);
-
-
-            //var teams = m_LoggedInUser.FavofriteTeams;
-
-            //if(!handleEmptyDataSourceForListbox(teams, listBoxUserFavoriteTeams, nameof(teams)))
-            //{
-            //    bindDataSourceToListbox(teams, pageBindingSource, listBoxUserFavoriteTeams);
-            //    pictureBoxFavoriteTeam.Image = null;
-
-            //}
-        }
-
-        private void fetchGroups()
-        {
-            //FetchData(user => user.Groups?.ToList() ?? new List<Group>(), listBoxUserGroups, groupBindingSource, "groups");
-
-            IFetchStrategy<Group> groupsFetcher = new FetchGroups();
-            fetchAndUpdateListBox(groupsFetcher, listBoxUserGroups);
-
-            //panelGroups.Invoke(new Action(() => panelGroups.Visible = true));
-
-            //var groups = m_LoggedInUser.Groups;
-
-            //if (!handleEmptyDataSourceForListbox(groups, listBoxUserGroups, nameof(groups)))
-            //{
-            //    bindDataSourceToListbox(groups, groupBindingSource, listBoxUserGroups);
-            //}
-        }
 
 
         private void fetchProfileInfo()
@@ -327,9 +269,7 @@ namespace BasicFacebookFeatures
             {
                 checkedListBoxRealitionshipStatus.Invoke(new Action(() =>
                 checkedListBoxRealitionshipStatus.Items.Add(relationshipStatus)));
-
             }
-
         }
 
         private void populateLikedPagesList()
@@ -406,7 +346,6 @@ namespace BasicFacebookFeatures
 
         private void fetchActivityCenter()
         {
-            AppManager.Instance.GetUserData();
             listBoxFilteredItemsDescriptions.Invoke(new Action(() => {
                 listBoxFilteredItemsDescriptions.Visible = true;
                 listBoxFilteredItemsDescriptions.Items.Clear();
@@ -650,51 +589,12 @@ namespace BasicFacebookFeatures
             listBox.DisplayMember = "Name"; 
         }
 
-        //public void FetchData<T>(Func<User, List<T>> i_FetchFunction, ListBox i_ListBox, BindingSource i_BindingSource, string i_ItemType)
-        //{
-        //    FetchContext<T> fetchContext = new FetchContext<T>(new GenericFetchStrategy<T>(i_FetchFunction));
-
-        //    List<T> dataList = fetchContext.ExecuteFetch(AppManager.Instance.LoggedInUser);
-
-        //    if (!handleEmptyDataSourceForListbox(dataList, i_ListBox, i_ItemType))
-        //    {
-        //        bindDataSourceToListbox(dataList, i_BindingSource, i_ListBox);
-        //    }
-        //}
-
-
         private void unLaunchFacebook()
         {
             labelUserName.Visible = false;
             pictureBoxProfile.Visible = false;
         }
 
-        private void fetchLikedPages()
-        {
-            panelLikes.Invoke(new Action(() => panelLikes.Visible = true));
-
-            listBoxLikes.Invoke(new Action(() => resetListBox(listBoxLikes)));
-
-            try
-            {
-                if (m_LoggedInUser.LikedPages != null && m_LoggedInUser.LikedPages.Count > 0)
-                {
-                    foreach (Page likedPage in m_LoggedInUser.LikedPages)
-                    {
-                        listBoxLikes.Invoke(new Action(()=> listBoxLikes.Items.Add(likedPage)));
-                    }
-                }
-                else
-                {
-                    listBoxLikes.Invoke(new Action(() => listBoxLikes.Items.Add("No liked pages to display.")));
-                }
-            }
-            catch (Exception ex)
-            {
-                listBoxLikes.Invoke(new Action(() => listBoxLikes.Items.Add("Couldn't fetch liked pages.")));
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-        }
 
         private void userFavoriteTeamsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
