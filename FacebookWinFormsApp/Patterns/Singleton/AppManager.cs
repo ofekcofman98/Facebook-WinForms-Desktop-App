@@ -18,7 +18,6 @@ namespace BasicFacebookFeatures
         private readonly List<IUserDataObserver> m_Observers = new List<IUserDataObserver>();
 
         public ActivityCenter ActivityCenter { get; private set; }
-        public FindFriends FindFriends { get; private set; }
 
 
         public bool IsLoggedIn { get; private set; } = false;
@@ -48,7 +47,6 @@ namespace BasicFacebookFeatures
         private AppManager()
         {
             ActivityCenter = new ActivityCenter();
-            FindFriends = new FindFriends();
         }
 
         public static AppManager Instance
