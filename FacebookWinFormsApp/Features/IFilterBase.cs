@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures
 {
-    public class FindFriends
+    public abstract class IFilterBase
     {
-        public List<User> GetFriendsFromUserByFilter(IFilterable i_filter, User i_SelectedFriendToGetFriendsFrom)
+        public List<User> FilterUserFriends( User i_SelectedFriendToGetFriendsFrom)
         {
 
             List<User> filteredUsers = new List<User>();
 
             foreach (User user in i_SelectedFriendToGetFriendsFrom.Friends)
             {
-                if (i_filter.Filter(user))
+                if (filter(user))
                 {
                     filteredUsers.Add(user);
                 }
@@ -25,5 +25,8 @@ namespace BasicFacebookFeatures
 
             return filteredUsers;
         }
+
+        protected abstract bool filter(User i_user);
+
     }
 }

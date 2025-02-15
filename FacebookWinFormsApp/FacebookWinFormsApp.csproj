@@ -97,13 +97,13 @@
     <Compile Include="Patterns\Strategy\GenericFetchStrategy.cs" />
     <Compile Include="Patterns\Strategy\IFetchStrategy.cs" />
     <Compile Include="Patterns\Singleton\AppManager.cs" />
-    <Compile Include="Patterns\Composite\CompositeFilter.cs" />
+    <Compile Include="Patterns\Composite\Filters.cs" />
     <Compile Include="Patterns\Composite\IFilterable.cs" />
     <Compile Include="Patterns\Composite\FilterAge.cs" />
     <Compile Include="Patterns\Composite\FilterGender.cs" />
     <Compile Include="Patterns\Composite\FilterLikedPages.cs" />
     <Compile Include="Patterns\Composite\FilterRelationshipStatus.cs" />
-    <Compile Include="Features\FindFriends.cs" />
+    <Compile Include="Features\IFilterBase.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>

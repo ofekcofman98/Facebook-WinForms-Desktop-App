@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures
 {
-    public class FilterRelationshipStatus : IFilterable
+    public class FilterRelationshipStatus : IFilterBase
     {
         private readonly HashSet<User.eRelationshipStatus> r_RelationshipStatusSet ;
         public FilterRelationshipStatus(HashSet<User.eRelationshipStatus> i_RelationshipStatusesSet)
         {
             r_RelationshipStatusSet = i_RelationshipStatusesSet;
         }
-        public bool Filter(User i_User)
+        protected override bool filter(User i_User)
         {
             if (r_RelationshipStatusSet.Count == 0)
             {

@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures
 {
-    public class CompositeFilter : IFilterable
+    public class Filters : IFilterBase
     {
-        private readonly List<IFilterable> r_filters = new List<IFilterable>();
+        private readonly List<IFilterBase> r_filters = new List<IFilterBase>();
 
-        public void AddFilter(IFilterable filter)
+        public void AddFilter(IFilterBase filter)
         {
             r_filters.Add(filter);
         }
-
-        public bool Filter(User i_User)
+        
+        protected override bool filter(User i_User)
         {
             bool result = false;
             foreach (IFilterable filter in r_filters)

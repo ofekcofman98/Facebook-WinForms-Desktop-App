@@ -67,6 +67,7 @@ namespace BasicFacebookFeatures
             m_OnLogout += unLaunchFacebook;
             m_OnLogout += updateLoginButton;
         }
+        
 
         public void AddLoginMethods()
         {
@@ -779,7 +780,7 @@ namespace BasicFacebookFeatures
 
         private void buttonApplySearch_Click(object sender, EventArgs e)
         {
-            CompositeFilter filters = new CompositeFilter();
+            Filters filters = new Filters();
             if (comboBoxFriendList.SelectedItem == null)
             {
                 return;
@@ -795,8 +796,8 @@ namespace BasicFacebookFeatures
             }
             filters.AddFilter(new FilterRelationshipStatus(getUserSelectedRelationshipStatuses()));
             filters.AddFilter(new FilterLikedPages(getUserSelectedLikedPagesId()));
-            List<User> usersFriendList = selectedFriend.Friends.ToList();
-            List<User> filteredFriends = usersFriendList.FindAll(filters.Filter);
+
+            List<User> filteredFriends = filters.FilterUserFriends(selectedFriend);
             updateFilteredFriendsListBox(filteredFriends);
         }
 
