@@ -4,16 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BasicFacebookFeatures.Patterns.Observer;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
-    public sealed class AppManager
+    public sealed class AppManager : IUserDataNotifier
     {
         private readonly string r_AppId = "945333600988492";
         private LoginResult m_LoginResult;
         private User m_LoggedInUser;
+        private readonly List<IUserDataObserver> m_Observers = new List<IUserDataObserver>();
 
         public ActivityCenter ActivityCenter { get; private set; }
         public FindFriends FindFriends { get; private set; }
@@ -91,8 +93,9 @@ namespace BasicFacebookFeatures
                     if (m_LoggedInUser == null)
                     {
                         m_LoggedInUser = m_LoginResult.LoggedInUser;
-                        //GetUserData();
                     }
+
+                    //NotifyObservers();
                 }
                 else
                 {
@@ -159,5 +162,25 @@ namespace BasicFacebookFeatures
             IsLoggedIn = false; 
         }
 
+        public void AttachObserver(IUserDataObserver i_Observer)
+        {
+            if (!m_Observers.Contains(i_Observer))
+            {
+                m_Observers.Add(i_Observer);
+            }
+        }
+
+        public void DetachObserver(IUserDataObserver i_Observer)
+        {
+            m_Observers.Remove(i_Observer);
+        }
+
+        public void NotifyObservers()
+        {
+            foreach (IUserDataObserver observer in m_Observers)
+            {
+                observer.OnUserDataUpdated(m_LoggedInUser);
+            }
+        }
     }
 }

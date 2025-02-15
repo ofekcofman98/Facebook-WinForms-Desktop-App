@@ -88,6 +88,8 @@
     <Compile Include="AlbumControl.Designer.cs">
       <DependentUpon>AlbumControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Patterns\Observer\IUserDataObserver.cs" />
+    <Compile Include="Patterns\Observer\IUserDataNotifier.cs" />
     <Compile Include="Patterns\Singleton\AppManager.cs" />
     <Compile Include="Patterns\Composite\CompositeFilter.cs" />
     <Compile Include="Patterns\Composite\IFilterable.cs" />

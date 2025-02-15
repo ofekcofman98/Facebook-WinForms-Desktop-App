@@ -15,42 +15,32 @@ using static System.Windows.Forms.AxHost;
 using static BasicFacebookFeatures.ActivityCenter;
 using Facebook;
 using BasicFacebookFeatures;
+using BasicFacebookFeatures.Patterns.Observer;
 using CefSharp;
 using Action = System.Action;
 using BasicFacebookFeatures.Strategy;
 
 namespace BasicFacebookFeatures
 {
-
-    //public delegate void LoginDelegate();
-    //public delegate void LogoutDelegate();
-    public partial class FormMain : Form
+    public partial class FormMain : Form, IUserDataObserver
     {
         private Action m_OnLogin;
         private Action m_OnLogout;
 
         private readonly List<Panel> r_HomePanels;
         private readonly List<TabPage> r_AddedTabs;
+
         private User m_LoggedInUser;
 
         public FormMain()
         {
             InitializeComponent();
-            
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
-            r_HomePanels = new List<Panel>
-                           {
-                               panelAlbums,
-                               panelStatusPost,
-                               panelFavoriteTeams,
-                               panelFriends,
-                               panelLikes,
-                               panelGroups
-                           };
+            r_HomePanels = new List<Panel> { panelAlbums, panelStatusPost, panelFavoriteTeams, panelFriends, panelLikes, panelGroups };
             r_AddedTabs = new List<TabPage> { tabMyProfile, tabActivityCenter, tabFindNewFriends };
+            updateTabs(i_IsVisible: false);
 
-            updateTabs(false);
-
+            AppManager.Instance.AttachObserver(this);
             AddLoginMethods();
             AddLogoutMethods();
         }
@@ -58,13 +48,6 @@ namespace BasicFacebookFeatures
         void AddToOnLoginWithThread(Action action)
         {
             m_OnLogin += () => new Thread(() => action()).Start();
-        }
-
-        public void AddLogoutMethods()
-        {
-            m_OnLogout += updateHomePanelsVisible;
-            m_OnLogout += unLaunchFacebook;
-            m_OnLogout += updateLoginButton;
         }
 
         public void AddLoginMethods()
@@ -77,7 +60,7 @@ namespace BasicFacebookFeatures
             AddToOnLoginWithThread(() => fetchActivityCenter());
             AddToOnLoginWithThread(() => fetchFriendsLookupPage());
 
-            AddToOnLoginWithThread(() => FetchUserDataIntoListBox());
+            AddToOnLoginWithThread(() => fetchUserDataIntoListBox());
 
             m_OnLogin += fetchStatusPost; //no need for server request
         }
@@ -100,7 +83,7 @@ namespace BasicFacebookFeatures
                 {
                     m_LoggedInUser = AppManager.Instance.LoggedInUser;
                     AppManager.Instance.GetUserData();
-                    updateTabs(AppManager.Instance.IsLoggedIn);
+                    updateTabs(i_IsVisible: true);
                     m_OnLogin?.Invoke();
                 }
             }
@@ -108,6 +91,14 @@ namespace BasicFacebookFeatures
             {
                 MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        public void AddLogoutMethods()
+        {
+            m_OnLogout += updateHomePanelsVisible;
+            m_OnLogout += unLaunchFacebook;
+            m_OnLogout += updateLoginButton;
+            m_OnLogout += clearUI;
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
@@ -120,7 +111,7 @@ namespace BasicFacebookFeatures
             try
             {
                 AppManager.Instance.Logout();
-                updateTabs(AppManager.Instance.IsLoggedIn);
+                updateTabs(i_IsVisible: false);
                 m_OnLogout?.Invoke();
             }
             catch (Exception e)
@@ -128,6 +119,12 @@ namespace BasicFacebookFeatures
                 MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            AppManager.Instance.DetachObserver(this);
+        }
+
 
         private void updateHomePanelsVisible()
         {
@@ -159,6 +156,46 @@ namespace BasicFacebookFeatures
             }
         }
 
+        public void OnUserDataUpdated(User i_User)
+        {
+            m_LoggedInUser = i_User;
+
+            if (m_LoggedInUser != null)
+            {
+                updateUI();
+            }
+            else
+            {
+                clearUI();
+            }
+        }
+
+        private void updateUI()
+        {
+            fetchProfileInfo();
+            fetchMyProfile();
+            fetchActivityCenter();
+            fetchFriendsLookupPage();
+            fetchUserDataIntoListBox();
+            fetchStatusPost();
+        }
+
+        private void clearUI()
+        {
+            labelUserName.Visible = false;
+            pictureBoxProfile.Visible = false;
+            listBoxUserFriends.DataSource = null;
+            listBoxUserAlbums.DataSource = null;
+            listBoxUserGroups.DataSource = null;
+            listBoxLikes.DataSource = null;
+            listBoxUserFavoriteTeams.DataSource = null;
+            buttonLogin.Enabled = true;
+            buttonLogin.Text = "Login";
+            buttonLogin.BackColor = buttonLogout.BackColor;
+            buttonLogout.Enabled = false;
+        }
+
+
         private void updateLoginButton()
         {
             if (AppManager.Instance.IsLoggedIn)
@@ -184,7 +221,7 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void FetchUserDataIntoListBox()
+        private void fetchUserDataIntoListBox()
         {
             if (AppManager.Instance.IsLoggedIn)
             {
@@ -751,7 +788,5 @@ namespace BasicFacebookFeatures
                 MessageBox.Show(ex.Message);
             }
         }
-      
-
     }
 }
