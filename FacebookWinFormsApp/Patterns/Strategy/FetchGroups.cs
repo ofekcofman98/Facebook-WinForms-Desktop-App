@@ -5,14 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BasicFacebookFeatures.Patterns.Strategy
+namespace BasicFacebookFeatures.Strategy
 {
-    internal class FetchGroups : IFetchStrategy<Group>
+    public class FetchGroups : IFetchStrategy<Group>
     {
-        public List<Group> Fetch(User i_LoggedInUser)
+        public List<Group> Fetch(User i_User)
         {
-            return i_LoggedInUser?.Groups?.ToList() ?? new List<Group>();
+            return i_User.Groups?.ToList() ?? new List<Group>();
         }
-
     }
 }

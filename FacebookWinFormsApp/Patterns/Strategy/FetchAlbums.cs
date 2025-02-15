@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BasicFacebookFeatures.Patterns.Strategy
+namespace BasicFacebookFeatures.Strategy
 {
-    internal class FetchAlbums : IFetchStrategy<Album>
+    public class FetchAlbums : IFetchStrategy<Album>
     {
-        public List<Album> Fetch(User i_LoggedInUser)
+        public List<Album> Fetch(User i_User)
         {
-            return i_LoggedInUser?.Albums?.ToList() ?? new List<Album>();
+            return AppManager.Instance.UserAlbums ?? new List<Album>();
         }
     }
 }

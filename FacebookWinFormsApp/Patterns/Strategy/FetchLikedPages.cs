@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures.Strategy
 {
-    public class FetchFriends : IFetchStrategy<User>
+    public class FetchLikedPages : IFetchStrategy<Page>
     {
-        public List<User> Fetch(User i_User)
+        public List<Page> Fetch(User i_User)
         {
-            return i_User.Friends?.ToList() ?? new List<User>();
+            return i_User.LikedPages?.ToList() ?? new List<Page>();
         }
     }
-
 }

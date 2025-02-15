@@ -5,20 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BasicFacebookFeatures.Patterns.Strategy
+namespace BasicFacebookFeatures.Strategy
 {
-    internal class Fetcher<T>
+    public class Fetcher<T>
     {
-        public IFetchStrategy<T> FetchStrategy { get; set; }
-        public Fetcher(IFetchStrategy<T> i_FetchStrategy)
+        private IFetchStrategy<T> m_Strategy;
+
+        public Fetcher(IFetchStrategy<T> i_Strategy)
         {
-            FetchStrategy = i_FetchStrategy;
+            m_Strategy = i_Strategy;
         }
 
-        public List<T> ExecuteFetch(User i_LoggedInUser)
+        public List<T> FetchData(User i_User)
         {
-            return FetchStrategy.Fetch(i_LoggedInUser);
+            return m_Strategy.Fetch(i_User);
         }
 
+        public void SetStrategy(IFetchStrategy<T> i_Strategy)
+        {
+            m_Strategy = i_Strategy;
+        }
     }
 }
