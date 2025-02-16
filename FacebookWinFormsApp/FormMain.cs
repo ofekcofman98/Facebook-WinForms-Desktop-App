@@ -47,7 +47,7 @@ namespace BasicFacebookFeatures
 
         void AddToOnLoginWithThread(Action action)
         {
-            m_OnLogin += () => new Thread(() => action()).Start();
+            m_OnLogin += () => this.Invoke(new Action(() => action()));
         }
 
         public void AddLoginMethods()
@@ -353,7 +353,9 @@ namespace BasicFacebookFeatures
 
         private void bindDataSourceToListbox<T>(IEnumerable<T> i_Items, BindingSource i_BindingSource, ListBox i_ListBox)
         {
-            if(!i_ListBox.InvokeRequired)
+            Console.WriteLine($"[DEBUG] Binding {i_ListBox.Name} to {typeof(T).Name} data.");
+
+            if (!i_ListBox.InvokeRequired)
             {
                 i_BindingSource.DataSource = i_Items;
             }
@@ -716,7 +718,7 @@ namespace BasicFacebookFeatures
 
         private void buttonApplySearch_Click(object sender, EventArgs e)
         {
-            Filters filters = new Filters();
+            CompositeFilter filters = new CompositeFilter();
             if (comboBoxFriendList.SelectedItem == null)
             {
                 return;
@@ -732,8 +734,8 @@ namespace BasicFacebookFeatures
             }
             filters.AddFilter(new FilterRelationshipStatus(getUserSelectedRelationshipStatuses()));
             filters.AddFilter(new FilterLikedPages(getUserSelectedLikedPagesId()));
-
-            List<User> filteredFriends = filters.FilterUserFriends(selectedFriend);
+            List<User> usersFriendList = selectedFriend.Friends.ToList();
+            List<User> filteredFriends = usersFriendList.FindAll(filters.Filter);
             updateFilteredFriendsListBox(filteredFriends);
         }
 
