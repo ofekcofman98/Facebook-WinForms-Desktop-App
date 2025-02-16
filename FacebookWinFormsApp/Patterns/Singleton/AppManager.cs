@@ -93,7 +93,6 @@ namespace BasicFacebookFeatures
                         m_LoggedInUser = m_LoginResult.LoggedInUser;
                     }
 
-                    //NotifyObservers();
                 }
                 else
                 {
@@ -125,6 +124,8 @@ namespace BasicFacebookFeatures
             }
 
             ActivityCenter.InitializeUserData(activityItems);
+            NotifyObservers();
+
         }
 
         public List<Photo> GetPhotos()

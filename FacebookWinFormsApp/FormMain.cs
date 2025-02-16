@@ -39,31 +39,21 @@ namespace BasicFacebookFeatures
             r_HomePanels = new List<Panel> { panelAlbums, panelStatusPost, panelFavoriteTeams, panelFriends, panelLikes, panelGroups };
             r_AddedTabs = new List<TabPage> { tabMyProfile, tabActivityCenter, tabFindNewFriends };
             updateTabs(i_IsVisible: false);
-
-            AppManager.Instance.AttachObserver(this);
+            this.Load += FormMain_Load;
             AddLoginMethods();
             AddLogoutMethods();
+        }
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            AppManager.Instance.AttachObserver(this);
         }
 
         void AddToOnLoginWithThread(Action action)
         {
-            m_OnLogin += () => new Thread(() => action()).Start();
+            m_OnLogin += () => this.Invoke(new Action(() => action()));
         }
 
-        public void AddLoginMethods()
-        {
 
-            AddToOnLoginWithThread(() => updateLoginButton());
-            AddToOnLoginWithThread(() => updateHomePanelsVisible());
-            AddToOnLoginWithThread(() => fetchProfileInfo());
-            AddToOnLoginWithThread(() => fetchMyProfile());
-            AddToOnLoginWithThread(() => fetchActivityCenter());
-            AddToOnLoginWithThread(() => fetchFriendsLookupPage());
-
-            AddToOnLoginWithThread(() => fetchUserDataIntoListBox());
-
-            m_OnLogin += fetchStatusPost; //no need for server request
-        }
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
@@ -82,9 +72,9 @@ namespace BasicFacebookFeatures
                 if(AppManager.Instance.IsLoggedIn)
                 {
                     m_LoggedInUser = AppManager.Instance.LoggedInUser;
-                    AppManager.Instance.GetUserData();
                     updateTabs(i_IsVisible: true);
-                    m_OnLogin?.Invoke();
+                    AppManager.Instance.GetUserData();
+                    
                 }
             }
             catch(Exception e)
@@ -158,6 +148,7 @@ namespace BasicFacebookFeatures
 
         public void OnUserDataUpdated(User i_User)
         {
+
             m_LoggedInUser = i_User;
 
             if (m_LoggedInUser != null)
@@ -169,9 +160,25 @@ namespace BasicFacebookFeatures
                 clearUI();
             }
         }
+        public void AddLoginMethods()
+        {
+
+            AddToOnLoginWithThread(() => updateLoginButton());
+            AddToOnLoginWithThread(() => updateHomePanelsVisible());
+            AddToOnLoginWithThread(() => fetchProfileInfo());
+            AddToOnLoginWithThread(() => fetchMyProfile());
+            AddToOnLoginWithThread(() => fetchActivityCenter());
+            AddToOnLoginWithThread(() => fetchFriendsLookupPage());
+
+            AddToOnLoginWithThread(() => fetchUserDataIntoListBox());
+
+            m_OnLogin += fetchStatusPost; //no need for server request
+        }
 
         private void updateUI()
         {
+            updateLoginButton();
+            updateHomePanelsVisible();
             fetchProfileInfo();
             fetchMyProfile();
             fetchActivityCenter();
@@ -668,7 +675,7 @@ namespace BasicFacebookFeatures
         private void updateFilteredFriendsListBox(List<User> i_FilteredFriends)
         {
             listBoxFilteredUsers.Items.Clear();
-            listBoxUserFavoriteTeams.DisplayMember = "Name";
+            listBoxFilteredUsers.DisplayMember = "Name";
             foreach(User user in i_FilteredFriends)
             {
                 listBoxFilteredUsers.Items.Add(user);
@@ -678,7 +685,7 @@ namespace BasicFacebookFeatures
             {
                 listBoxFilteredUsers.Items.Add("No Users to retrieve");
             }
-            listBoxUserFavoriteTeams.SelectedIndex = 0;
+            listBoxFilteredUsers.SelectedIndex = 0;
         }
 
 
