@@ -15,7 +15,7 @@ namespace BasicFacebookFeatures
         private readonly string r_AppId = "945333600988492";
         private LoginResult m_LoginResult;
         private User m_LoggedInUser;
-        private readonly List<IUserDataObserver> m_Observers = new List<IUserDataObserver>();
+        private readonly List<IUserDataObserver> r_Observers = new List<IUserDataObserver>();
 
         public ActivityCenter ActivityCenter { get; private set; }
 
@@ -163,20 +163,20 @@ namespace BasicFacebookFeatures
 
         public void AttachObserver(IUserDataObserver i_Observer)
         {
-            if (!m_Observers.Contains(i_Observer))
+            if (!r_Observers.Contains(i_Observer))
             {
-                m_Observers.Add(i_Observer);
+                r_Observers.Add(i_Observer);
             }
         }
 
         public void DetachObserver(IUserDataObserver i_Observer)
         {
-            m_Observers.Remove(i_Observer);
+            r_Observers.Remove(i_Observer);
         }
 
         public void NotifyObservers()
         {
-            foreach (IUserDataObserver observer in m_Observers)
+            foreach (IUserDataObserver observer in r_Observers)
             {
                 observer.OnUserDataUpdated(m_LoggedInUser);
             }

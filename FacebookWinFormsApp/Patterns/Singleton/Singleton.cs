@@ -28,19 +28,6 @@ namespace BasicFacebookFeatures
                         if (s_Instance == null)
                         {
                             Type typeOfT = typeof(T);
-
-                            //foreach (MethodInfo method in typeOfT.GetMethods())
-                            //{
-                            //    if (method.IsConstructor
-                            //        && 
-                            //        method.IsPrivate
-                            //        &&
-                            //        method.GetParameters().Length == 0)
-                            //    {
-                            //        s_Instance = (T)method.Invoke(null, null);
-                            //        break;
-                            //    }
-                            //}
                             ConstructorInfo constructor = typeof(T).GetConstructor(
                                 BindingFlags.Instance | BindingFlags.NonPublic,
                                 null,

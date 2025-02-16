@@ -50,10 +50,8 @@ namespace BasicFacebookFeatures
 
         void AddToOnLoginWithThread(Action action)
         {
-            // m_OnLogin += () => this.Invoke(new Action(() => action()));
             m_OnLogin += () => new Thread(() => action()).Start();
         }
-
 
 
         private void buttonLogin_Click(object sender, EventArgs e)
@@ -170,7 +168,6 @@ namespace BasicFacebookFeatures
             AddToOnLoginWithThread(() => fetchMyProfile());
             AddToOnLoginWithThread(() => fetchActivityCenter());
             AddToOnLoginWithThread(() => fetchFriendsLookupPage());
-
             AddToOnLoginWithThread(() => fetchUserDataIntoListBox());
 
             m_OnLogin += fetchStatusPost; //no need for server request

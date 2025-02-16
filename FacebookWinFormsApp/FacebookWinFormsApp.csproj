@@ -90,7 +90,7 @@
     </Compile>
     <Compile Include="Patterns\Observer\IUserDataObserver.cs" />
     <Compile Include="Patterns\Observer\IUserDataNotifier.cs" />
-    <Compile Include="Patterns\Singleton\AppManager.cs" />
+    <Compile Include="AppManager.cs" />
     <Compile Include="Patterns\Composite\Filters.cs" />
     <Compile Include="Patterns\Composite\IFilterable.cs" />
     <Compile Include="Patterns\Composite\FilterAge.cs" />
