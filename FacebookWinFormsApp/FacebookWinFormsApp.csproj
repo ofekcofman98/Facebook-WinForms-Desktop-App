@@ -91,13 +91,12 @@
     <Compile Include="Patterns\Observer\IUserDataObserver.cs" />
     <Compile Include="Patterns\Observer\IUserDataNotifier.cs" />
     <Compile Include="AppManager.cs" />
-    <Compile Include="Patterns\Composite\Filters.cs" />
-    <Compile Include="Patterns\Composite\IFilterable.cs" />
-    <Compile Include="Patterns\Composite\FilterAge.cs" />
-    <Compile Include="Patterns\Composite\FilterGender.cs" />
-    <Compile Include="Patterns\Composite\FilterLikedPages.cs" />
-    <Compile Include="Patterns\Composite\FilterRelationshipStatus.cs" />
-    <Compile Include="Features\IFilterBase.cs" />
+    <Compile Include="Patterns\Template method\Filters.cs" />
+    <Compile Include="Patterns\Template method\FilterAge.cs" />
+    <Compile Include="Patterns\Template method\FilterGender.cs" />
+    <Compile Include="Patterns\Template method\FilterLikedPages.cs" />
+    <Compile Include="Patterns\Template method\FilterRelationshipStatus.cs" />
+    <Compile Include="Patterns\Template method\IFilterBase.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
