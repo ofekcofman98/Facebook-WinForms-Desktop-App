@@ -14,7 +14,7 @@ namespace BasicFacebookFeatures
         {
             r_RelationshipStatusSet = i_RelationshipStatusesSet;
         }
-        protected override bool filter(User i_User)
+        internal protected override bool filter(User i_User)
         {
             if (r_RelationshipStatusSet.Count == 0)
             {

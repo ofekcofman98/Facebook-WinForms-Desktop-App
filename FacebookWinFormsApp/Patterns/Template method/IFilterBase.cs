@@ -26,7 +26,7 @@ namespace BasicFacebookFeatures
             return filteredUsers;
         }
 
-        protected abstract bool filter(User i_user);
+        internal protected abstract bool filter(User i_user);
 
     }
 }

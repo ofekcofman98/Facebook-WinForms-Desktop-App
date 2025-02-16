@@ -16,7 +16,7 @@ namespace BasicFacebookFeatures
             m_LikedPagesId = i_LikedPagesId;
         }
 
-        protected override bool filter(User i_User)
+        internal protected override bool filter(User i_User)
         {
             bool filter = false;
             if (m_LikedPagesId.Count == 0)

@@ -17,7 +17,7 @@ namespace BasicFacebookFeatures
             m_MaxAge = i_MaxAge;
         }
 
-        protected override bool filter(User i_User)
+        internal protected override bool filter(User i_User)
         {
             int age = UserUtils.GetUserAge(i_User);
 

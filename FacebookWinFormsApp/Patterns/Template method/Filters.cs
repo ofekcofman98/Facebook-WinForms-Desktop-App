@@ -16,12 +16,12 @@ namespace BasicFacebookFeatures
             r_filters.Add(filter);
         }
         
-        protected override bool filter(User i_User)
+        internal protected override bool filter(User i_User)
         {
             bool result = false;
-            foreach (IFilterable filter in r_filters)
+            foreach (IFilterBase filter in r_filters)
             {
-                result = filter.Filter(i_User);
+                result = filter.filter(i_User);
                 if (!result)
                 {
                     break;

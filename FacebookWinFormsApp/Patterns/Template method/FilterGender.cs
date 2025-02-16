@@ -14,7 +14,7 @@ namespace BasicFacebookFeatures
         {
             m_PreferanceGender = i_Gender;
         }
-        protected override bool filter(User i_User)
+        internal protected override bool filter(User i_User)
         {
             return i_User.Gender == m_PreferanceGender;
         }
