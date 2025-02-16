@@ -50,7 +50,8 @@ namespace BasicFacebookFeatures
 
         void AddToOnLoginWithThread(Action action)
         {
-            m_OnLogin += () => this.Invoke(new Action(() => action()));
+            // m_OnLogin += () => this.Invoke(new Action(() => action()));
+            m_OnLogin += () => new Thread(() => action()).Start();
         }
 
 
