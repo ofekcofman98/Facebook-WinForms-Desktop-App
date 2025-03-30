@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BasicFacebookFeatures
+namespace BasicFacebookFeatures.Patterns.Observer
 {
-    public interface IFilterable
+    public interface IUserDataObserver
     {
-        bool Filter(User i_User);
+        void OnUserDataUpdated(User i_User);
     }
 }

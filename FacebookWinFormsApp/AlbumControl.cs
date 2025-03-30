@@ -11,15 +11,17 @@ using System.Windows.Forms;
 
 namespace BasicFacebookFeatures
 {
-    public partial class Album : UserControl
+    public partial class AlbumControl : UserControl
     {
         private List<Photo> m_Photos = new List<Photo>();
         private int m_CurrentIndex = 0;
 
-        public Album()
+
+        public AlbumControl()
         {
             InitializeComponent();
             updateButtons();
+
         }
 
         public void SetPhotos(List<Photo> i_Photos)
@@ -27,7 +29,7 @@ namespace BasicFacebookFeatures
             m_Photos = i_Photos;
             m_CurrentIndex = 0;
 
-            if(m_Photos.Count > 0)
+            if (m_Photos.Count > 0)
             {
                 displayPhoto(m_Photos[m_CurrentIndex]);
             }
@@ -53,7 +55,7 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                if(!string.IsNullOrEmpty(i_Photo.PictureNormalURL))
+                if (!string.IsNullOrEmpty(i_Photo.PictureNormalURL))
                 {
                     pictureBoxInAlbum.Load(i_Photo.PictureNormalURL);
                 }
@@ -68,25 +70,25 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void buttonNextPhotoInAlbum_Click(object sender, EventArgs e)
+        private void buttonNextPhotoInAlbum_Click_1(object sender, EventArgs e)
         {
-            if(m_CurrentIndex < m_Photos.Count - 1)
+            if (m_CurrentIndex < m_Photos.Count - 1)
             {
                 m_CurrentIndex++;
                 displayPhoto(m_Photos[m_CurrentIndex]);
                 updateButtons();
             }
-
         }
 
-        private void buttonPreviousPhotoInAlbum_Click(object sender, EventArgs e)
+        private void buttonPreviousPhotoInAlbum_Click_1(object sender, EventArgs e)
         {
-            if(m_CurrentIndex > 0)
+            if (m_CurrentIndex > 0)
             {
                 m_CurrentIndex--;
                 displayPhoto(m_Photos[m_CurrentIndex]);
                 updateButtons();
             }
+
         }
     }
 }

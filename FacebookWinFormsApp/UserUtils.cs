@@ -9,7 +9,7 @@ namespace BasicFacebookFeatures
 {
     public static class UserUtils
     {
-        private static readonly String sr_facebookDateFormat = "MM/dd/yyyy";
+        private static readonly String sr_FacebookDateFormat = "MM/dd/yyyy";
         public static readonly string[] sr_Months =
             {
                 "January", "February", "March", "April", "May", "June",
@@ -20,7 +20,7 @@ namespace BasicFacebookFeatures
         {
             String birthDateString = i_User.Birthday;
 
-            if (DateTime.TryParseExact(birthDateString, sr_facebookDateFormat, null, System.Globalization.DateTimeStyles.None, out DateTime birthDate))
+            if (DateTime.TryParseExact(birthDateString, sr_FacebookDateFormat, null, System.Globalization.DateTimeStyles.None, out DateTime birthDate))
             {
                 DateTime today = DateTime.Today;
                 int age = today.Year - birthDate.Year;

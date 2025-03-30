@@ -54,6 +54,10 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Facebook">
       <HintPath>..\FBApi\Facebook.dll</HintPath>
@@ -78,29 +82,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlbumControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AlbumControl.Designer.cs">
+      <DependentUpon>AlbumControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Patterns\Observer\IUserDataObserver.cs" />
+    <Compile Include="Patterns\Observer\IUserDataNotifier.cs" />
     <Compile Include="AppManager.cs" />
-    <Compile Include="Filters\IFilterable.cs" />
-    <Compile Include="Filters\FilterAge.cs" />
-    <Compile Include="Filters\FilterGender.cs" />
-    <Compile Include="Filters\FilterLikedPages.cs" />
-    <Compile Include="Filters\FilterRelationshipStatus.cs" />
-    <Compile Include="Features\FindFriends.cs" />
+    <Compile Include="Patterns\Template method\Filters.cs" />
+    <Compile Include="Patterns\Template method\FilterAge.cs" />
+    <Compile Include="Patterns\Template method\FilterGender.cs" />
+    <Compile Include="Patterns\Template method\FilterLikedPages.cs" />
+    <Compile Include="Patterns\Template method\FilterRelationshipStatus.cs" />
+    <Compile Include="Patterns\Template method\IFilterBase.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Patterns\Adapters\IActivityItem.cs" />
+    <Compile Include="Patterns\Adapters\PhotoAdapter.cs" />
+    <Compile Include="Patterns\Adapters\PostAdapter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Features\ActivityCenter.cs" />
-    <Compile Include="Album.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Album.Designer.cs">
-      <DependentUpon>Album.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Patterns\Singleton\Singleton.cs" />
+    <Compile Include="Patterns\Strategy\FetchAlbums.cs" />
+    <Compile Include="Patterns\Strategy\Fetcher.cs" />
+    <Compile Include="Patterns\Strategy\FetchFavoriteTeams.cs" />
+    <Compile Include="Patterns\Strategy\FetchFriends.cs" />
+    <Compile Include="Patterns\Strategy\FetchGroups.cs" />
+    <Compile Include="Patterns\Strategy\FetchLikedPages.cs" />
+    <Compile Include="Patterns\Strategy\IFetchStrategy.cs" />
     <Compile Include="UserUtils.cs" />
+    <EmbeddedResource Include="AlbumControl.resx">
+      <DependentUpon>AlbumControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -114,9 +134,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Album.resx">
-      <DependentUpon>Album.cs</DependentUpon>
-    </EmbeddedResource>
+    <None Include="Properties\DataSources\FacebookWrapper.ObjectModel.Album.datasource" />
+    <None Include="Properties\DataSources\FacebookWrapper.ObjectModel.FriendList.datasource" />
+    <None Include="Properties\DataSources\FacebookWrapper.ObjectModel.Group.datasource" />
+    <None Include="Properties\DataSources\FacebookWrapper.ObjectModel.Page.datasource" />
+    <None Include="Properties\DataSources\FacebookWrapper.ObjectModel.User.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

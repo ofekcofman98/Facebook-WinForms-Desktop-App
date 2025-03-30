@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures
 {
-    public class FilterAge : IFilterable
+    public class FilterAge : IFilterBase
     {
         private int m_MinAge;
         private int m_MaxAge;
@@ -17,7 +17,7 @@ namespace BasicFacebookFeatures
             m_MaxAge = i_MaxAge;
         }
 
-        public bool Filter(User i_User)
+        internal protected override bool filter(User i_User)
         {
             int age = UserUtils.GetUserAge(i_User);
 

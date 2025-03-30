@@ -7,35 +7,77 @@ using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
-
-    internal class ActivityCenter
+    public enum eSortingType
     {
+        TimeAscending,
+        TimeDescending,
+        CountAscending,
+        CountDescending, // also default
+    }
 
-        private readonly List<Post> r_UserPosts;
-        private readonly List<Photo> r_UserPhotos;
+    public class ActivityCenter
+    {
+        private List<IActivityItem> m_ActivityItems;
 
         private readonly Dictionary<int, int> r_YearCounts = new Dictionary<int, int>();
         private readonly Dictionary<int, int> r_MonthCounts = new Dictionary<int, int>();
         private readonly Dictionary<int, int> r_HourCounts = new Dictionary<int, int>();
 
-        public List<Post> FilteredPosts { get; private set; }
-        public List<Photo> FilteredPhotos { get; private set; }
+        private const int k_StartYear = 2010;
+        private const int k_StartMonth = 1;
+        private const int k_EndMonth = 12;
+        private const int k_StartHour = 0;
+        private const int k_EndHour = 23;
 
+        public List<IActivityItem> FilteredActivityItems { get; private set; }
 
-        public ActivityCenter(AppManager i_AppManager)
+        public readonly Dictionary<eSortingType, string> r_SortingDictionary = new Dictionary<eSortingType, string>()
+                                                                                   {
+                                                                                       { eSortingType.TimeAscending, "Sort by Time Ascending" },
+                                                                                       { eSortingType.TimeDescending, "Sort by Time Descending" },
+                                                                                       { eSortingType.CountAscending, "Sort by Count Ascending" },
+                                                                                       { eSortingType.CountDescending, "Sort by Count Descending" }
+                                                                                   };
+
+        public ActivityCenter()
         {
-            r_UserPhotos = i_AppManager.UserPhotos;
-            r_UserPosts = i_AppManager.UserPosts;
+            initializeCounts(r_YearCounts, k_StartYear, DateTime.Now.Year);
+            initializeCounts(r_MonthCounts, k_StartMonth, k_EndMonth);
+            initializeCounts(r_HourCounts, k_StartHour, k_EndHour);
 
-            initializeCounts(r_YearCounts, 2010, DateTime.Now.Year);
-            initializeCounts(r_MonthCounts, 1, 12);
-            initializeCounts(r_HourCounts, 0, 23);
+            FilteredActivityItems = new List<IActivityItem>();
+        }
 
-            FilteredPosts = new List<Post>();
-            FilteredPhotos = new List<Photo>();
+        public void InitializeUserData(List<IActivityItem> i_ActivityItems)
+        {
+            m_ActivityItems = i_ActivityItems;
+            processActivityItems();
+        }
 
-            processPosts();
-            processPhotos();
+        private void processActivityItems()
+        {
+            foreach(IActivityItem item in m_ActivityItems)
+            {
+                item.ProcessTimeData(processTimeData);
+            }
+        }
+
+        private void processTimeData(DateTime i_CreatedTime)
+        {
+            if(r_YearCounts.ContainsKey(i_CreatedTime.Year))
+            {
+                r_YearCounts[i_CreatedTime.Year]++;
+            }
+
+            if (r_MonthCounts.ContainsKey(i_CreatedTime.Month))
+            {
+                r_MonthCounts[i_CreatedTime.Month]++;
+            }
+            
+            if (r_HourCounts.ContainsKey(i_CreatedTime.Hour))
+            {
+                r_HourCounts[i_CreatedTime.Hour]++;
+            }
         }
 
         private void initializeCounts(Dictionary<int, int> i_CountDict, int i_From, int i_To)
@@ -45,79 +87,20 @@ namespace BasicFacebookFeatures
                 i_CountDict[i] = 0;
             }
         }
-
-        private void processPosts()
-        {
-            foreach(Post post in r_UserPosts)
-            {
-                if(post.CreatedTime.HasValue)
-                {
-                    processTimeData(post.CreatedTime.Value);
-                }
-            }
-        }
-
-        private void processPhotos()
-        {
-            foreach(Photo photo in r_UserPhotos)
-            {
-                if(photo.CreatedTime.HasValue)
-                {
-                    processTimeData(photo.CreatedTime.Value);
-                }
-            }
-        }
-
-        private void processTimeData(DateTime? i_CreatedTime)
-        {
-            if(i_CreatedTime.HasValue)
-            {
-                DateTime createdTime = i_CreatedTime.Value;
-
-                if(r_YearCounts.ContainsKey(createdTime.Year))
-                {
-                    r_YearCounts[createdTime.Year]++;
-                }
-
-                if(r_MonthCounts.ContainsKey(createdTime.Month))
-                {
-                    r_MonthCounts[createdTime.Month]++;
-                }
-
-                if(r_HourCounts.ContainsKey(createdTime.Hour))
-                {
-                    r_HourCounts[createdTime.Hour]++;
-                }
-            }
-        }
-        public List<KeyValuePair<int, int>> GetYearCounts(string i_SortBy = "CountDescending")
+        public List<KeyValuePair<int, int>> GetYearCounts(eSortingType i_SortBy)
         {
             return sortCountsList(r_YearCounts, i_SortBy);
         }
 
-        public List<KeyValuePair<int, int>> GetMonthCounts(int i_Year, string i_SortBy = "CountDescending")
+        public List<KeyValuePair<int, int>> GetMonthCounts(int i_Year, eSortingType i_SortBy)
         {
             Dictionary<int, int> monthCounts = new Dictionary<int, int>();
-            foreach(Post post in r_UserPosts)
+
+            foreach(IActivityItem item in m_ActivityItems)
             {
-                if(post.CreatedTime.HasValue && post.CreatedTime.Value.Year == i_Year)
+                if(item.CreatedTime.HasValue && item.CreatedTime.Value.Year == i_Year)
                 {
-                    int month = post.CreatedTime.Value.Month;
-
-                    if(!monthCounts.ContainsKey(month))
-                    {
-                        monthCounts[month] = 0;
-                    }
-
-                    monthCounts[month]++;
-                }
-            }
-
-            foreach(Photo photo in r_UserPhotos)
-            {
-                if(photo.CreatedTime.HasValue && photo.CreatedTime.Value.Year == i_Year)
-                {
-                    int month = photo.CreatedTime.Value.Month;
+                    int month = item.CreatedTime.Value.Month;
 
                     if(!monthCounts.ContainsKey(month))
                     {
@@ -132,29 +115,15 @@ namespace BasicFacebookFeatures
         }
 
 
-        public List<KeyValuePair<int, int>> GetHourCounts(string i_SortBy = "CountDescending")
+        public List<KeyValuePair<int, int>> GetHourCounts(eSortingType i_SortBy)
         {
             Dictionary<int, int> hourCounts = new Dictionary<int, int>();
 
-            foreach(Post post in r_UserPosts)
+            foreach (IActivityItem item in m_ActivityItems)
             {
-                if(post.CreatedTime.HasValue)
+                if (item.CreatedTime.HasValue)
                 {
-                    int hour = post.CreatedTime.Value.Hour;
-                    if(!hourCounts.ContainsKey(hour))
-                    {
-                        hourCounts[hour] = 0;
-                    }
-
-                    hourCounts[hour]++;
-                }
-            }
-
-            foreach (Photo photo in r_UserPhotos)
-            {
-                if (photo.CreatedTime.HasValue)
-                {
-                    int hour = photo.CreatedTime.Value.Hour;
+                    int hour = item.CreatedTime.Value.Hour;
                     if (!hourCounts.ContainsKey(hour))
                     {
                         hourCounts[hour] = 0;
@@ -167,22 +136,22 @@ namespace BasicFacebookFeatures
             return sortCountsList(hourCounts, i_SortBy);
         }
 
-        private List<KeyValuePair<int, int>> sortCountsList(Dictionary<int, int> i_CountsList, string i_SortBy)
+        private List<KeyValuePair<int, int>> sortCountsList(Dictionary<int, int> i_CountsList, eSortingType i_SortBy)
         {
             List<KeyValuePair<int, int>> sortedCounts = i_CountsList.ToList();
 
             switch (i_SortBy)
             {
-                case "CountAscending":
+                case eSortingType.CountAscending:
                     sortedCounts = sortedCounts.OrderBy(pair => pair.Value).ToList();
                     break;
-                case "CountDescending":
+                case eSortingType.CountDescending:
                     sortedCounts = sortedCounts.OrderByDescending(pair => pair.Value).ToList();
                     break;
-                case "TimeAscending":
+                case eSortingType.TimeAscending:
                     sortedCounts = sortedCounts.OrderBy(pair => pair.Key).ToList();
                     break;
-                case "TimeDescending":
+                case eSortingType.TimeDescending:
                     sortedCounts = sortedCounts.OrderByDescending(pair => pair.Key).ToList();
                     break;
             }
@@ -190,53 +159,36 @@ namespace BasicFacebookFeatures
             return sortedCounts;
         }
 
-
-        public List<Post> GetPostsByTime(int? i_Year = null, int? i_Month = null, int? i_Hour = null)
+        public List<IActivityItem> GetItemsByTime(int? i_Year = null, int? i_Month = null, int? i_Hour = null)
         {
-            List<Post> filteredPosts = new List<Post>();
+            List<IActivityItem> filteredItems = new List<IActivityItem>();
 
-            foreach(Post post in r_UserPosts)
+            foreach(IActivityItem item in m_ActivityItems)
             {
-                if(post.CreatedTime.HasValue)
+                if(item.MatchesDateFilter(i_Year, i_Month, i_Hour))
                 {
-                    DateTime createdTime = post.CreatedTime.Value;
-
-                    if((!i_Year.HasValue || createdTime.Year == i_Year)
-                       && (!i_Month.HasValue || createdTime.Month == i_Month)
-                       && (!i_Hour.HasValue || createdTime.Hour == i_Hour))
-                    {
-                        filteredPosts.Add(post);
-                    }
-
+                    filteredItems.Add(item);
                 }
             }
 
-            return filteredPosts;
+            return filteredItems;
         }
 
-        public List<Photo> GetPhotosByTime(int? i_Year = null, int? i_Month = null, int? i_Hour = null)
+        public void ResetCounts()
         {
-            List<Photo> filteredPhotos = new List<Photo>();
-
-            foreach(Photo photo in r_UserPhotos)
-            {
-                if(photo.CreatedTime.HasValue)
-                {
-                    DateTime createdTime = photo.CreatedTime.Value;
-
-                    if((!i_Year.HasValue || createdTime.Year == i_Year)
-                       && (!i_Month.HasValue || createdTime.Month == i_Month)
-                       && (!i_Hour.HasValue || createdTime.Hour == i_Hour))
-                    {
-                        filteredPhotos.Add(photo);
-                    }
-
-                }
-            }
-
-            return filteredPhotos;
+            resetCountDictionary(r_YearCounts);
+            resetCountDictionary(r_HourCounts);
+            resetCountDictionary(r_MonthCounts);
         }
 
+        private void resetCountDictionary(Dictionary<int, int> i_CountDict)
+        {
+            List<int> keys = i_CountDict.Keys.ToList();
+            foreach (int key in keys)
+            {
+                i_CountDict[key] = 0;
+            }
+        }
 
     }
 

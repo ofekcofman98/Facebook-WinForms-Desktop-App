@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures
 {
-    public class FilterLikedPages : IFilterable
+    public class FilterLikedPages : IFilterBase
     {
         private HashSet<String> m_LikedPagesId;
         public FilterLikedPages(HashSet<String> i_LikedPagesId)
@@ -16,7 +16,7 @@ namespace BasicFacebookFeatures
             m_LikedPagesId = i_LikedPagesId;
         }
 
-        public bool Filter(User i_User)
+        internal protected override bool filter(User i_User)
         {
             bool filter = false;
             if (m_LikedPagesId.Count == 0)

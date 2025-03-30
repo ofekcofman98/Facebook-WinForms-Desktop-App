@@ -7,14 +7,14 @@ using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
-    public class FilterGender : IFilterable
+    public class FilterGender : IFilterBase
     {
-        User.eGender m_PreferanceGender;
+        private User.eGender m_PreferanceGender;
         public FilterGender(User.eGender i_Gender)
         {
             m_PreferanceGender = i_Gender;
         }
-        public bool Filter(User i_User)
+        internal protected override bool filter(User i_User)
         {
             return i_User.Gender == m_PreferanceGender;
         }

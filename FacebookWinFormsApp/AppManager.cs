@@ -4,16 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BasicFacebookFeatures.Patterns.Observer;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
-    internal class AppManager
+    public sealed class AppManager : IUserDataNotifier
     {
         private readonly string r_AppId = "945333600988492";
-        private FacebookWrapper.LoginResult m_LoginResult;
-        private FacebookWrapper.ObjectModel.User m_LoggedInUser;
+        private LoginResult m_LoginResult;
+        private User m_LoggedInUser;
+        private readonly List<IUserDataObserver> r_Observers = new List<IUserDataObserver>();
+
+        public ActivityCenter ActivityCenter { get; private set; }
+
 
         public bool IsLoggedIn { get; private set; } = false;
         private readonly string[] r_Permissions = new string[]
@@ -36,16 +41,32 @@ namespace BasicFacebookFeatures
 
         public List<Post> UserPosts { get; set; }
         public List<Photo> UserPhotos { get; set; }
+        public List<Album> UserAlbums { get; private set; }
+        
+
+        private AppManager()
+        {
+            ActivityCenter = new ActivityCenter();
+        }
+
+        public static AppManager Instance
+        {
+            get
+            {
+                return Singleton<AppManager>.Instance;
+            }
+        }
 
 
-        public FacebookWrapper.LoginResult LoginResult
+        public LoginResult LoginResult
         {
             get
             {  
                 return m_LoginResult;
             }
         }
-        public FacebookWrapper.ObjectModel.User LoggedInUser
+
+        public User LoggedInUser
         {
             get
             {
@@ -67,8 +88,11 @@ namespace BasicFacebookFeatures
                 if(string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
                 {
                     IsLoggedIn = true;
-                    m_LoggedInUser = m_LoginResult.LoggedInUser;
-                    getUserData();
+                    if (m_LoggedInUser == null)
+                    {
+                        m_LoggedInUser = m_LoginResult.LoggedInUser;
+                    }
+
                 }
                 else
                 {
@@ -82,10 +106,26 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void getUserData()
+        public void GetUserData()
         {
             UserPosts = m_LoggedInUser.Posts.ToList();
             UserPhotos = GetPhotos();
+
+            List<IActivityItem> activityItems = new List<IActivityItem>();
+
+            foreach (Photo photo in UserPhotos)
+            {
+                activityItems.Add(new PhotoAdapter(photo));
+            }
+
+            foreach(Post post in UserPosts)
+            {
+                activityItems.Add(new PostAdapter(post));
+            }
+
+            ActivityCenter.InitializeUserData(activityItems);
+            NotifyObservers();
+
         }
 
         public List<Photo> GetPhotos()
@@ -93,7 +133,9 @@ namespace BasicFacebookFeatures
             List<Photo> photos = new List<Photo>();
             if(m_LoggedInUser.Albums != null)
             {
-                foreach(FacebookWrapper.ObjectModel.Album album in m_LoggedInUser.Albums)
+                UserAlbums = m_LoggedInUser.Albums?.ToList() ?? new List<Album>();
+
+                foreach (Album album in m_LoggedInUser.Albums)
                 {
                     if(album.Photos != null)
                     {
@@ -115,10 +157,29 @@ namespace BasicFacebookFeatures
             m_LoggedInUser = null;
             UserPhotos = null;
             UserPosts = null;
+            ActivityCenter.ResetCounts();
             IsLoggedIn = false; 
         }
 
+        public void AttachObserver(IUserDataObserver i_Observer)
+        {
+            if (!r_Observers.Contains(i_Observer))
+            {
+                r_Observers.Add(i_Observer);
+            }
+        }
 
+        public void DetachObserver(IUserDataObserver i_Observer)
+        {
+            r_Observers.Remove(i_Observer);
+        }
 
+        public void NotifyObservers()
+        {
+            foreach (IUserDataObserver observer in r_Observers)
+            {
+                observer.OnUserDataUpdated(m_LoggedInUser);
+            }
+        }
     }
 }
