@@ -1,0 +1,41 @@
+# Facebook WinForms Desktop App (.NET 4 / C#)
+
+This project is a Windows desktop application built using **C# and .NET Framework 4**, developed as a final academic project.  
+It integrates with the **Facebook Graph API** to fetch, display, and analyze user data in a clean, desktop environment.
+
+---
+
+## 📌 Features
+
+- Facebook login via OAuth
+- View and interact with personal feed and posts
+- **Stat Center**: A dedicated tab for analyzing top-liked posts, top-engaged users, and more
+- Modular architecture following **OOP** and **design patterns** (e.g., Singleton, Strategy)
+- Built using **WinForms**, with an emphasis on clean UI and maintainable backend
+
+---
+
+## 🛠 Tech Stack
+
+- C# / .NET Framework 4
+- WinForms (Desktop UI)
+- Facebook Graph API
+- JSON.NET
+- Git & Visual Studio
+
+
+## 🚀 Getting Started
+
+1. Clone the repository  
+   `git clone https://github.com/ofekcofman98/facebook-winforms-app.git`
+
+2. Open the solution in **Visual Studio**
+
+3. Set up a **Facebook Developer App**  
+   - Get your App ID and App Secret  
+   - Configure OAuth Redirect URI  
+   - Insert credentials into the app configuration
+
+4. Run the project!
+
+* NOTE: you need to be in Administrators/developers/testers list for running the project. Pls make contact me to get permissions
